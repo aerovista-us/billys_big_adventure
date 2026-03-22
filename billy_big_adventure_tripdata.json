@@ -1,6 +1,6 @@
 {
   "schema_name": "billy_big_adventure_tripdata",
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "generated_at": "2026-03-22",
   "coverage": {
     "origin": "Coeur d'Alene, Idaho",
@@ -15,9 +15,13 @@
       "day_trip_extensions",
       "route_sidequests",
       "narrative_voice_pee_wee_hangover",
-      "wolfpack_logistics_humor"
+      "wolfpack_logistics_humor",
+      "weather_and_fire_awareness",
+      "pre_trip_origin_stops",
+      "communications_dead_zones"
     ],
     "notes": [
+      "Second-pass enrichment: more corridor anchors, live-check templates, and planner humor rows—still not a substitute for Idaho 511, USACE, or reservation systems.",
       "First-pass but broad trip dataset for the Billy's Big Adventure planner UI.",
       "Narrative voice intentionally blends Pee-wee-scale quest energy with Hangover-style wolfpack logistics humor (PG-13). Movie nods are for morale, not a playbook—obey laws, signs, MVUM/OHV rules, and Idaho 511.",
       "Practical records (alerts, closures, reservations) stay factual; fun_option rows are explicitly silly.",
@@ -27,7 +31,8 @@
       "tone_keywords": [
         "bike_quest_stubborn_joy",
         "headcount_before_wheels_turn",
-        "morning_after_hydration_not_chaos"
+        "morning_after_hydration_not_chaos",
+        "paper_maps_when_cell_quits"
       ],
       "references_in_spirit": [
         "Pee-wee's Big Adventure",
@@ -484,6 +489,78 @@
       "kind": "official_org",
       "verified": "2026-03-22",
       "trust": "high"
+    },
+    {
+      "id": "src_visitcoeurdalene",
+      "title": "Visit Coeur d'Alene (tourism)",
+      "url": "https://www.visitcoeurdalene.org/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_visitlcvalley",
+      "title": "Visit Lewis Clark Valley",
+      "url": "https://www.visitlcvalley.com/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_nws_otx",
+      "title": "National Weather Service Spokane (Northern Idaho / eastern WA coverage)",
+      "url": "https://www.weather.gov/otx/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idfg_license",
+      "title": "Idaho Fish and Game - licenses, tags, permits",
+      "url": "https://idfg.idaho.gov/license",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_invasive_watercraft",
+      "title": "Idaho Invasive Species - watercraft inspection program",
+      "url": "https://invasivespecies.idaho.gov/programs/watercraft/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_fs_npc_alerts",
+      "title": "Nez Perce-Clearwater National Forest alerts",
+      "url": "https://www.fs.usda.gov/alerts/nezperce-clearwater/alerts",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_usace_hub",
+      "title": "USACE Dworshak Dam and Reservoir (hub page)",
+      "url": "https://www.nww.usace.army.mil/Locations/District-Locks-and-Dams/Dworshak-Dam-and-Reservoir/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_ready_idaho",
+      "title": "Idaho Office of Emergency Management",
+      "url": "https://ioem.idaho.gov/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_google_maps_cda_orofino",
+      "title": "Google Maps directions (live routing)",
+      "url": "https://www.google.com/maps/dir/Coeur+d'Alene,+ID/Orofino,+ID",
+      "kind": "travel-planner",
+      "verified": "2026-03-22",
+      "trust": "medium"
     }
   ],
   "app_contract": {
@@ -602,6 +679,50 @@
       "notes": [
         "Day-2 extension if the wolfpack still has daylight and nobody lost the keys in Orofino."
       ]
+    },
+    {
+      "id": "route_lewiston_services_pivot",
+      "type": "route_profile",
+      "name": "Lewiston / Clarkston services pivot",
+      "zone": "lewiston_grade",
+      "corridor_role": "optional_detour",
+      "status": "open",
+      "summary": "If you need a full-size hospital backup, big-box restock, or a longer meal break before the grade, the Lewiston–Clarkston metro is the natural corridor hub between Coeur d'Alene and Orofino.",
+      "corridor_nodes": [
+        "US-95 / US-12 interchange area",
+        "Lewiston",
+        "Clarkston, WA (optional)"
+      ],
+      "source_ids": [
+        "src_visitlcvalley",
+        "src_stjoes",
+        "src_idaho_511"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "Adds time and complexity; use when the wolfpack actually needs services, not when everyone is hangry five minutes from departure.",
+        "Crossing into Washington for fuel or food is fine—just remember which state’s hands-free / traffic laws you are in."
+      ]
+    },
+    {
+      "id": "route_maps_live_compare",
+      "type": "route_profile",
+      "name": "Live maps compare (no static turn-by-turn)",
+      "zone": "corridor",
+      "corridor_role": "primary",
+      "status": "check_live",
+      "summary": "Rome2Rio gives a distance/time sanity check; Google Maps (or Apple Maps) should own the actual turn-by-turn on trip day because construction and detours move faster than JSON.",
+      "distance_miles": 135.2,
+      "drive_time_minutes": 181,
+      "source_ids": [
+        "src_route_rome2rio",
+        "src_google_maps_cda_orofino",
+        "src_idaho_511"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "If US-95 near Orofino is ugly, compare an alternate suggested by the live map engine—but still verify against Idaho 511."
+      ]
     }
   ],
   "alerts": [
@@ -649,6 +770,70 @@
       "summary": "Clearwater County Chamber calendar shows no events scheduled specifically for April 6, 2026.",
       "source_ids": [
         "src_clearwater_events_apr6"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "alert_weather_fire_preflight",
+      "type": "alert",
+      "name": "Weather + forest alert preflight",
+      "zone": "corridor",
+      "corridor_role": "preflight",
+      "status": "check_live",
+      "severity": "medium",
+      "summary": "Early April can still throw snow, ice, wind, and lowland rain mixes on the grade and reservoir roads. Forest closures and incident traffic also happen—check NWS and Nez Perce-Clearwater alerts alongside Idaho 511.",
+      "source_ids": [
+        "src_nws_otx",
+        "src_fs_npc_alerts",
+        "src_idaho_511"
+      ],
+      "confidence": "high",
+      "action": "Night before and morning of: skim forecasts for Coeur d'Alene, Lewiston, and Orofino; scan forest alerts if you intend any dirt-road side quests."
+    },
+    {
+      "id": "alert_fishing_license_boat_rules",
+      "type": "alert",
+      "name": "Fishing license + boat inspection awareness",
+      "zone": "destination_region",
+      "corridor_role": "regulatory_preflight",
+      "status": "check_live",
+      "severity": "medium",
+      "summary": "If the crew will actually fish or launch a motorized boat, Idaho Fish and Game license rules and invasive species / inspection expectations apply. Rules and station hours are not static in JSON.",
+      "source_ids": [
+        "src_idfg_license",
+        "src_idaho_invasive_watercraft",
+        "src_idaho_fishing_planner"
+      ],
+      "confidence": "high",
+      "action": "Assign one person to confirm licenses and any required inspections before you pack rods and hulls."
+    },
+    {
+      "id": "alert_cell_and_satellite_reality",
+      "type": "alert",
+      "name": "Weak cell service around reservoir shorelines",
+      "zone": "destination_region",
+      "corridor_role": "communications",
+      "status": "open",
+      "severity": "low",
+      "summary": "Dworshak State Park documentation calls out unreliable cell service in-park; similar dead pockets are common along big western reservoirs. Plan meetup times and offline maps accordingly.",
+      "source_ids": [
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high",
+      "action": "Download offline maps, agree on rally points, and do not assume group chat works at the boat ramp."
+    },
+    {
+      "id": "alert_emergency_preparedness_idaho",
+      "type": "alert",
+      "name": "Emergency kit / household preparedness (Idaho OEM angle)",
+      "zone": "trip_general",
+      "corridor_role": "safety_culture",
+      "status": "open",
+      "severity": "low",
+      "summary": "Long rural drives benefit from basics: water, warm layers, flashlight, first aid, and a plan if someone needs urgent care. Idaho OEM publishes general preparedness guidance.",
+      "source_ids": [
+        "src_ready_idaho",
+        "src_clearwater_em"
       ],
       "confidence": "medium"
     }
@@ -1232,6 +1417,133 @@
       "confidence": "high"
     },
     {
+      "id": "poi_tubbs_hill",
+      "type": "poi",
+      "name": "Tubbs Hill (Coeur d'Alene)",
+      "zone": "coeur_d_alene",
+      "corridor_role": "pre_departure_stretch",
+      "status": "open",
+      "interest_tags": [
+        "hiking",
+        "lake_views",
+        "morning_move",
+        "free"
+      ],
+      "summary": "Popular in-town hike above Lake Coeur d'Alene—good leg-stretch before a long US-95 run if the crew is already in CDA.",
+      "practical_score": 7,
+      "budget_score": 10,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "location": {
+        "description": "Trailheads near downtown Coeur d'Alene; check local maps for parking"
+      },
+      "source_ids": [
+        "src_visitcoeurdalene"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "Not on the direct line to Dworshak—use when origin day starts in CDA with spare morning time."
+      ]
+    },
+    {
+      "id": "poi_mceuen_park_cda",
+      "type": "poi",
+      "name": "McEuen Park + downtown lakefront",
+      "zone": "coeur_d_alene",
+      "corridor_role": "pre_departure_stroll",
+      "status": "open",
+      "interest_tags": [
+        "walkable",
+        "playground",
+        "coffee_adjacent",
+        "photo"
+      ],
+      "summary": "Central lakefront park space in Coeur d'Alene for a calm stroll, kid energy burn, or last downtown coffee before wheels-up.",
+      "practical_score": 6,
+      "budget_score": 10,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_visitcoeurdalene"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_lc_valley_riverfront",
+      "type": "poi",
+      "name": "Lewiston–Clarkston riverfront trails",
+      "zone": "lewiston",
+      "corridor_role": "en_route_optional",
+      "status": "open",
+      "interest_tags": [
+        "river",
+        "walk",
+        "bike_path",
+        "stretch_break"
+      ],
+      "summary": "Snake / Clearwater confluence towns have extensive levee and riverfront trail mileage—useful low-cost break if you pivot through Lewiston for services.",
+      "practical_score": 7,
+      "budget_score": 10,
+      "surron_relevance": 2,
+      "overnight_relevance": 1,
+      "source_ids": [
+        "src_visitlcvalley"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_dworshak_usace_overview_stop",
+      "type": "poi",
+      "name": "Dworshak Dam public-facing overview",
+      "zone": "dworshak_dam",
+      "corridor_role": "destination_context",
+      "status": "check_live",
+      "interest_tags": [
+        "dam",
+        "engineering",
+        "orientation"
+      ],
+      "summary": "USACE hub page for the project—useful orientation before visitor center hours, tours, or closure rules; pair with alerts for what is actually open.",
+      "practical_score": 5,
+      "budget_score": 10,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_dworshak_usace_hub",
+        "src_dworshak_visitor_center"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "camping_big_eddy_overnight",
+      "type": "camping",
+      "name": "Big Eddy camping / overnight options (verify live)",
+      "zone": "dworshak_lower_reservoir",
+      "corridor_role": "destination_overnight_possible",
+      "status": "check_live",
+      "interest_tags": [
+        "camping",
+        "marina_adjacent",
+        "verify_reservations"
+      ],
+      "summary": "Big Eddy is a primary day-use and marina anchor; if the wolfpack wants to sleep nearer the water than Orofino motels, check USACE and reservation systems for what camping inventory exists and is open under current closures.",
+      "practical_score": 6,
+      "budget_score": 7,
+      "surron_relevance": 2,
+      "overnight_relevance": 7,
+      "location": {
+        "description": "Follow USACE directions to Big Eddy Recreation Area"
+      },
+      "source_ids": [
+        "src_big_eddy_usace",
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "Treat as a planning flag, not a guarantee—USACE pages and alerts change with water and safety work."
+      ]
+    },
+    {
       "id": "lodging_helgeson",
       "type": "lodging",
       "name": "Helgeson Place Hotel & Suites",
@@ -1471,6 +1783,32 @@
       "confidence": "medium"
     },
     {
+      "id": "supply_lewiston_retail_corridor",
+      "type": "supply",
+      "name": "Lewiston–Clarkston big-box / grocery corridor",
+      "zone": "lewiston",
+      "corridor_role": "resupply_pivot",
+      "status": "check_live",
+      "interest_tags": [
+        "grocery",
+        "chain_retail",
+        "ice",
+        "propane_maybe"
+      ],
+      "summary": "If you forgot cooler ice, camp fuel, or trail snacks, the LC Valley has the usual national and regional retail density—trade a little time on US-95 for selection.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 2,
+      "overnight_relevance": 2,
+      "source_ids": [
+        "src_visitlcvalley"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "No single address here on purpose; use maps search near your chosen exit."
+      ]
+    },
+    {
       "id": "service_glenwood_pharmacy",
       "type": "service",
       "name": "Arnzen's Glenwood Pharmacy",
@@ -1641,6 +1979,56 @@
       "confidence": "high"
     },
     {
+      "id": "food_lewiston_casual_corridor",
+      "type": "food",
+      "name": "Lewiston–Clarkston casual dining (live pick)",
+      "zone": "lewiston",
+      "corridor_role": "en_route_meal",
+      "status": "check_live",
+      "interest_tags": [
+        "lunch",
+        "group",
+        "riverside_possible"
+      ],
+      "summary": "Chamber/tourism listings cover a wide spread of cafes, pubs, and family spots on both sides of the river—better discovered live than frozen in JSON.",
+      "practical_score": 7,
+      "budget_score": 6,
+      "surron_relevance": 0,
+      "overnight_relevance": 1,
+      "source_ids": [
+        "src_visitlcvalley"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "food_deanos_grill",
+      "type": "food",
+      "name": "Deano's Restaurant (Orofino)",
+      "zone": "orofino",
+      "corridor_role": "highway_adjacent_meal",
+      "status": "open",
+      "interest_tags": [
+        "grill",
+        "highway_12",
+        "practical"
+      ],
+      "summary": "Grill / restaurant tied to the Deano's travel-center footprint on Highway 12—useful when the group wants food near the same stop as fuel.",
+      "practical_score": 7,
+      "budget_score": 6,
+      "surron_relevance": 1,
+      "overnight_relevance": 2,
+      "location": {
+        "address": "13834 Highway 12, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-3880"
+      },
+      "source_ids": [
+        "src_deanos"
+      ],
+      "confidence": "medium"
+    },
+    {
       "id": "reg_surron_access",
       "type": "regulation",
       "name": "Surron / motorized trail caution",
@@ -1734,6 +2122,57 @@
         "src_dworshak_reservoir_map"
       ],
       "confidence": "high"
+    },
+    {
+      "id": "reg_invasive_watercraft_idaho",
+      "type": "regulation",
+      "name": "Invasive species / watercraft inspection expectations",
+      "zone": "idaho_general",
+      "corridor_role": "water_legal",
+      "status": "check_live",
+      "interest_tags": [
+        "boat",
+        "inspection",
+        "invasive_species",
+        "important"
+      ],
+      "summary": "Idaho runs a watercraft inspection program aimed at preventing aquatic invasive species. Where, when, and whether your hull must stop depends on route, season, and current station status.",
+      "practical_score": 9,
+      "budget_score": 10,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_idaho_invasive_watercraft",
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Pair with fishing license checks if the trip is half birthday party, half fish heist."
+      ]
+    },
+    {
+      "id": "reg_wildlife_dawn_dusk_idaho",
+      "type": "regulation",
+      "name": "Wildlife on highway corridor (dawn/dusk vigilance)",
+      "zone": "corridor",
+      "corridor_role": "safety_culture",
+      "status": "open",
+      "interest_tags": [
+        "deer",
+        "elk",
+        "night_driving",
+        "safety"
+      ],
+      "summary": "North Idaho highways routinely cross deer and elk habitat. April is not a free pass—keep speeds sane, use high beams when appropriate, and expect animals on shoulders near fields and timber.",
+      "practical_score": 9,
+      "budget_score": 10,
+      "surron_relevance": 2,
+      "overnight_relevance": 3,
+      "source_ids": [
+        "src_idaho_511",
+        "src_itd_travel"
+      ],
+      "confidence": "medium"
     },
     {
       "id": "service_clearwater_health",
@@ -1842,6 +2281,32 @@
       "confidence": "high"
     },
     {
+      "id": "service_aaa_membership_roadside",
+      "type": "service",
+      "name": "AAA Idaho / roadside assistance (membership product)",
+      "zone": "trip_general",
+      "corridor_role": "breakdown_backup",
+      "status": "check_live",
+      "interest_tags": [
+        "tow",
+        "lockout",
+        "battery",
+        "membership"
+      ],
+      "summary": "If someone in the wolfpack already carries AAA, keep the app and card in the real world—not buried in a glove box cosplay bit.",
+      "practical_score": 5,
+      "budget_score": 4,
+      "surron_relevance": 0,
+      "overnight_relevance": 1,
+      "source_ids": [
+        "src_aaa_idaho_page"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "Not a substitute for 911; membership terms and coverage vary by level."
+      ]
+    },
+    {
       "id": "budget_personal_vehicle",
       "type": "budget_model",
       "name": "Personal vehicle baseline",
@@ -1945,6 +2410,48 @@
       "confidence": "medium"
     },
     {
+      "id": "budget_licenses_permits_water",
+      "type": "budget_model",
+      "name": "Licenses, inspections, and small permit math",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "check_live",
+      "interest_tags": [
+        "fishing_license",
+        "boat",
+        "variable_cost"
+      ],
+      "summary": "Fishing licenses and some boating-related fees are per-person or per-season numbers that change with rule updates. Model them as a line item the navigator updates the week of the trip.",
+      "assumptions": {
+        "placeholder_adult_license_usd": "check_idfg",
+        "invasive_inspection_fee_usd": "often_none_but_verify_stations"
+      },
+      "source_ids": [
+        "src_idfg_license",
+        "src_idaho_invasive_watercraft"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "budget_snack_and_ice_floor",
+      "type": "budget_model",
+      "name": "Snack + ice floor (group sanity)",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "inferred",
+      "interest_tags": [
+        "cooler",
+        "morale",
+        "per_person"
+      ],
+      "summary": "Even a tight birthday trip benefits from a deliberate per-person snack + hydration floor so the wolfpack does not cannibalize gas-station roller food as a meal plan.",
+      "assumptions": {
+        "suggested_per_person_usd_day_trip": 15,
+        "ice_bag_usd_typical": 4
+      },
+      "confidence": "low"
+    },
+    {
       "id": "template_airbnb",
       "type": "search_template",
       "name": "Airbnb search",
@@ -2026,6 +2533,71 @@
       "template_url": "https://www.fs.usda.gov/r01/nezperce-clearwater/maps-guides",
       "source_ids": [
         "src_mvum"
+      ]
+    },
+    {
+      "id": "template_booking_orofino",
+      "type": "search_template",
+      "name": "Booking.com hotel search (Orofino)",
+      "zone": "live_search",
+      "corridor_role": "future_app",
+      "status": "check_live",
+      "interest_tags": [
+        "hotel",
+        "live_search"
+      ],
+      "summary": "Alternate hotel aggregator launch point; rates and inventory change constantly.",
+      "template_url": "https://www.booking.com/searchresults.html?ss=Orofino%2C+Idaho%2C+United+States+of+America"
+    },
+    {
+      "id": "template_nws_forecast_orofino",
+      "type": "search_template",
+      "name": "NWS forecast (search Orofino)",
+      "zone": "live_search",
+      "corridor_role": "weather_preflight",
+      "status": "open",
+      "interest_tags": [
+        "weather",
+        "forecast"
+      ],
+      "summary": "Launch a weather.gov search for destination-town conditions; pair with WFO Spokane hub for regional context.",
+      "template_url": "https://forecast.weather.gov/MapClick.php?CityName=Orofino&state=ID",
+      "source_ids": [
+        "src_nws_otx"
+      ]
+    },
+    {
+      "id": "template_clearwater_events_hub",
+      "type": "search_template",
+      "name": "Clearwater County events calendar",
+      "zone": "live_search",
+      "corridor_role": "events",
+      "status": "open",
+      "interest_tags": [
+        "events",
+        "local_calendar"
+      ],
+      "summary": "Browse beyond the single April 6 snapshot alert when you want festivals, races, or town closures.",
+      "template_url": "https://clearwatercountyadventures.com/events/",
+      "source_ids": [
+        "src_clearwater_chamber"
+      ]
+    },
+    {
+      "id": "template_idfg_license_purchase",
+      "type": "search_template",
+      "name": "Idaho Fish and Game license purchase",
+      "zone": "live_search",
+      "corridor_role": "regulatory_preflight",
+      "status": "open",
+      "interest_tags": [
+        "license",
+        "fishing"
+      ],
+      "summary": "Buy or verify licenses before you pack rods.",
+      "template_url": "https://idfg.idaho.gov/license",
+      "source_ids": [
+        "src_idfg_license"
       ]
     },
     {
@@ -2192,30 +2764,129 @@
       "budget_score": 0,
       "surron_relevance": 0,
       "overnight_relevance": 0
+    },
+    {
+      "id": "fun_birthday_manifest_clipboard",
+      "type": "fun_option",
+      "name": "Birthday manifest clipboard",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "wolfpack",
+        "paperwork_cosplay",
+        "pee_wee_energy"
+      ],
+      "summary": "One laminated checklist titled ‘Official Birthday Expedition’ with boxes for snacks, chargers, and emotional support cooler. Crossing items off is mandatory theater.",
+      "practical_score": 3,
+      "budget_score": 6,
+      "surron_relevance": 0,
+      "overnight_relevance": 1
+    },
+    {
+      "id": "fun_dam_selfie_lighting_czar",
+      "type": "fun_option",
+      "name": "Dam selfie lighting czar",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "photo",
+        "roleplay",
+        "dworshak"
+      ],
+      "summary": "Assign one friend to care deeply about golden-hour angles at the dam while everyone else pretends this is Cannes. Keep tripods off roadways and respect closures.",
+      "practical_score": 2,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_wolfpack_treasurer_zelle",
+      "type": "fun_option",
+      "name": "Wolfpack treasurer (non-Vegas edition)",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "hangover_energy",
+        "money",
+        "responsible"
+      ],
+      "summary": "One person holds the shared fuel + ice spreadsheet and actually sends Venmo requests before anyone ‘forgets’ at the pump. Boring beats chaos.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 0,
+      "overnight_relevance": 2
+    },
+    {
+      "id": "fun_motel_room_number_cipher",
+      "type": "fun_option",
+      "name": "Motel room number cipher",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "overnight",
+        "group",
+        "pee_wee_energy"
+      ],
+      "summary": "Text the room number to the group chat using an unnecessarily elaborate cipher. Then immediately send the plaintext because adults have luggage and zero patience.",
+      "practical_score": 2,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 4
+    },
+    {
+      "id": "fun_reservoir_echo_roll_call",
+      "type": "fun_option",
+      "name": "Reservoir echo roll call",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "wolfpack",
+        "sound",
+        "pg13"
+      ],
+      "summary": "At a safe, legal pullout, one very short celebratory shout tests canyon acoustics—then immediate indoor voices because other visitors did not opt into your bit.",
+      "practical_score": 3,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
     }
   ],
   "operational_notes": {
     "road_and_weather_checks": [
       "Check Idaho 511 on departure morning.",
       "Re-check Dworshak USACE closure page for reservoir access status.",
-      "If planning anything motorized off normal roads, confirm legal travel using the correct MVUM / local rules."
+      "If planning anything motorized off normal roads, confirm legal travel using the correct MVUM / local rules.",
+      "Skim NWS Spokane (WFO OTX) headlines for northern Idaho / eastern WA if snow, wind, or river fog could affect the grade.",
+      "If launching a boat, scan Idaho invasive species / inspection pages the same week as departure."
     ],
     "recommended_app_behaviors": [
       "Treat alerts and booking search templates as dynamic/high-priority records.",
       "Show closed / mixed-status destination entities before open fun stops.",
       "If user toggles Surron mode, surface legal caution records before ride ideas.",
-      "If user toggles budget mode, sort by budget_score descending and practical_score descending."
+      "If user toggles budget mode, sort by budget_score descending and practical_score descending.",
+      "When listing corridor POIs, prefer grouping by zone (CDA → Lewiston → Orofino → reservoir) to match how people actually drive the day.",
+      "Surface communications_dead_zone style alerts whenever the user selects camping or marina-heavy entities."
     ],
     "known_gaps": [
       "No live Airbnb/VRBO inventory is embedded because rental supply changes too fast.",
       "No static list of every gas station or restaurant on the corridor is embedded; this file focuses on useful anchors rather than exhaustive map spam.",
-      "Road lane control details around Orofino are intentionally abstracted to Idaho 511 because those can change faster than a saved file."
+      "Road lane control details around Orofino are intentionally abstracted to Idaho 511 because those can change faster than a saved file.",
+      "Lewiston–Clarkston dining and big-box stops are pointed at tourism/search surfaces rather than frozen addresses.",
+      "Second-pass rows add breadth, not real-time road geometry—live maps still win for detours."
     ],
     "wolfpack_reminders": [
       "Headcount before major moves—movies skip it; your trip should not.",
       "If the crew splits attention, assign a navigator and a separate 511 checker.",
       "fun_option rows are jokes; alerts and search_template rows are the serious channel.",
-      "Hydration and sleep are part of logistics, not a punchline—plan both."
+      "Hydration and sleep are part of logistics, not a punchline—plan both.",
+      "Screenshot or print critical reservation codes; Big Eddy and state-park pockets may not load your email.",
+      "Decide in advance who owns fishing-license and boat-inspection homework so it is not a parking-lot argument.",
+      "Keep one paper Idaho / reservoir map in the glove box as backup when the group chat goes silent."
     ]
   }
 }

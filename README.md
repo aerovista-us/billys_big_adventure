@@ -10,7 +10,7 @@ Use **`index.html`** or **`billys_big_adventure.html`** — they are identical. 
 
 | File | Purpose |
 |------|---------|
-| `billy_big_adventure_tripdata.json` | Trip entities, routes, alerts, `source_registry`, **`fun_option` side quests** — **edit this** for data changes. Schema **1.1.0** adds `coverage.narrative_voice` and nine scripted side quests in-data (no duplicate list in the shell). |
+| `billy_big_adventure_tripdata.json` | Trip entities, routes, alerts, `source_registry`, **`fun_option` side quests** — **edit this** for data changes. Schema **1.2.0** expands corridor sources, routes, alerts, entities, search templates, budget models, and `fun_option` rows (see README “Trip data schema”). |
 | `billys_big_adventure.shell.html` | UI, styles, and app script — **edit this** for layout or planner logic. |
 | `index.html`, `billys_big_adventure.html` | **Generated** — do not hand-edit. |
 | `assets/poster.png` | Preferred hero art when present (e.g. copy from `mini.shops/av-backup/poster.png`). |
@@ -55,11 +55,23 @@ The page will `fetch('./billy_big_adventure_tripdata.json')` when served over HT
 
 Use the **Trip JSON** file input if auto-fetch fails.
 
-## Trip data schema highlights (v1.1.0)
+## Trip data schema highlights (v1.1.0 → v1.2.0)
+
+**v1.1.0 baseline**
 
 - **`coverage.narrative_voice`** — Declares the Pee-wee + Hangover *spirit* vs hard facts; includes a short disclaimer.
 - **`coverage.intent_tags`** — Adds `narrative_voice_pee_wee_hangover` and `wolfpack_logistics_humor` for filtering or tooling.
-- **`fun_option` entities** — All side quests (museum convoy, velvet suite, rooftop headcount, mystery cooler, Alamo stop, morning kit, singalong tax, tuxedo tow, goose escort fiction) live here; the app no longer duplicates them in JavaScript.
-- **`operational_notes.wolfpack_reminders`** — Extra operator-facing reminders in the same voice.
+- **`fun_option` entities** — Scripted side quests live in JSON (not duplicated in the shell script).
+- **`operational_notes.wolfpack_reminders`** — Operator-facing reminders in the same voice.
+
+**v1.2.0 additions (second data pass)**
+
+- **`coverage.intent_tags`** — `weather_and_fire_awareness`, `pre_trip_origin_stops`, `communications_dead_zones`.
+- **`source_registry`** — Visit CDA / LC Valley tourism, NWS WFO OTX, IDFG license hub, Idaho invasive watercraft program, Nez Perce-Clearwater forest alerts, USACE Dworshak hub, Idaho OEM, Google Maps directions template.
+- **`route_profiles`** — Lewiston services pivot; live maps compare row (pairs Rome2Rio sanity check with map + 511).
+- **`alerts`** — Weather/forest preflight, fishing license + invasive species awareness, weak cell service reminder, emergency-preparedness culture note.
+- **`entities`** — Extra POIs (CDA pre-trip, LC riverfront, USACE overview), optional Big Eddy overnight flag, Lewiston resupply + food anchors, invasive-species + wildlife-on-highway regulations, AAA roadside note, two budget sketches, four search templates (Booking.com Orofino, NWS Orofino forecast, Clearwater events hub, IDFG license).
+- **`fun_option`** — Five more PG-13 wolfpack bits (clipboard, lighting czar, treasurer, motel cipher, echo roll call).
+- **`operational_notes`** — Expanded road/weather, app behavior hints, known gaps, and wolfpack reminders.
 
 Edit JSON → run `build-embed.mjs` → ship updated `index.html` / `billys_big_adventure.html` if you rely on embedded fallback.
