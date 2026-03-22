@@ -1,0 +1,3507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Road-trip planner: CDA to Dworshak — real logistics with Pee-wee-sized heart and wolfpack-level headcounts. Dates, transport, stops, sources, side quests." />
+  <title>Billy's Big Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sky: #38b8e8;
+      --sky-glow: rgba(56, 184, 232, 0.35);
+      --sky-deep: #0d5a82;
+      --night: #061a28;
+      --night-mid: #0c2a3d;
+      --panel: rgba(10, 42, 62, 0.92);
+      --panel-2: rgba(6, 32, 48, 0.94);
+      --line: rgba(255, 199, 44, 0.22);
+      --text: #fff8e8;
+      --muted: #a8d9ef;
+      --yellow: #ffc72c;
+      --yellow-hot: #ffdf6b;
+      --red: #e31c2d;
+      --red-deep: #9b1020;
+      --orange: #ff8c42;
+      --green: #3d9a5c;
+      --green-soft: #7adf9a;
+      --forest: #1e5c3a;
+      --cream: #fff3d4;
+      --shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+      --font-display: "Lilita One", "Arial Black", sans-serif;
+      --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(ellipse 90% 45% at 50% -8%, rgba(255, 199, 44, 0.14), transparent 52%),
+        radial-gradient(circle at 95% 8%, var(--sky-glow), transparent 38%),
+        radial-gradient(circle at 5% 85%, rgba(30, 92, 58, 0.2), transparent 42%),
+        linear-gradient(168deg, var(--night-mid) 0%, var(--night) 48%, #040f18 100%);
+      color: var(--text);
+      font-family: var(--font-body);
+    }
+    body { padding: 24px; }
+    .wrap { max-width: 1260px; margin: 0 auto; display: grid; gap: 20px; }
+    .hero, .panel {
+      border: 2px solid rgba(56, 184, 232, 0.2);
+      background: var(--panel-2);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border: 2px solid rgba(255, 199, 44, 0.25);
+      background:
+        linear-gradient(145deg, rgba(227, 28, 45, 0.12), rgba(56, 184, 232, 0.1)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04) 1px, transparent 1px, transparent 20px),
+        var(--panel);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("assets/decor.svg") no-repeat 100% 100%;
+      background-size: min(420px, 55%) auto;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -100px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 199, 44, 0.35), transparent 62%);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+    .eyebrow, .badge, .mini-pill, .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+    .eyebrow {
+      font-family: var(--font-body);
+      font-weight: 800;
+      color: var(--night);
+      padding: 8px 14px;
+      border: 2px solid var(--red-deep);
+      background: linear-gradient(180deg, var(--yellow-hot), var(--yellow));
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 0 var(--red-deep);
+    }
+    h1, h2, h3, h4 { margin: 0; line-height: 1.05; font-family: var(--font-display); }
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      max-width: 14ch;
+      text-wrap: balance;
+      color: var(--yellow);
+      text-shadow:
+        3px 3px 0 var(--red),
+        -1px -1px 0 rgba(0,0,0,0.35),
+        0 0 24px rgba(255, 199, 44, 0.35);
+      letter-spacing: 0.02em;
+    }
+    h2.section-title, details.flow-panel > summary { letter-spacing: 0.03em; }
+    .card h3, .data-card h4, .control .label, fieldset.control legend {
+      font-family: var(--font-body);
+      font-weight: 800;
+    }
+    .card h3 { font-size: 1.05rem; }
+    .sub { margin-top: 14px; max-width: 70ch; color: var(--muted); line-height: 1.65; font-size: 1.04rem; }
+    .hero-grid, .grid-2, .grid-3, .grid-4 { display: grid; gap: 16px; }
+    .hero-grid { grid-template-columns: 1.5fr 1fr; margin-top: 22px; }
+    .grid-2 { grid-template-columns: 1.1fr 0.9fr; }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .section-title { margin-bottom: 12px; font-size: 1.3rem; }
+    .muted { color: var(--muted); line-height: 1.58; }
+    .controls { display: grid; gap: 14px; }
+    .control {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .control label, .control .label { font-weight: 700; font-size: 0.95rem; }
+    .range-line, .field-line { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
+    input[type="range"] { width: 100%; accent-color: var(--red); }
+    input[type="date"], input[type="number"], input[type="file"] {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(10,10,16,0.72);
+      color: var(--text);
+      padding: 11px 12px;
+      font: inherit;
+    }
+    .date-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+    .pill-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill-group input { display: none; }
+    .pill-group label {
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+    .pill-group input:checked + label {
+      background: linear-gradient(180deg, rgba(227, 28, 45, 0.35), rgba(227, 28, 45, 0.2));
+      border-color: var(--yellow);
+      color: var(--cream);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 var(--red-deep), 0 12px 28px rgba(227, 28, 45, 0.25);
+    }
+    .hero-road {
+      position: relative;
+      height: 100px;
+      border-radius: 18px;
+      padding: 14px 16px;
+      border: 2px solid rgba(56, 184, 232, 0.35);
+      background: linear-gradient(180deg, rgba(15, 90, 130, 0.5), rgba(6, 26, 40, 0.9));
+      overflow: hidden;
+    }
+    .hero-road svg.road-svg {
+      position: absolute;
+      left: 0; right: 0; bottom: 8px;
+      width: 100%;
+      height: 36px;
+      opacity: 0.95;
+    }
+    .stops { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; height: 100%; padding-top: 4px; }
+    .stop {
+      display: grid; gap: 2px; padding: 8px 10px; border-radius: 12px;
+      background: rgba(255, 248, 232, 0.08);
+      border: 2px solid rgba(255, 199, 44, 0.35);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    }
+    .stop strong { font-size: 0.95rem; }
+    .stop span { font-size: 0.8rem; color: var(--muted); }
+    .badge-row, .toolbar, .button-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge, .mini-pill { padding: 9px 12px; border: 2px solid rgba(56, 184, 232, 0.45); background: rgba(56, 184, 232, 0.12); color: #d4f4ff; }
+    .mini-pill.warn { color: #ffb8b8; border-color: rgba(227, 28, 45, 0.45); background: rgba(227, 28, 45, 0.15); }
+    .mini-pill.good { color: var(--green-soft); border-color: rgba(61, 154, 92, 0.5); background: rgba(61, 154, 92, 0.12); }
+    .result-main, .card, .route-card, .stop-card, .alert-card, .absurd-card, .data-card {
+      padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+    }
+    .result-main { background: linear-gradient(135deg, rgba(227, 28, 45, 0.12), rgba(56, 184, 232, 0.1)), rgba(255,255,255,0.04); border-color: rgba(255, 199, 44, 0.2); }
+    .recommendation { display: inline-flex; gap: 8px; align-items: center; padding: 8px 14px; border-radius: 999px; margin-bottom: 12px; font-size: 0.85rem; font-weight: 800; background: rgba(61, 154, 92, 0.2); border: 2px solid var(--green); color: var(--green-soft); }
+    .price { margin-top: 12px; font-weight: 800; color: var(--yellow); text-shadow: 1px 1px 0 var(--red-deep); }
+    .cards, .routes, .stops-grid, .alerts-grid, .data-grid { display: grid; gap: 14px; }
+    .cards, .routes, .stops-grid, .alerts-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .data-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .tag { width: fit-content; padding: 6px 10px; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+    .tag.alert { color: #ffd0d0; border-color: rgba(227, 28, 45, 0.45); background: rgba(227, 28, 45, 0.15); }
+    .tag.route { color: #9ee8ff; border-color: rgba(56, 184, 232, 0.45); background: rgba(56, 184, 232, 0.12); }
+    .tag.stop { color: #ffe8f0; border-color: rgba(227, 28, 45, 0.35); background: rgba(227, 28, 45, 0.12); }
+    .tag.absurd { color: var(--yellow); border-color: rgba(255, 199, 44, 0.45); background: rgba(255, 199, 44, 0.1); }
+    .list { margin: 12px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.7; }
+    .quote { padding: 18px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); color: var(--muted); line-height: 1.66; }
+    .small { font-size: 0.92rem; color: #8ec9dc; line-height: 1.55; }
+    .data-status { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    button { cursor: pointer; border: 0; color: var(--night); font-weight: 800; padding: 12px 18px; border-radius: 14px; background: linear-gradient(180deg, var(--yellow-hot), var(--yellow)); box-shadow: 0 5px 0 var(--red-deep), 0 14px 28px rgba(0,0,0,0.35); }
+    button:hover { filter: brightness(1.05); }
+    button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--red-deep), 0 8px 20px rgba(0,0,0,0.3); }
+    button.secondary { color: var(--cream); background: linear-gradient(180deg, var(--sky), var(--sky-deep)); box-shadow: 0 5px 0 #063652, 0 14px 28px rgba(56, 184, 232, 0.2); }
+    button.secondary:active { box-shadow: 0 2px 0 #063652, 0 8px 20px rgba(56, 184, 232, 0.15); }
+    button.ghost { color: var(--cream); background: rgba(255, 248, 232, 0.06); box-shadow: none; border: 2px solid rgba(255, 199, 44, 0.35); }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 12px;
+      z-index: 9999;
+      padding: 10px 16px;
+      background: var(--yellow);
+      color: var(--night);
+      font-weight: 800;
+      border-radius: 10px;
+      text-decoration: none;
+      font-family: var(--font-body);
+      border: 2px solid var(--red);
+    }
+    .skip-link:focus {
+      left: 12px;
+      outline: 3px solid var(--sky);
+      outline-offset: 2px;
+    }
+    .toc-nav {
+      max-width: 1260px;
+      margin: 0 auto 12px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+    }
+    .toc-nav span { color: var(--muted); font-size: 0.85rem; font-weight: 600; margin-right: 4px; }
+    .toc-nav a { color: var(--yellow); font-weight: 700; text-decoration: none; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+    .toc-nav a:hover { text-decoration: underline; }
+    fieldset.control { border: 0; margin: 0; padding: 0; min-width: 0; }
+    fieldset.control legend { margin-bottom: 8px; }
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+    .pill-group input:focus-visible + label {
+      outline: 3px solid var(--sky);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pill-group input:checked + label { transform: none; transition: none; }
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    details.flow-panel { border: 0; padding: 0; }
+    details.flow-panel > summary {
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      list-style: none;
+      margin-bottom: 12px;
+      padding: 8px 0;
+      color: var(--text);
+    }
+    details.flow-panel > summary::-webkit-details-marker { display: none; }
+    details.flow-panel > summary::after {
+      content: " ▾";
+      color: var(--muted);
+      font-size: 0.85em;
+    }
+    details.flow-panel[open] > summary::after { content: " ▴"; }
+    .source-links { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px 14px; }
+    .source-links a {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #8ee6ff;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(56, 184, 232, 0.45);
+    }
+    .source-links a:hover { border-bottom-color: var(--yellow); color: var(--yellow); }
+    .external-strip {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .external-strip a {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--yellow);
+      text-decoration: none;
+      border-bottom: 2px solid var(--red);
+    }
+    .external-strip a:hover { text-decoration: underline; }
+    .hero-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 22px;
+      align-items: start;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-poster-wrap {
+      flex-shrink: 0;
+    }
+    .hero-poster {
+      display: block;
+      width: min(200px, 42vw);
+      height: auto;
+      border-radius: 14px;
+      border: 4px solid var(--yellow);
+      box-shadow:
+        0 0 0 2px var(--red),
+        0 14px 36px rgba(0,0,0,0.45);
+      transform: rotate(-2.5deg);
+      background: var(--night);
+    }
+    .hero-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      opacity: 0.9;
+    }
+    .hero-icons svg {
+      width: 40px;
+      height: 40px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+    }
+    .sprite-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+    @media (max-width: 980px) { .hero-grid, .grid-2, .grid-3, .grid-4, .cards, .routes, .stops-grid, .alerts-grid, .data-grid, .date-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) {
+      .hero-top { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .hero-poster { transform: rotate(-1deg); width: min(240px, 70vw); }
+    }
+    @media (max-width: 640px) { body { padding: 14px; } .hero, .panel { padding: 16px; border-radius: 20px; } .stops { gap: 6px; flex-wrap: wrap; justify-content: center; } .stop { padding: 6px 8px; } .stop strong { font-size: 0.82rem; } .stop span { font-size: 0.72rem; } }
+  </style>
+</head>
+<body>
+  <svg class="sprite-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="sym-dam" viewBox="0 0 48 40">
+        <path fill="#5a6d7e" d="M6 34 L10 14 L38 14 L42 34 Z"/>
+        <path fill="#38b8e8" d="M4 32 h40 v6 H4 z" opacity="0.85"/>
+        <rect fill="#ffc72c" x="17" y="8" width="14" height="8" rx="1"/>
+        <line x1="12" y1="22" x2="36" y2="22" stroke="#061a28" stroke-width="1" opacity="0.3"/>
+      </symbol>
+      <symbol id="sym-ufo" viewBox="0 0 48 36">
+        <ellipse cx="24" cy="14" rx="17" ry="7" fill="#aeb6bf"/>
+        <ellipse cx="24" cy="16" rx="20" ry="5" fill="#38b8e8" opacity="0.45"/>
+        <path fill="#ffc72c" opacity="0.75" d="M17 20 L24 34 L31 20 Z"/>
+        <circle cx="24" cy="13" r="3" fill="#fff8e8"/>
+      </symbol>
+      <symbol id="sym-pine" viewBox="0 0 36 44">
+        <path fill="#1e5c3a" d="M18 2 L30 20 L24 20 L32 34 H4 L12 20 L6 20 Z"/>
+        <rect fill="#4a3224" x="14" y="34" width="8" height="8" rx="1"/>
+      </symbol>
+      <symbol id="sym-motel" viewBox="0 0 48 38">
+        <rect fill="#9b1020" x="4" y="6" width="40" height="28" rx="3"/>
+        <rect fill="#ffc72c" x="8" y="10" width="32" height="8" rx="1"/>
+        <rect fill="#38b8e8" x="10" y="22" width="8" height="10" rx="1"/>
+        <rect fill="#38b8e8" x="30" y="22" width="8" height="10" rx="1"/>
+        <rect fill="#fff8e8" x="20" y="24" width="8" height="6" rx="1"/>
+      </symbol>
+      <symbol id="sym-map" viewBox="0 0 40 40">
+        <path fill="#fff3d4" stroke="#e31c2d" stroke-width="2" d="M6 8 L28 6 L34 28 L10 32 Z" opacity="0.9"/>
+        <path fill="none" stroke="#ffc72c" stroke-width="2" stroke-dasharray="4 3" d="M10 24 Q18 12 26 20 T34 14"/>
+        <circle fill="#e31c2d" cx="22" cy="18" r="3"/>
+      </symbol>
+      <symbol id="sym-trout" viewBox="0 0 48 32">
+        <ellipse cx="22" cy="16" rx="14" ry="8" fill="#38b8e8" opacity="0.6"/>
+        <path fill="#1e5c3a" d="M8 16 L2 12 v8 Z"/>
+        <circle cx="30" cy="14" r="2" fill="#061a28"/>
+      </symbol>
+    </defs>
+  </svg>
+  <a class="skip-link" href="#main">Skip to planner</a>
+  <nav class="toc-nav" aria-label="On this page">
+    <span>Jump:</span>
+    <a href="#section-build">Build</a>
+    <a href="#section-rec">Plan</a>
+    <a href="#section-alerts">Alerts</a>
+    <a href="#section-stops">Stops</a>
+    <a href="#section-routes">Routes</a>
+    <a href="#section-itinerary">Itinerary</a>
+  </nav>
+  <div id="livePlanAnnounce" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-top">
+        <div class="hero-poster-wrap">
+          <img class="hero-poster" src="assets/poster.png" width="200" height="267" alt="Illustrated travel poster: Billy's Big Adventure, Dworshak road-trip collage in retro neon colors" decoding="async" loading="eager" onerror="this.onerror=null;this.src='assets/poster.svg';" />
+        </div>
+        <div>
+          <div class="eyebrow">Pee-wee heart · Wolfpack logistics · Dworshak birthday mission</div>
+          <h1 id="hero-title">Billy's Big Adventure</h1>
+          <p class="sub">Part “I know what I’m looking for” bike-quest energy, part “count the crew before the rig moves” grown-up comedy. Under the jokes: real trip data—dates, nights, transport you still have to lock, Surrons, sleep style—and stop cards that react to the window you actually picked.</p>
+          <div class="hero-icons" aria-hidden="true">
+            <svg width="40" height="33" viewBox="0 0 48 40"><title>Dam</title><use href="#sym-dam"/></svg>
+            <svg width="40" height="30" viewBox="0 0 48 36"><title>UFO</title><use href="#sym-ufo"/></svg>
+            <svg width="34" height="42" viewBox="0 0 36 44"><title>Pines</title><use href="#sym-pine"/></svg>
+            <svg width="40" height="32" viewBox="0 0 48 38"><title>Motel</title><use href="#sym-motel"/></svg>
+            <svg width="36" height="36" viewBox="0 0 40 40"><title>Map</title><use href="#sym-map"/></svg>
+            <svg width="40" height="27" viewBox="0 0 48 32"><title>Fish</title><use href="#sym-trout"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="hero-grid">
+        <div class="panel">
+          <h2 class="section-title">Road-trip shape</h2>
+          <p class="muted">Pick the launch date, let the page compute nights, then pressure-test motel vs camp vs van chaos vs “who stole the keys and why is there a second cooler.” Same corridor: CDA → Lewiston lane → Orofino reset → Dworshak mission.</p>
+          <div class="hero-road" style="margin-top:14px;">
+            <svg class="road-svg" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 26 Q100 6 200 18 T400 12" fill="none" stroke="#0a1520" stroke-width="10" stroke-linecap="round"/>
+              <path d="M0 26 Q100 6 200 18 T400 12" fill="none" stroke="#2a3540" stroke-width="6" stroke-linecap="round"/>
+              <path d="M0 26 Q100 6 200 18 T400 12" fill="none" stroke="#ffc72c" stroke-width="2" stroke-dasharray="12 10" stroke-linecap="round"/>
+            </svg>
+            <div class="stops">
+              <div class="stop"><strong>CDA</strong><span>launch</span></div>
+              <div class="stop"><strong>Lewiston lane</strong><span>detour chance</span></div>
+              <div class="stop"><strong>Orofino</strong><span>fuel + food</span></div>
+              <div class="stop"><strong>Dworshak</strong><span>mission zone</span></div>
+            </div>
+          </div>
+          <div class="badge-row" style="margin-top:14px;">
+            <div class="badge" id="tripWindowBadge">Apr 6 → Apr 7 • 1 night</div>
+            <div class="badge" id="dataSourceBadge">Loading trip data…</div>
+            <div class="badge" id="schemaChip" title="Trip dataset version">Data …</div>
+            <div class="badge">Budget-aware</div>
+            <div class="badge">Side quests: rated R for ridiculous</div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2 class="section-title">Mission notes</h2>
+          <ul class="list">
+            <li><strong>Transport first.</strong> Otherwise you are pitching a sequel nobody wants to film—except maybe on a shaky phone at 2 a.m.</li>
+            <li><strong>Wolfpack rule:</strong> headcount before wheels turn. Nobody gets “forgotten at the gas station” energy (rooftops are for movies; Orofino is for snacks).</li>
+            <li>Dates drive nights; transport, Surrons, sleep, and vibe re-rank stops and surface the “read this before you commit” alerts.</li>
+            <li>Load the JSON from disk if this file is opened somewhere that blocks fetch—your trip data still works.</li>
+            <li><strong>Real-trip mode:</strong> hydrate, sleep, and obey signs, maps, and Idaho rules. The Hangover nods are for morale, not a playbook.</li>
+          </ul>
+          <p class="small" style="margin-top:12px;">Your last settings are saved in this browser (local storage)—so the wolfpack can close the tab and not lose the plan.</p>
+          <div class="external-strip" aria-label="Live travel checks">
+            <a href="https://511.idaho.gov/roadconditions" target="_blank" rel="noopener noreferrer">Idaho 511</a>
+            <a href="https://itd.idaho.gov/travel/" target="_blank" rel="noopener noreferrer">ITD travel</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-build" class="grid-2" aria-labelledby="build-heading">
+      <div class="panel">
+        <h2 id="build-heading" class="section-title">Build the trip (director’s cut)</h2>
+        <div class="controls">
+          <div class="control">
+            <div class="label">Trip dates</div>
+            <div class="date-grid">
+              <div>
+                <label for="startDate">Start date</label>
+                <input id="startDate" type="date" value="2026-04-06" />
+              </div>
+              <div>
+                <label for="endDate">End date</label>
+                <input id="endDate" type="date" value="2026-04-07" />
+              </div>
+              <div>
+                <label for="nightsInput">Nights</label>
+                <input id="nightsInput" type="number" min="0" step="1" value="1" />
+              </div>
+            </div>
+          </div>
+
+          <div class="control">
+            <div class="range-line">
+              <label for="people">People in the crew</label>
+              <strong id="peopleValue">2</strong>
+            </div>
+            <input id="people" type="range" min="1" max="6" value="2" />
+          </div>
+
+          <div class="control">
+            <div class="range-line">
+              <label for="surrons">How many Surrons</label>
+              <strong id="surronValue">2</strong>
+            </div>
+            <input id="surrons" type="range" min="0" max="4" value="2" />
+          </div>
+
+          <div class="control">
+            <div class="range-line">
+              <label for="budget">Total budget comfort zone</label>
+              <strong id="budgetValue">$320</strong>
+            </div>
+            <input id="budget" type="range" min="120" max="1200" step="10" value="320" />
+          </div>
+
+          <fieldset class="control">
+            <legend class="label">Transport path</legend>
+            <div class="pill-group">
+              <input type="radio" id="transport-unlocked" name="transport" value="unlocked" checked>
+              <label for="transport-unlocked">No transport locked</label>
+
+              <input type="radio" id="transport-crew" name="transport" value="crew-rig">
+              <label for="transport-crew">Crew has a rig</label>
+
+              <input type="radio" id="transport-borrow" name="transport" value="borrow-rig">
+              <label for="transport-borrow">Borrow truck / trailer</label>
+
+              <input type="radio" id="transport-van" name="transport" value="rent-cargo-van">
+              <label for="transport-van">Rent cargo van</label>
+
+              <input type="radio" id="transport-box" name="transport" value="rent-box-truck">
+              <label for="transport-box">Rent box truck</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control">
+            <legend class="label">Sleep style</legend>
+            <div class="pill-group">
+              <input type="radio" id="sleep-cheap" name="sleep" value="cheap-room" checked>
+              <label for="sleep-cheap">Cheap room</label>
+
+              <input type="radio" id="sleep-camp" name="sleep" value="camp">
+              <label for="sleep-camp">Camp it</label>
+
+              <input type="radio" id="sleep-van" name="sleep" value="van">
+              <label for="sleep-van">Van / truck hack</label>
+
+              <input type="radio" id="sleep-cabin" name="sleep" value="cabin">
+              <label for="sleep-cabin">Cabin if lucky</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control">
+            <legend class="label">Trip vibe</legend>
+            <div class="pill-group">
+              <input type="radio" id="vibe-balanced" name="vibe" value="balanced" checked>
+              <label for="vibe-balanced">Balanced</label>
+
+              <input type="radio" id="vibe-chaos" name="vibe" value="chaos">
+              <label for="vibe-chaos">Mild chaos (wolfpack)</label>
+
+              <input type="radio" id="vibe-legend" name="vibe" value="legend">
+              <label for="vibe-legend">Legend / morning-after myth</label>
+            </div>
+          </fieldset>
+
+          <div class="control">
+            <div class="field-line">
+              <label for="jsonLoader">Trip JSON</label>
+              <button class="ghost" id="reloadDataBtn" type="button">Retry auto-load</button>
+            </div>
+            <input id="jsonLoader" type="file" accept="application/json,.json" />
+            <div class="small" id="dataStatusText">The page will try to fetch billy_big_adventure_tripdata.json first, then fall back to bundled seed data.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="section-rec" aria-labelledby="rec-heading">
+        <h2 id="rec-heading" class="section-title">Live recommendation</h2>
+        <p class="small" style="margin:0 0 10px;">The friend who still remembers what you agreed to yesterday.</p>
+        <div class="toolbar" style="margin-bottom:12px;">
+          <button type="button" class="secondary" id="copyPlanBtn">Copy wolfpack brief</button>
+        </div>
+        <div class="result-main" role="region" aria-labelledby="rec-heading">
+          <div class="recommendation" id="recTag">Best next move</div>
+          <h3 id="headline">Lock transport first</h3>
+          <p class="muted" id="summary">Before rooms, before cabins, before anyone swears they saw the Alamo in a gravel lot—figure out what actually moves the wolfpack (and the bikes) from CDA to Dworshak.</p>
+          <div class="price" id="priceBand">Rough total feel: plan shape not ready yet</div>
+        </div>
+        <div class="grid-3" style="margin-top:14px;">
+          <div class="card">
+            <h3>Transport</h3>
+            <p class="muted" id="transportText">No vehicle assumed. Pick a transport path first—this is the plot, not the B-story.</p>
+          </div>
+          <div class="card">
+            <h3>Sleep</h3>
+            <p class="muted" id="sleepText">Cheap room is a placeholder until transport is solved. Nobody wakes up in the right motel if nobody drove there.</p>
+          </div>
+          <div class="card">
+            <h3>Move</h3>
+            <p class="muted" id="moveText">Keep pass one simple: launch, fuel, mission zone, sleep, encore block, home.</p>
+          </div>
+        </div>
+        <div class="quote" id="quoteBox" style="margin-top:14px;">The best trips are Pee-wee stubborn about the fun and Hangover-serious about the headcount.</div>
+        <div class="data-grid" style="margin-top:14px;">
+          <div class="data-card"><h4>Trip window</h4><p class="muted" id="tripWindowText">Apr 6 to Apr 7 • 1 night</p></div>
+          <div class="data-card"><h4>Travel math</h4><p class="muted" id="travelMathText">Using route data once loaded.</p></div>
+          <div class="data-card"><h4>Selected focus</h4><p class="muted" id="focusText">Cheap room + undecided transport + possible Surrons.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <details class="panel flow-panel" id="section-alerts" open>
+      <summary>Active alerts — the part of the movie where reality shows up</summary>
+      <div class="alerts-grid" id="alertsGrid"></div>
+    </details>
+
+    <details class="panel flow-panel" id="section-stops" open>
+      <summary>Date-aware stop cards</summary>
+      <div class="toolbar">
+        <button id="routeRefreshBtn" type="button">Re-rank stops</button>
+        <button id="practicalBtn" class="secondary" type="button" title="Crew rig, cheap room, balanced vibe — less plot twist">Practical mode</button>
+      </div>
+      <div class="stops-grid" id="stopsGrid"></div>
+    </details>
+
+    <details class="panel flow-panel" id="section-routes" open>
+      <summary>Route cards</summary>
+      <div class="routes" id="routesGrid"></div>
+    </details>
+
+    <section id="section-itinerary" class="grid-2" aria-label="Itinerary and fun">
+      <div class="panel">
+        <h2 class="section-title">Suggested shape — script you’ll improvise anyway</h2>
+        <ul class="list" id="itineraryList"></ul>
+      </div>
+      <div class="panel">
+        <div class="toolbar">
+          <button id="absurdBtn" type="button">Spin wolfpack wild card</button>
+          <button id="allFunBtn" class="secondary" type="button">Browse all side quests</button>
+        </div>
+        <h2 class="section-title">Side quests &amp; morale patches</h2>
+        <div class="button-row" id="funButtons"></div>
+        <div class="absurd-card" id="absurdCard" style="margin-top:14px;">
+          <span class="tag absurd">Side quest</span>
+          <h3 style="margin-top:10px;">Honorary birthday parade permit</h3>
+          <p class="muted">Pee-wee-grade paperwork. Hangover-grade confidence. Completely fake, emotionally licensed—deploy when the wolfpack needs one sacred stupid tradition.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script id="embeddedTripData" type="application/json">{
+  "schema_name": "billy_big_adventure_tripdata",
+  "schema_version": "1.1.0",
+  "generated_at": "2026-03-22",
+  "coverage": {
+    "origin": "Coeur d'Alene, Idaho",
+    "destination": "Dworshak Reservoir / Orofino / Ahsahka corridor, Idaho",
+    "trip_window_focus": "early April 2026",
+    "intent_tags": [
+      "birthday_trip",
+      "budget_road_trip",
+      "overnight",
+      "surron_possible",
+      "moving_van_or_truck_possible",
+      "day_trip_extensions",
+      "route_sidequests",
+      "narrative_voice_pee_wee_hangover",
+      "wolfpack_logistics_humor"
+    ],
+    "notes": [
+      "First-pass but broad trip dataset for the Billy's Big Adventure planner UI.",
+      "Narrative voice intentionally blends Pee-wee-scale quest energy with Hangover-style wolfpack logistics humor (PG-13). Movie nods are for morale, not a playbook—obey laws, signs, MVUM/OHV rules, and Idaho 511.",
+      "Practical records (alerts, closures, reservations) stay factual; fun_option rows are explicitly silly.",
+      "Availability, prices, hours, closures, and road conditions change fast; re-check live sources before departure."
+    ],
+    "narrative_voice": {
+      "tone_keywords": [
+        "bike_quest_stubborn_joy",
+        "headcount_before_wheels_turn",
+        "morning_after_hydration_not_chaos"
+      ],
+      "references_in_spirit": [
+        "Pee-wee's Big Adventure",
+        "The Hangover"
+      ],
+      "disclaimer": "No endorsement of impaired driving, wildlife harassment, or Vegas-grade mistakes—Idaho edition runs on snacks, sleep, and spreadsheets."
+    }
+  },
+  "source_registry": [
+    {
+      "id": "src_route_rome2rio",
+      "title": "Rome2Rio Coeur d'Alene to Orofino",
+      "url": "https://www.rome2rio.com/s/Coeur-d-Alene/Orofino",
+      "kind": "travel-planner",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_dworshak_closures_usace",
+      "title": "Dworshak Dam closes some recreation areas for public safety",
+      "url": "https://www.nww.usace.army.mil/Media/News-Releases/Article/4437262/dworshak-dam-closes-some-recreation-areas-for-public-safety/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_state_park",
+      "title": "Dworshak State Park",
+      "url": "https://parksandrecreation.idaho.gov/state-park/dworshak-state-park/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_visitor_center",
+      "title": "Dworshak Visitor Center",
+      "url": "https://www.nww.usace.army.mil/Locations/District-Locks-and-Dams/Dworshak-Dam-and-Reservoir/Dworshak-Visitor-Center/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_big_eddy_usace",
+      "title": "Big Eddy recreation area",
+      "url": "https://www.nww.usace.army.mil/Locations/District-Locks-and-Dams/Dworshak-Dam-and-Reservoir/Big-Eddy/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_water",
+      "title": "Dworshak water data",
+      "url": "https://water.usace.army.mil/overview/nww/locations/dwr",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_reservoir_map",
+      "title": "Dworshak reservoir recreation map",
+      "url": "https://parksandrecreation.idaho.gov/wp-content/uploads/Dworshak-Reservoir-map-USACE.pdf",
+      "kind": "official_pdf",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_fishing_planner",
+      "title": "Idaho Fishing Planner - Dworshak Reservoir",
+      "url": "https://idfg.idaho.gov/ifwis/fishingplanner/water/1162552466241",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_fisheries_update",
+      "title": "Dworshak Reservoir kokanee and smallmouth bass update",
+      "url": "https://idfg.idaho.gov/article/dworshak-reservoir-kokanee-and-smallmouth-bass-update",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_hatchery",
+      "title": "Dworshak National Fish Hatchery",
+      "url": "https://www.fws.gov/fish-hatchery/dworshak",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_ohv",
+      "title": "Idaho ATVs, UTVs & Motorbikes",
+      "url": "https://parksandrecreation.idaho.gov/park-activity/atvs-utvs-motorbikes/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_ebikes",
+      "title": "Idaho Parks - Biking / e-bike rules",
+      "url": "https://parksandrecreation.idaho.gov/park-activity/biking/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_mvum",
+      "title": "Nez Perce-Clearwater NF maps and guides",
+      "url": "https://www.fs.usda.gov/r01/nezperce-clearwater/maps-guides",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_511",
+      "title": "Idaho 511 road conditions",
+      "url": "https://511.idaho.gov/roadconditions",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_itd_travel",
+      "title": "ITD travel information",
+      "url": "https://itd.idaho.gov/travel/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_orofino_tourism",
+      "title": "City of Orofino tourism page",
+      "url": "https://cityoforofino.org/tourism/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_chamber",
+      "title": "Clearwater County Adventures / Chamber",
+      "url": "https://clearwatercountyadventures.com/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_clearwater_events_apr6",
+      "title": "Clearwater County Adventures events for Apr 6, 2026",
+      "url": "https://clearwatercountyadventures.com/events/2026-04-06/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_nezperce_vc",
+      "title": "Nez Perce NHP Visitor Center",
+      "url": "https://www.nps.gov/nepe/planyourvisit/nez-perce-nhp-visitor-center.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_confluence_overlook",
+      "title": "Confluence Overlook",
+      "url": "https://www.nps.gov/nepe/planyourvisit/visit-confluence-overlook.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_winchester_lake",
+      "title": "Winchester Lake State Park",
+      "url": "https://parksandrecreation.idaho.gov/state-park/winchester-lake-state-park/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_hells_gate",
+      "title": "Hells Gate State Park",
+      "url": "https://parksandrecreation.idaho.gov/state-park/hells-gate-state-park/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_weippe_discovery",
+      "title": "Weippe Discovery Center",
+      "url": "https://visitnorthcentralidaho.org/visitorcenters/weippe-discovery-center/",
+      "kind": "regional_official",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_weippe_prairie",
+      "title": "Weippe Prairie",
+      "url": "https://www.nps.gov/nepe/learn/historyculture/weippe-prairie.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_lolo_trail",
+      "title": "Visit Lolo Trail and Pass",
+      "url": "https://www.nps.gov/nepe/planyourvisit/visit-lolo-trail-and-pass.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_helgeson",
+      "title": "Helgeson Place Hotel & Suites",
+      "url": "https://www.helgesonhotel.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_white_pine",
+      "title": "White Pine Motel",
+      "url": "https://whitepinemotel.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_konkolville",
+      "title": "Konkolville Motel",
+      "url": "https://www.konkolvillemotel.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_best_western",
+      "title": "Best Western Lodge at River's Edge",
+      "url": "https://www.bestwestern.com/en_US/book/orofino/hotel-rooms/best-western-lodge-at-river-s-edge/propertyCode.13057.html",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_hayes_foods",
+      "title": "Hayes Foods and Hardware",
+      "url": "https://www.acehardware.com/store-details/05314",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_glenwood_pharmacy",
+      "title": "Arnzen's Glenwood Pharmacy",
+      "url": "https://www.glenwoodpharmacy.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_clearwater_canyon_pharmacy",
+      "title": "Clearwater Canyon Pharmacy",
+      "url": "https://www.clearwatercanyonpharmacy.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_atkinson_fuel",
+      "title": "Atkinson Distributing fuel services",
+      "url": "https://www.atkinsondistributing.com/services-view/gas-services/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_deanos",
+      "title": "Deano's Convenience Store & Gas Pumps",
+      "url": "https://www.atkinsondistributing.com/services-view/deanos/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_exxon_orofino",
+      "title": "Exxon - Orofino",
+      "url": "https://www.exxon.com/en/find-station/exxon-orofino-id-deanosorofino-200311216",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_orofino_airport",
+      "title": "Orofino Municipal Airport",
+      "url": "https://cityoforofino.org/orofino-municipal-airport/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_museum",
+      "title": "Clearwater Historical Museum",
+      "url": "https://www.clearwatermuseum.org/index.html",
+      "kind": "business_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_rex_theater",
+      "title": "Rex Theater",
+      "url": "https://orofinotheater.com/",
+      "kind": "business_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_pizza_factory",
+      "title": "Pizza Factory Orofino",
+      "url": "https://www.pizzafactory.com/orofino/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_edge",
+      "title": "Dining on the Edge",
+      "url": "https://www.diningontheedge.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_ponderosa",
+      "title": "Ponderosa Restaurant and Brass Rail Lounge",
+      "url": "https://www.ponderosacafe.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_aaa_idaho",
+      "title": "AAA Idaho average gas prices",
+      "url": "https://gasprices.aaa.com/?state=ID",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_aaa_idaho_page",
+      "title": "AAA Idaho metro averages page",
+      "url": "https://gasprices.aaa.com/page/18/?state=ID",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_van",
+      "title": "U-Haul cargo van rental",
+      "url": "https://www.uhaul.com/Truck-Rentals/Cargo-Van/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_sizes",
+      "title": "U-Haul truck sizes",
+      "url": "https://www.uhaul.com/Truck-Rentals/Moving-Truck-Sizes/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_pickup",
+      "title": "U-Haul pickup truck rental",
+      "url": "https://www.uhaul.com/Truck-Rentals/Pickup-Truck/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_safety",
+      "title": "U-Haul truck user instructions",
+      "url": "https://www.uhaul.com/Tips/Loading/Truck-User-Instructions-123/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_passengers",
+      "title": "U-Haul truck rentals FAQ",
+      "url": "https://www.uhaul.com/FrequentlyAskedQuestions/Truck-Rentals/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_hd_cda_rentals",
+      "title": "Home Depot Coeur d'Alene rentals",
+      "url": "https://www.homedepot.com/l/Coeur-D-Alene/ID/Coeur-D-Alene/83815/1803/rentals",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_hd_van",
+      "title": "Home Depot cargo van rental product page",
+      "url": "https://www.homedepot.com/p/rental/Cargo-Van-Rental-3/316821410",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_penske_van",
+      "title": "Penske cargo van",
+      "url": "https://www.pensketruckrental.com/trucks-and-vans/cargo-van/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_clearwater_sheriff",
+      "title": "Clearwater County Sheriff",
+      "url": "https://www.clearwatercounty.org/departments/sheriff/index.php",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_em",
+      "title": "Clearwater County Emergency Management",
+      "url": "https://www.clearwatercounty.org/departments/emergency_management/index.php",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_contact",
+      "title": "Clearwater County contact list",
+      "url": "https://www.clearwatercounty.org/contact_us/index.php",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_health",
+      "title": "St. Mary's Health & Clearwater Valley Health locations",
+      "url": "https://smh-cvh.org/ourlocations/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_stjoes",
+      "title": "St. Joseph Regional Medical Center",
+      "url": "https://www.sjrmc.org/contact",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    }
+  ],
+  "app_contract": {
+    "entity_common_fields": [
+      "id",
+      "type",
+      "name",
+      "zone",
+      "corridor_role",
+      "status",
+      "interest_tags",
+      "summary",
+      "practical_score",
+      "budget_score",
+      "surron_relevance",
+      "overnight_relevance",
+      "location",
+      "contact",
+      "hours",
+      "source_ids",
+      "confidence",
+      "notes"
+    ],
+    "entity_types": [
+      "route_profile",
+      "alert",
+      "poi",
+      "lodging",
+      "camping",
+      "supply",
+      "food",
+      "service",
+      "regulation",
+      "budget_model",
+      "search_template",
+      "fun_option"
+    ],
+    "status_enum": [
+      "open",
+      "mixed",
+      "closed",
+      "seasonal",
+      "check_live",
+      "inferred"
+    ],
+    "confidence_enum": [
+      "high",
+      "medium",
+      "low"
+    ]
+  },
+  "route_profiles": [
+    {
+      "id": "route_primary_fastest",
+      "type": "route_profile",
+      "name": "Fastest practical corridor",
+      "zone": "corridor",
+      "corridor_role": "primary",
+      "status": "check_live",
+      "summary": "Use Coeur d'Alene to Lewiston corridor on US-95, then continue toward Orofino and the Dworshak/Ahsahka area. Coeur d'Alene to Orofino is about 135.2 road miles and about 3h 1m before adding the last stretch to Big Eddy / Ahsahka.",
+      "distance_miles": 135.2,
+      "drive_time_minutes": 181,
+      "corridor_nodes": [
+        "Coeur d'Alene",
+        "Lewiston / Lewiston Grade area",
+        "Lapwai / Spalding",
+        "Orofino",
+        "Ahsahka / Dworshak"
+      ],
+      "source_ids": [
+        "src_route_rome2rio",
+        "src_nezperce_vc",
+        "src_big_eddy_usace"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "Exact turn-by-turn path is not stored here because apps can map that live.",
+        "Big Eddy is described by USACE as 5 miles west of Orofino on Highway 7, then 3 miles to Big Eddy.",
+        "Always re-check Idaho 511 before departure.",
+        "Wolfpack logistics: one navigator, one 511 checker, nobody ‘remembers’ the whole corridor from group chat."
+      ]
+    },
+    {
+      "id": "route_historic_detour_chain",
+      "type": "route_profile",
+      "name": "History-heavy side quest chain",
+      "zone": "corridor",
+      "corridor_role": "optional_detour",
+      "status": "open",
+      "summary": "If you want the route itself to become part of the trip, chain together Confluence Overlook, Nez Perce NHP Visitor Center, and Hells Gate State Park before continuing east toward Orofino.",
+      "source_ids": [
+        "src_confluence_overlook",
+        "src_nezperce_vc",
+        "src_hells_gate"
+      ],
+      "confidence": "high",
+      "notes": [
+        "This is not the shortest way to get there, but it adds actual substance instead of random filler stops.",
+        "Pee-wee would call this ‘the scenic director’s cut’; still pack water and patience."
+      ]
+    },
+    {
+      "id": "route_longer_detour_weippe",
+      "type": "route_profile",
+      "name": "Extend eastward after Orofino",
+      "zone": "destination_region",
+      "corridor_role": "post-arrival_extension",
+      "status": "open",
+      "summary": "If Day 2 needs more to do, keep going east from Orofino toward Weippe and the historic Lolo Trail lane.",
+      "source_ids": [
+        "src_weippe_discovery",
+        "src_weippe_prairie",
+        "src_lolo_trail"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Day-2 extension if the wolfpack still has daylight and nobody lost the keys in Orofino."
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "id": "alert_dworshak_closures_mar2026",
+      "type": "alert",
+      "name": "Recent Dworshak recreation closures",
+      "zone": "destination_region",
+      "corridor_role": "destination_alert",
+      "status": "mixed",
+      "severity": "high",
+      "summary": "USACE said Merry's Bay Day Use Area, Dent Acres Recreation Area, and Bruce's Eddy Recreation Area are temporarily closed for public safety due to flooding and mudslides. Dam View Campground, Canyon Creek Recreation Area, and Big Eddy Recreation Area remain open. Dent Campground and Dent Group Camping Area were scheduled to open April 12.",
+      "source_ids": [
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high",
+      "action": "Do not build the trip around Dent or Merry's Bay for an April 6 outing unless live status changes."
+    },
+    {
+      "id": "alert_orofino_flooding_context",
+      "type": "alert",
+      "name": "Clearwater County flooding / mudslide context",
+      "zone": "destination_region",
+      "corridor_role": "destination_alert",
+      "status": "check_live",
+      "severity": "high",
+      "summary": "The Orofino / Clearwater County area has been dealing with flooding and mudslide impacts in March 2026. Use Idaho 511 and local emergency channels before leaving.",
+      "source_ids": [
+        "src_idaho_511",
+        "src_itd_travel"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "This record intentionally avoids hard-coding transient lane details because those can change faster than a static file."
+      ]
+    },
+    {
+      "id": "alert_apr6_events_snapshot",
+      "type": "alert",
+      "name": "Official events snapshot for Apr 6, 2026",
+      "zone": "destination_region",
+      "corridor_role": "events",
+      "status": "open",
+      "severity": "low",
+      "summary": "Clearwater County Chamber calendar shows no events scheduled specifically for April 6, 2026.",
+      "source_ids": [
+        "src_clearwater_events_apr6"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "entities": [
+    {
+      "id": "poi_confluence_overlook",
+      "type": "poi",
+      "name": "Confluence Overlook",
+      "zone": "lewiston_grade",
+      "corridor_role": "en_route",
+      "status": "open",
+      "interest_tags": [
+        "scenic",
+        "quick_stop",
+        "photo",
+        "history",
+        "highway_view"
+      ],
+      "summary": "Highway pullout overlooking the confluence of the Snake and Clearwater Rivers, with views across the Nez Perce homeland and a historical marker.",
+      "practical_score": 8,
+      "budget_score": 10,
+      "surron_relevance": 2,
+      "overnight_relevance": 1,
+      "location": {
+        "description": "about 8 miles north of Lewiston on the Lewiston Grade of US-95",
+        "lat": 46.461539,
+        "lon": -116.9918
+      },
+      "source_ids": [
+        "src_confluence_overlook"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_nez_perce_vc",
+      "type": "poi",
+      "name": "Nez Perce National Historical Park Visitor Center",
+      "zone": "lapwai_spalding",
+      "corridor_role": "en_route",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "culture",
+        "museum",
+        "stretch_legs",
+        "serious_stop"
+      ],
+      "summary": "Substantial visitor center, museum, and historic district stop that adds real depth to the route instead of disposable roadside filler.",
+      "practical_score": 8,
+      "budget_score": 10,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "location": {
+        "address": "39063 US Hwy 95, Lapwai, ID 83540-9715",
+        "lat": 46.447364,
+        "lon": -116.823272
+      },
+      "hours": {
+        "note": "Check NPS for current hours and programming."
+      },
+      "source_ids": [
+        "src_nezperce_vc"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_hells_gate",
+      "type": "poi",
+      "name": "Hells Gate State Park + Lewis & Clark Discovery Center",
+      "zone": "lewiston",
+      "corridor_role": "en_route_or_backup_overnight",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "river",
+        "camping",
+        "bike",
+        "boat",
+        "backup_plan"
+      ],
+      "summary": "Big, serviceable stop near Lewiston with discovery center, marina, camping, cabins, bike access, and a strong 'gateway adventure' feel if the upper route gets messy.",
+      "practical_score": 7,
+      "budget_score": 7,
+      "surron_relevance": 2,
+      "overnight_relevance": 8,
+      "location": {
+        "address": "5100 Hells Gate Rd, Lewiston, ID 83501",
+        "lat": 46.36917,
+        "lon": -117.05444
+      },
+      "hours": {
+        "visitor_center": "Open daily 9 AM–5 PM; closed major holidays",
+        "day_use": "7 AM–10 PM"
+      },
+      "contact": {
+        "phone": "(208) 799-5015"
+      },
+      "source_ids": [
+        "src_hells_gate"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Useful as a fallback overnight or rain-plan stop."
+      ]
+    },
+    {
+      "id": "poi_winchester_lake",
+      "type": "poi",
+      "name": "Winchester Lake State Park",
+      "zone": "south_of_lewiston",
+      "corridor_role": "alternate_detour",
+      "status": "open",
+      "interest_tags": [
+        "camping",
+        "yurts",
+        "fishing",
+        "canoe",
+        "mountain_bike",
+        "quiet"
+      ],
+      "summary": "A quieter detour south of Lewiston if the trip grows into a multi-stop Idaho wander instead of a straight Dworshak punch-in.",
+      "practical_score": 5,
+      "budget_score": 8,
+      "surron_relevance": 2,
+      "overnight_relevance": 7,
+      "location": {
+        "address": "1786 Forest Rd, Winchester, ID 83555"
+      },
+      "contact": {
+        "phone": "(208) 924-7563"
+      },
+      "hours": {
+        "day_use": "7 AM–10 PM"
+      },
+      "source_ids": [
+        "src_winchester_lake"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_orofino_downtown",
+      "type": "poi",
+      "name": "Orofino downtown / business district",
+      "zone": "orofino",
+      "corridor_role": "gateway_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "basecamp",
+        "food",
+        "supplies",
+        "walkable",
+        "hotel_cluster"
+      ],
+      "summary": "Main practical basecamp zone for food, rooms, pharmacy, groceries, theater, and a quick reset before pushing out toward the reservoir.",
+      "practical_score": 10,
+      "budget_score": 8,
+      "surron_relevance": 5,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "Orofino, ID 83544"
+      },
+      "source_ids": [
+        "src_orofino_tourism",
+        "src_clearwater_chamber"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_clearwater_museum",
+      "type": "poi",
+      "name": "Clearwater Historical Museum",
+      "zone": "orofino",
+      "corridor_role": "town_activity",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "indoor",
+        "cheap",
+        "rain_plan"
+      ],
+      "summary": "Local history museum focused on Clearwater River Country, including Nez Perce history, Lewis and Clark, mining, homesteading, farming, and logging.",
+      "practical_score": 6,
+      "budget_score": 9,
+      "surron_relevance": 0,
+      "overnight_relevance": 2,
+      "location": {
+        "address": "433 Bartlett St, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-5033"
+      },
+      "hours": {
+        "year_round": "Tue–Fri 10 AM–3 PM",
+        "seasonal": "Open Saturdays after Memorial Day until Labor Day 10 AM–2 PM"
+      },
+      "source_ids": [
+        "src_clearwater_museum"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_rex_theater",
+      "type": "poi",
+      "name": "Rex Theater",
+      "zone": "orofino",
+      "corridor_role": "town_activity",
+      "status": "open",
+      "interest_tags": [
+        "movie",
+        "date_night",
+        "indoor",
+        "nostalgia"
+      ],
+      "summary": "Historic Orofino movie house and cultural landmark if the birthday trip wants a goofy old-school evening layer.",
+      "practical_score": 5,
+      "budget_score": 8,
+      "surron_relevance": 0,
+      "overnight_relevance": 4,
+      "location": {
+        "address": "Orofino, ID"
+      },
+      "source_ids": [
+        "src_rex_theater"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_dworshak_hatchery",
+      "type": "poi",
+      "name": "Dworshak National Fish Hatchery",
+      "zone": "ahsahka",
+      "corridor_role": "near_destination",
+      "status": "open",
+      "interest_tags": [
+        "fish",
+        "history",
+        "science",
+        "quick_stop",
+        "freeish"
+      ],
+      "summary": "Major hatchery at the confluence of the North Fork and main Clearwater River, 3 miles west of Orofino.",
+      "practical_score": 7,
+      "budget_score": 10,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "location": {
+        "description": "3 miles west of Orofino on the Clearwater / North Fork confluence"
+      },
+      "source_ids": [
+        "src_dworshak_hatchery"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_dworshak_visitor_center",
+      "type": "poi",
+      "name": "Dworshak Visitor Center",
+      "zone": "dworshak_dam",
+      "corridor_role": "destination_activity",
+      "status": "open",
+      "interest_tags": [
+        "dam",
+        "history",
+        "maps",
+        "videos",
+        "gift_shop",
+        "engineering"
+      ],
+      "summary": "Free visitor center with exhibits, maps, videos, and a small gift shop. Good weekday add-on if you want more than just shoreline time.",
+      "practical_score": 7,
+      "budget_score": 9,
+      "surron_relevance": 0,
+      "overnight_relevance": 1,
+      "location": {
+        "address": "Dworshak Dam / Ahsahka, ID"
+      },
+      "contact": {
+        "phone": "208-476-1255",
+        "info_line": "800-321-3198"
+      },
+      "hours": {
+        "spring_fall_winter": "Open Monday through Friday",
+        "summer": "Open 7 days a week from Memorial Day weekend through Labor Day weekend",
+        "day_use": "8:30 AM–4:30 PM",
+        "gates_lock": "4:30 PM"
+      },
+      "rules": [
+        "Photo ID required for tours",
+        "Tours are limited in size",
+        "Pets not allowed in visitor center",
+        "No camping in day-use area"
+      ],
+      "source_ids": [
+        "src_dworshak_visitor_center"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_dworshak_state_park",
+      "type": "camping",
+      "name": "Dworshak State Park",
+      "zone": "freeman_creek_lenore",
+      "corridor_role": "destination_anchor",
+      "status": "mixed",
+      "interest_tags": [
+        "camping",
+        "cabins",
+        "marina",
+        "boat",
+        "disc_golf",
+        "shore_access",
+        "basecamp"
+      ],
+      "summary": "Primary park anchor on the western shore of Dworshak Reservoir with campsites, cabins, group camp options, boat access, rentals, fishing support, and weak cell service.",
+      "practical_score": 9,
+      "budget_score": 7,
+      "surron_relevance": 3,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "9934 Freeman Creek, Lenore, ID 83541",
+        "lat": 46.57583,
+        "lon": -116.28
+      },
+      "contact": {
+        "phone": "(208) 476-5994",
+        "reservations": "1-888-922-6743"
+      },
+      "hours": {
+        "day_use": "7 AM–10 PM"
+      },
+      "capacity": {
+        "campsites_total": 103,
+        "campsites_electric_water": 46,
+        "campsites_electric": 11,
+        "campsites_central_water": 46,
+        "ada_campsites": 2,
+        "camper_cabins": 4,
+        "group_campsites": 2,
+        "group_lodging_beds": 100
+      },
+      "amenities": [
+        "boat ramp",
+        "handling dock",
+        "fish-cleaning station",
+        "marina fuel",
+        "overnight boat moorage",
+        "disc golf",
+        "canoe rental",
+        "kayak rental",
+        "SUP rental",
+        "life jacket loaners",
+        "playgrounds",
+        "indoor showers"
+      ],
+      "constraints": [
+        "Cell service is unreliable within the park",
+        "Wi-Fi is only noted at the Big Eddy Marina conference center"
+      ],
+      "source_ids": [
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_freeman_creek_cabins",
+      "type": "lodging",
+      "name": "Freeman Creek Cabins",
+      "zone": "dworshak_state_park",
+      "corridor_role": "destination_lodging",
+      "status": "seasonal",
+      "interest_tags": [
+        "cabin",
+        "simple",
+        "state_park",
+        "budget_group"
+      ],
+      "summary": "Four park cabins sleeping five each with electricity, heat, and air conditioning.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 2,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "Dworshak State Park / Freeman Creek area"
+      },
+      "capacity": {
+        "cabin_count": 4,
+        "sleep_per_cabin": 5
+      },
+      "source_ids": [
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_three_meadows_group",
+      "type": "lodging",
+      "name": "Three Meadows Group Camp",
+      "zone": "dworshak_state_park",
+      "corridor_role": "destination_group_lodging",
+      "status": "open",
+      "interest_tags": [
+        "group",
+        "large_crew",
+        "chaos_camp",
+        "event_basecamp"
+      ],
+      "summary": "Large group lodging and camp zone with cabins, lodge, kitchen, fire pit, courts, amphitheater, and private boat dock.",
+      "practical_score": 5,
+      "budget_score": 6,
+      "surron_relevance": 3,
+      "overnight_relevance": 10,
+      "capacity": {
+        "sleep_up_to_cabins": 100,
+        "sleep_with_tents_or_rvs": 120,
+        "day_capacity": 200
+      },
+      "source_ids": [
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Probably overkill for a tiny birthday crew, but useful if this idea snowballs."
+      ]
+    },
+    {
+      "id": "poi_big_eddy",
+      "type": "poi",
+      "name": "Big Eddy Recreation Area + Marina",
+      "zone": "dworshak_lower_reservoir",
+      "corridor_role": "destination_primary_target",
+      "status": "open",
+      "interest_tags": [
+        "open_access",
+        "marina",
+        "boat_launch",
+        "day_use",
+        "good_first_trip"
+      ],
+      "summary": "Open now, close to Orofino, year-round general access, and one of the safest bets for a first Dworshak run during current closure conditions.",
+      "practical_score": 10,
+      "budget_score": 8,
+      "surron_relevance": 2,
+      "overnight_relevance": 5,
+      "location": {
+        "description": "5 miles west of Orofino on Highway 7, then follow signs for 3 miles to Big Eddy"
+      },
+      "contact": {
+        "usace": "208-476-1255",
+        "marina": "208-476-5994"
+      },
+      "marina": {
+        "full_season_slips": 99,
+        "fuel": true,
+        "marina_store": true,
+        "conference_area": true
+      },
+      "source_ids": [
+        "src_big_eddy_usace",
+        "src_dworshak_state_park",
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_canyon_creek",
+      "type": "poi",
+      "name": "Canyon Creek Recreation Area",
+      "zone": "dworshak_reservoir",
+      "corridor_role": "destination_secondary_target",
+      "status": "open",
+      "interest_tags": [
+        "open_access",
+        "backup_plan",
+        "water_access"
+      ],
+      "summary": "USACE says Canyon Creek remains open. Good backup if Big Eddy is busy or you want a second zone to explore.",
+      "practical_score": 8,
+      "budget_score": 8,
+      "surron_relevance": 2,
+      "overnight_relevance": 3,
+      "source_ids": [
+        "src_dworshak_closures_usace",
+        "src_dworshak_reservoir_map"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_dent_acres",
+      "type": "poi",
+      "name": "Dent Acres / Dent Campground",
+      "zone": "upper_dworshak",
+      "corridor_role": "destination_not_for_apr6",
+      "status": "closed",
+      "interest_tags": [
+        "usually_popular",
+        "boat_access",
+        "not_now"
+      ],
+      "summary": "Temporarily closed in the March 2026 public-safety announcement. Dent Campground and group camping were scheduled to open April 12, which is after the birthday date.",
+      "practical_score": 1,
+      "budget_score": 0,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_merrys_bay",
+      "type": "poi",
+      "name": "Merry's Bay Day Use Area",
+      "zone": "dworshak_reservoir",
+      "corridor_role": "destination_not_for_apr6",
+      "status": "closed",
+      "interest_tags": [
+        "closed"
+      ],
+      "summary": "Temporarily closed in the March 2026 USACE safety update due to flooding / mudslides.",
+      "practical_score": 0,
+      "budget_score": 0,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_weippe_discovery",
+      "type": "poi",
+      "name": "Weippe Discovery Center",
+      "zone": "weippe",
+      "corridor_role": "east_side_day2_extension",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "museum",
+        "lolo_trail",
+        "day2_extension"
+      ],
+      "summary": "Small interpretive stop for the Lewis and Clark / Nez Perce meeting story if you push east beyond Orofino.",
+      "practical_score": 4,
+      "budget_score": 9,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "location": {
+        "address": "204 Wood St., Weippe, ID"
+      },
+      "contact": {
+        "phone": "(208) 435-4406"
+      },
+      "source_ids": [
+        "src_weippe_discovery"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_weippe_prairie",
+      "type": "poi",
+      "name": "Weippe Prairie",
+      "zone": "weippe",
+      "corridor_role": "east_side_day2_extension",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "views",
+        "landscape",
+        "camas",
+        "nez_perce"
+      ],
+      "summary": "Publicly accessible historic landscape where Lewis & Clark first met the Nez Perce, with sweeping prairie views.",
+      "practical_score": 4,
+      "budget_score": 10,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "source_ids": [
+        "src_weippe_prairie"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "lodging_helgeson",
+      "type": "lodging",
+      "name": "Helgeson Place Hotel & Suites",
+      "zone": "orofino",
+      "corridor_role": "budget_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "hotel",
+        "kitchen",
+        "downtown",
+        "pet_friendlyish"
+      ],
+      "summary": "Historic 20-suite hotel in Orofino with full kitchens and downtown access.",
+      "practical_score": 9,
+      "budget_score": 8,
+      "surron_relevance": 6,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "125 Johnson Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "1-208-476-5729",
+        "email": "helgesonhotel@orofino-id.com"
+      },
+      "features": [
+        "full kitchen in each suite",
+        "free Wi-Fi",
+        "some pet-friendly rooms",
+        "non-smoking"
+      ],
+      "source_ids": [
+        "src_helgeson"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "lodging_white_pine",
+      "type": "lodging",
+      "name": "White Pine Motel",
+      "zone": "orofino",
+      "corridor_role": "budget_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "motel",
+        "walkable",
+        "pet_friendly",
+        "simple"
+      ],
+      "summary": "18-room downtown-adjacent motel with walking access to local amenities, Wi-Fi, and pet-friendly positioning.",
+      "practical_score": 9,
+      "budget_score": 9,
+      "surron_relevance": 6,
+      "overnight_relevance": 10,
+      "features": [
+        "18 rooms",
+        "Wi-Fi",
+        "pet-friendly",
+        "non-smoking"
+      ],
+      "source_ids": [
+        "src_white_pine"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "lodging_konkolville",
+      "type": "lodging",
+      "name": "Konkolville Motel",
+      "zone": "orofino",
+      "corridor_role": "budget_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "motel",
+        "quiet",
+        "creekside",
+        "pet_friendly"
+      ],
+      "summary": "Motel about three miles from downtown Orofino, set in a canyon near Orofino Creek.",
+      "practical_score": 8,
+      "budget_score": 8,
+      "surron_relevance": 7,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "2600 Michigan Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-5584",
+        "toll_free": "(800) 616-1964"
+      },
+      "source_ids": [
+        "src_konkolville"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "lodging_best_western",
+      "type": "lodging",
+      "name": "Best Western Lodge at River's Edge",
+      "zone": "orofino",
+      "corridor_role": "comfort_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "hotel",
+        "river_view",
+        "pool",
+        "breakfast",
+        "higher_budget"
+      ],
+      "summary": "Comfort-upgrade option on Main Street with pool / hot tub / breakfast type amenities and direct booking support.",
+      "practical_score": 8,
+      "budget_score": 4,
+      "surron_relevance": 5,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "615 Main Street, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-9999"
+      },
+      "features": [
+        "check-in 4 PM",
+        "check-out 11 AM",
+        "indoor pool",
+        "river views",
+        "gift shop",
+        "multiple room types"
+      ],
+      "source_ids": [
+        "src_best_western"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "supply_hayes",
+      "type": "supply",
+      "name": "Hayes Foods and Hardware",
+      "zone": "orofino",
+      "corridor_role": "supply_anchor",
+      "status": "open",
+      "interest_tags": [
+        "grocery",
+        "hardware",
+        "last_minute_trip_fixes"
+      ],
+      "summary": "Useful one-stop practical stop for grocery and hardware-type needs before heading farther into the reservoir corridor.",
+      "practical_score": 10,
+      "budget_score": 8,
+      "surron_relevance": 8,
+      "overnight_relevance": 5,
+      "location": {
+        "address": "10840 Highway 12, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-4317"
+      },
+      "hours": {
+        "mon_fri": "8 AM–9 PM",
+        "sat": "8 AM–9 PM",
+        "sun": "9 AM–7 PM"
+      },
+      "source_ids": [
+        "src_hayes_foods"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "supply_atkinson",
+      "type": "supply",
+      "name": "Atkinson fuel network (Orofino)",
+      "zone": "orofino",
+      "corridor_role": "fuel_anchor",
+      "status": "open",
+      "interest_tags": [
+        "fuel",
+        "non_ethanol",
+        "diesel",
+        "route_planning"
+      ],
+      "summary": "Orofino fuel network including main office cardlock / credit card pumps and Deano's convenience store pumps.",
+      "practical_score": 9,
+      "budget_score": 7,
+      "surron_relevance": 5,
+      "overnight_relevance": 3,
+      "locations": [
+        {
+          "name": "Atkinson's Main Office",
+          "address": "701 Michigan Ave, Orofino, ID"
+        },
+        {
+          "name": "Deano's Convenience Store",
+          "address": "13834 Highway 12, Orofino, ID"
+        }
+      ],
+      "features": [
+        "Chevron products",
+        "non-ethanol gasoline",
+        "diesel"
+      ],
+      "source_ids": [
+        "src_atkinson_fuel",
+        "src_deanos"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "supply_exxon_deanos",
+      "type": "supply",
+      "name": "Deano's / Exxon Orofino",
+      "zone": "orofino",
+      "corridor_role": "fuel_anchor",
+      "status": "open",
+      "interest_tags": [
+        "fuel",
+        "diesel",
+        "snacks",
+        "late_stop"
+      ],
+      "summary": "Fuel / convenience option on Highway 12 with long daily hours and diesel.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 5,
+      "overnight_relevance": 2,
+      "location": {
+        "address": "13834 Hwy 12, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-3880"
+      },
+      "hours": {
+        "daily": "6 AM–10 PM",
+        "pumps": "24/7 per Atkinson/Deano's source"
+      },
+      "source_ids": [
+        "src_exxon_orofino",
+        "src_deanos"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "service_glenwood_pharmacy",
+      "type": "service",
+      "name": "Arnzen's Glenwood Pharmacy",
+      "zone": "orofino",
+      "corridor_role": "medical_support",
+      "status": "open",
+      "interest_tags": [
+        "pharmacy",
+        "trip_support",
+        "meds"
+      ],
+      "summary": "Local full-service pharmacy in Orofino.",
+      "practical_score": 8,
+      "budget_score": 5,
+      "surron_relevance": 1,
+      "overnight_relevance": 3,
+      "location": {
+        "address": "1105 Michigan Avenue, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-3600"
+      },
+      "hours": {
+        "mon_fri": "10 AM–6 PM",
+        "sat_sun": "closed"
+      },
+      "source_ids": [
+        "src_glenwood_pharmacy"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_canyon_pharmacy",
+      "type": "service",
+      "name": "Clearwater Canyon Pharmacy",
+      "zone": "orofino",
+      "corridor_role": "medical_support",
+      "status": "open",
+      "interest_tags": [
+        "pharmacy",
+        "trip_support",
+        "meds"
+      ],
+      "summary": "Additional pharmacy option in Orofino.",
+      "practical_score": 7,
+      "budget_score": 5,
+      "surron_relevance": 1,
+      "overnight_relevance": 3,
+      "location": {
+        "address": "13020 US Highway 12, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-0110"
+      },
+      "hours": {
+        "mon_fri": "9 AM–6 PM"
+      },
+      "source_ids": [
+        "src_clearwater_canyon_pharmacy"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_orofino_airport",
+      "type": "service",
+      "name": "Orofino Municipal Airport fuel",
+      "zone": "orofino",
+      "corridor_role": "niche_support",
+      "status": "open",
+      "interest_tags": [
+        "airport",
+        "24_7_fuel",
+        "aviation"
+      ],
+      "summary": "Probably not core to this trip, but the municipal airport notes 24/7 fuel purchase via credit card.",
+      "practical_score": 2,
+      "budget_score": 3,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_orofino_airport"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "food_edge",
+      "type": "food",
+      "name": "Dining on the Edge",
+      "zone": "orofino",
+      "corridor_role": "birthday_meal",
+      "status": "open",
+      "interest_tags": [
+        "restaurant",
+        "river_view",
+        "birthday_dinner",
+        "date_night"
+      ],
+      "summary": "More special-occasion dinner play with river views.",
+      "practical_score": 6,
+      "budget_score": 3,
+      "surron_relevance": 0,
+      "overnight_relevance": 2,
+      "hours": {
+        "thu": "4 PM–10 PM",
+        "fri": "4 PM–10 PM",
+        "sat": "4 PM–10 PM",
+        "sun": "4 PM–8 PM",
+        "mon_wed": "closed"
+      },
+      "source_ids": [
+        "src_edge"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "food_pizza_factory",
+      "type": "food",
+      "name": "Pizza Factory Orofino",
+      "zone": "orofino",
+      "corridor_role": "cheapish_group_food",
+      "status": "open",
+      "interest_tags": [
+        "pizza",
+        "group",
+        "easy",
+        "post_ride"
+      ],
+      "summary": "Simple group-friendly pizza option in town.",
+      "practical_score": 8,
+      "budget_score": 8,
+      "surron_relevance": 1,
+      "overnight_relevance": 2,
+      "location": {
+        "address": "307 Michigan Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-5519"
+      },
+      "source_ids": [
+        "src_pizza_factory"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "food_ponderosa",
+      "type": "food",
+      "name": "Ponderosa Restaurant and Brass Rail Lounge",
+      "zone": "orofino",
+      "corridor_role": "all_day_food",
+      "status": "open",
+      "interest_tags": [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "family_style"
+      ],
+      "summary": "Family-style restaurant open long hours, useful when timing matters more than aesthetics.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 0,
+      "overnight_relevance": 2,
+      "hours": {
+        "daily": "5 AM–10 PM"
+      },
+      "source_ids": [
+        "src_ponderosa"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "reg_surron_access",
+      "type": "regulation",
+      "name": "Surron / motorized trail caution",
+      "zone": "idaho_general",
+      "corridor_role": "legal",
+      "status": "check_live",
+      "interest_tags": [
+        "ohv",
+        "ebike",
+        "trail_access",
+        "important"
+      ],
+      "summary": "Idaho Parks allows Class 1 and 2 e-bikes in state parks and on department-administered trails, but Idaho requires OHV numbering for motorbikes / dirtbikes / ATVs / UTVs. Nez Perce-Clearwater MVUMs are the official maps for motorized travel decisions.",
+      "practical_score": 10,
+      "budget_score": 10,
+      "surron_relevance": 10,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_idaho_ebikes",
+        "src_idaho_ohv",
+        "src_mvum"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Whether a specific Surron setup qualifies as an e-bike or should be treated as a motorbike depends on the actual configuration and where you ride.",
+        "Do not assume state-park shoreline paths or random forest roads are legal without checking the applicable map/rules."
+      ]
+    },
+    {
+      "id": "reg_usace_visitor_center_atv",
+      "type": "regulation",
+      "name": "Visitor center roadway ATV note",
+      "zone": "dworshak_dam",
+      "corridor_role": "legal",
+      "status": "open",
+      "interest_tags": [
+        "atv",
+        "roadway_access",
+        "dam_area"
+      ],
+      "summary": "The Dworshak Visitor Center notes that ATVs licensed as a motor vehicle are allowed on the roadways in that area.",
+      "source_ids": [
+        "src_dworshak_visitor_center"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "reg_reservoir_ramps",
+      "type": "regulation",
+      "name": "Boat ramp usability context",
+      "zone": "dworshak_reservoir",
+      "corridor_role": "water_access",
+      "status": "open",
+      "interest_tags": [
+        "boat_ramp",
+        "water_level",
+        "planning"
+      ],
+      "summary": "The official Dworshak map lists usable elevation ranges for major ramps. Big Eddy has the deepest usable range in the map table, which helps explain why it stays valuable when conditions are sketchy elsewhere.",
+      "ramp_table": [
+        {
+          "ramp": "Big Eddy",
+          "usable_lake_elevation_ft": "1600-1445"
+        },
+        {
+          "ramp": "Bruce's Eddy #1",
+          "usable_lake_elevation_ft": "1600-1490"
+        },
+        {
+          "ramp": "Bruce's Eddy #2",
+          "usable_lake_elevation_ft": "1600-1560"
+        },
+        {
+          "ramp": "Canyon Creek",
+          "usable_lake_elevation_ft": "1600-1560"
+        },
+        {
+          "ramp": "Dent Acres",
+          "usable_lake_elevation_ft": "1600-1485"
+        },
+        {
+          "ramp": "Freeman Creek",
+          "usable_lake_elevation_ft": "1600-1515"
+        },
+        {
+          "ramp": "Grandad",
+          "usable_lake_elevation_ft": "1600-1530"
+        }
+      ],
+      "source_ids": [
+        "src_dworshak_reservoir_map"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_health",
+      "type": "service",
+      "name": "Clearwater Valley Health emergency / clinic support",
+      "zone": "orofino",
+      "corridor_role": "medical_support",
+      "status": "open",
+      "interest_tags": [
+        "hospital",
+        "emergency",
+        "medical"
+      ],
+      "summary": "Primary medical support in Orofino; emergency department is always open.",
+      "practical_score": 10,
+      "budget_score": 0,
+      "surron_relevance": 10,
+      "overnight_relevance": 4,
+      "location": {
+        "address": "1055 Riverside Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-5777"
+      },
+      "hours": {
+        "emergency_department": "Always open"
+      },
+      "source_ids": [
+        "src_clearwater_health"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_sheriff",
+      "type": "service",
+      "name": "Clearwater County Sheriff",
+      "zone": "orofino",
+      "corridor_role": "safety_support",
+      "status": "open",
+      "interest_tags": [
+        "sheriff",
+        "non_emergency",
+        "backcountry_medics"
+      ],
+      "summary": "County sheriff and backcountry medic request point if the trip goes sideways in remote terrain.",
+      "location": {
+        "address": "150 Michigan Ave., Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-4521",
+        "tip_hotline": "208-476-3673"
+      },
+      "source_ids": [
+        "src_clearwater_sheriff",
+        "src_clearwater_contact"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_em",
+      "type": "service",
+      "name": "Clearwater County Emergency Management",
+      "zone": "orofino",
+      "corridor_role": "safety_support",
+      "status": "open",
+      "interest_tags": [
+        "emergency_management",
+        "flooding",
+        "mudslides"
+      ],
+      "summary": "Good emergency-management contact to know when the area is in active flood / slide conditions.",
+      "location": {
+        "address": "2200 Michigan Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-4064"
+      },
+      "source_ids": [
+        "src_clearwater_em",
+        "src_clearwater_contact"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_stjoes",
+      "type": "service",
+      "name": "St. Joseph Regional Medical Center",
+      "zone": "lewiston",
+      "corridor_role": "regional_medical_backup",
+      "status": "open",
+      "interest_tags": [
+        "hospital",
+        "regional_backup"
+      ],
+      "summary": "Regional full-service hospital backup in Lewiston if something bigger than local urgent needs comes up.",
+      "location": {
+        "address": "415 6th Street, Lewiston, ID 83501"
+      },
+      "contact": {
+        "general": "208-743-2511",
+        "physician_referral": "208-799-5511"
+      },
+      "source_ids": [
+        "src_stjoes"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "budget_personal_vehicle",
+      "type": "budget_model",
+      "name": "Personal vehicle baseline",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "inferred",
+      "interest_tags": [
+        "gas_budget",
+        "baseline"
+      ],
+      "summary": "Using Idaho regular gas average and the Coeur d'Alene-to-Orofino drive distance as a baseline, fuel remains the cleanest budget play if you already have a vehicle that can haul your gear.",
+      "assumptions": {
+        "gas_price_regular_idaho_avg": 4.099,
+        "route_miles_round_trip_to_orofino": 270.4,
+        "mpg_examples": {
+          "20_mpg": 55.4,
+          "25_mpg": 44.3,
+          "30_mpg": 37.0
+        }
+      },
+      "formula_note": "Fuel cost = round-trip miles / mpg * gas price",
+      "source_ids": [
+        "src_aaa_idaho",
+        "src_route_rome2rio"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "budget_uhaul_cargo_van",
+      "type": "budget_model",
+      "name": "U-Haul cargo van baseline",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "open",
+      "interest_tags": [
+        "rental",
+        "cargo_van",
+        "bike_haul"
+      ],
+      "summary": "U-Haul cargo van has two seats and about 246 cu ft of cargo space. Good for hauling, not magically good for comfort.",
+      "assumptions": {
+        "estimated_mpg": 18,
+        "cargo_volume_cu_ft": 246,
+        "inside_dimensions": "9'6\" x 5'7\" x 4'8\"",
+        "seats": 2,
+        "round_trip_fuel_estimate_usd": 61.6
+      },
+      "source_ids": [
+        "src_uhaul_van",
+        "src_uhaul_passengers",
+        "src_aaa_idaho",
+        "src_route_rome2rio"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "budget_home_depot_van",
+      "type": "budget_model",
+      "name": "Home Depot cargo van concept",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "check_live",
+      "interest_tags": [
+        "rental",
+        "cargo_van",
+        "unlimited_mileage_maybe"
+      ],
+      "summary": "Home Depot advertises cargo vans starting at $19 and says its moving vehicles have unlimited mileage, but local branch availability needs to be checked directly.",
+      "assumptions": {
+        "starting_rate_usd": 19,
+        "max_payload_lb": 3000
+      },
+      "source_ids": [
+        "src_hd_van",
+        "src_hd_cda_rentals"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "budget_lodging_logic",
+      "type": "budget_model",
+      "name": "Lodging logic",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "inferred",
+      "interest_tags": [
+        "room_split",
+        "camping",
+        "cabin",
+        "decision_logic"
+      ],
+      "summary": "For a small crew, the usual money order is: own vehicle + tent if you already own gear, then own vehicle + budget motel, then van/truck only if bike hauling solves a real problem, then comfort hotel / cabin if the crew can split enough to flatten the hit.",
+      "source_ids": [
+        "src_dworshak_state_park",
+        "src_helgeson",
+        "src_white_pine",
+        "src_konkolville",
+        "src_best_western",
+        "src_uhaul_van"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "template_airbnb",
+      "type": "search_template",
+      "name": "Airbnb search",
+      "zone": "live_search",
+      "corridor_role": "future_app",
+      "status": "check_live",
+      "interest_tags": [
+        "vacation_rental",
+        "live_search"
+      ],
+      "summary": "Use live booking search for vacation rentals because inventory and price change too fast for static JSON.",
+      "template_url": "https://www.airbnb.com/s/Orofino--ID/homes",
+      "notes": [
+        "App should treat this as an external launch, not static inventory."
+      ]
+    },
+    {
+      "id": "template_vrbo",
+      "type": "search_template",
+      "name": "VRBO search",
+      "zone": "live_search",
+      "corridor_role": "future_app",
+      "status": "check_live",
+      "interest_tags": [
+        "vacation_rental",
+        "live_search"
+      ],
+      "summary": "Backup vacation-rental search template.",
+      "template_url": "https://www.vrbo.com/search?destination=Orofino%2C%20Idaho%2C%20United%20States%20of%20America"
+    },
+    {
+      "id": "template_511",
+      "type": "search_template",
+      "name": "Idaho 511",
+      "zone": "live_search",
+      "corridor_role": "must_check_before_departure",
+      "status": "open",
+      "interest_tags": [
+        "road_conditions",
+        "must_check"
+      ],
+      "summary": "Mandatory last-minute road check source.",
+      "template_url": "https://511.idaho.gov/roadconditions",
+      "source_ids": [
+        "src_idaho_511"
+      ]
+    },
+    {
+      "id": "template_recreation_reservations",
+      "type": "search_template",
+      "name": "Idaho Parks reservations",
+      "zone": "live_search",
+      "corridor_role": "must_check_before_departure",
+      "status": "open",
+      "interest_tags": [
+        "camping",
+        "cabins",
+        "reservations"
+      ],
+      "summary": "Use for Dworshak campsite / cabin checks.",
+      "template_url": "https://getoutside.idaho.gov/dworshak",
+      "source_ids": [
+        "src_dworshak_state_park"
+      ]
+    },
+    {
+      "id": "template_mvum",
+      "type": "search_template",
+      "name": "Motor Vehicle Use Maps",
+      "zone": "live_search",
+      "corridor_role": "surron_legality",
+      "status": "open",
+      "interest_tags": [
+        "mvum",
+        "ohv",
+        "forest_roads"
+      ],
+      "summary": "App should link users to the official motorized-travel maps before presenting any Surron route ideas.",
+      "template_url": "https://www.fs.usda.gov/r01/nezperce-clearwater/maps-guides",
+      "source_ids": [
+        "src_mvum"
+      ]
+    },
+    {
+      "id": "fun_museum_convoy",
+      "type": "fun_option",
+      "name": "Museum-grade birthday convoy",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "birthday",
+        "pee_wee_energy",
+        "wolfpack"
+      ],
+      "summary": "Pee-wee energy: treat the convoy as a traveling exhibit. Assign one friend to narrate every gas stop like a solemn docent while the wolfpack tries not to laugh.",
+      "practical_score": 1,
+      "budget_score": 2,
+      "surron_relevance": 3,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_velvet_suite",
+      "type": "fun_option",
+      "name": "Velvet-rope moon suite",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "birthday",
+        "hangover_energy"
+      ],
+      "summary": "Hangover-adjacent luxury cosplay: battery candles, handwritten room-service cards, one unserious concierge with a clipboard. Actual sleep quality not guaranteed.",
+      "practical_score": 1,
+      "budget_score": 3,
+      "surron_relevance": 0,
+      "overnight_relevance": 6
+    },
+    {
+      "id": "fun_roof_count_idaho",
+      "type": "fun_option",
+      "name": "Rooftop headcount (Idaho edition)",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "wolfpack",
+        "hangover_energy"
+      ],
+      "summary": "Before leaving any lot, one dramatic roll call like you misplaced a groomsman. You are beside a Subaru and a guilt cooler—not a Vegas roof. Still: count everyone.",
+      "practical_score": 4,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_mystery_cooler",
+      "type": "fun_option",
+      "name": "Something in the cooler",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "group",
+        "hangover_energy"
+      ],
+      "summary": "Movie lore, snack reality: one sticker-bombed or padlocked cooler that is 90% sandwiches and 10% myth. Assign a cooler historian to log each opening.",
+      "practical_score": 2,
+      "budget_score": 4,
+      "surron_relevance": 0,
+      "overnight_relevance": 2
+    },
+    {
+      "id": "fun_alamo_dworshak",
+      "type": "fun_option",
+      "name": "The Alamo stop — reservoir cut",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "pee_wee_energy",
+        "photo_op"
+      ],
+      "summary": "One non-negotiable photo stop nobody fully explains but everyone obeys—a sign, a rock, a fish statue. Pee-wee rules; wolfpack attendance mandatory.",
+      "practical_score": 2,
+      "budget_score": 5,
+      "surron_relevance": 1,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_morning_kit_adult",
+      "type": "fun_option",
+      "name": "Adult “next morning” kit",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "practical_adjacent",
+        "hangover_energy",
+        "responsible"
+      ],
+      "summary": "Water, electrolytes, real breakfast, sunglasses, dignity. The movie had chaos; your trip has ibuprofen only if your doctor says OK—and zero mystery pills.",
+      "practical_score": 6,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 3
+    },
+    {
+      "id": "fun_singalong_tax",
+      "type": "fun_option",
+      "name": "One-verse singalong tax",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "group",
+        "wolfpack"
+      ],
+      "summary": "Pick one ridiculous song. Exactly one verse at the fuel pump. Whoever knows all the words navigates the next leg—fair tax, cruel jury.",
+      "practical_score": 2,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_tuxedo_tow",
+      "type": "fun_option",
+      "name": "Tuxedo tow package",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "roleplay",
+        "birthday",
+        "hangover_energy"
+      ],
+      "summary": "Black-tie meets muddy ramps: everyone dresses gala-ready while unloading bikes like valet chaos broke the timeline. The wolfpack pretends this was planned.",
+      "practical_score": 1,
+      "budget_score": 2,
+      "surron_relevance": 5,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_goose_escort",
+      "type": "fun_option",
+      "name": "Ceremonial goose escort (fiction only)",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "birthday",
+        "nonsense",
+        "pee_wee_energy"
+      ],
+      "summary": "Data-only joke: seven imaginary geese ‘bless’ the convoy. Real geese are wildlife—observe from distance; do not harass. Pee-wee would use puppets; you use restraint.",
+      "practical_score": 0,
+      "budget_score": 0,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
+    }
+  ],
+  "operational_notes": {
+    "road_and_weather_checks": [
+      "Check Idaho 511 on departure morning.",
+      "Re-check Dworshak USACE closure page for reservoir access status.",
+      "If planning anything motorized off normal roads, confirm legal travel using the correct MVUM / local rules."
+    ],
+    "recommended_app_behaviors": [
+      "Treat alerts and booking search templates as dynamic/high-priority records.",
+      "Show closed / mixed-status destination entities before open fun stops.",
+      "If user toggles Surron mode, surface legal caution records before ride ideas.",
+      "If user toggles budget mode, sort by budget_score descending and practical_score descending."
+    ],
+    "known_gaps": [
+      "No live Airbnb/VRBO inventory is embedded because rental supply changes too fast.",
+      "No static list of every gas station or restaurant on the corridor is embedded; this file focuses on useful anchors rather than exhaustive map spam.",
+      "Road lane control details around Orofino are intentionally abstracted to Idaho 511 because those can change faster than a saved file."
+    ],
+    "wolfpack_reminders": [
+      "Headcount before major moves—movies skip it; your trip should not.",
+      "If the crew splits attention, assign a navigator and a separate 511 checker.",
+      "fun_option rows are jokes; alerts and search_template rows are the serious channel.",
+      "Hydration and sleep are part of logistics, not a punchline—plan both."
+    ]
+  }
+}</script>
+  <script>
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+    const nightsInput = document.getElementById('nightsInput');
+    const people = document.getElementById('people');
+    const surrons = document.getElementById('surrons');
+    const budget = document.getElementById('budget');
+    const peopleValue = document.getElementById('peopleValue');
+    const surronValue = document.getElementById('surronValue');
+    const budgetValue = document.getElementById('budgetValue');
+    const tripWindowBadge = document.getElementById('tripWindowBadge');
+    const dataSourceBadge = document.getElementById('dataSourceBadge');
+    const dataStatusText = document.getElementById('dataStatusText');
+    const jsonLoader = document.getElementById('jsonLoader');
+    const reloadDataBtn = document.getElementById('reloadDataBtn');
+    const alertsGrid = document.getElementById('alertsGrid');
+    const stopsGrid = document.getElementById('stopsGrid');
+    const routesGrid = document.getElementById('routesGrid');
+    const itineraryList = document.getElementById('itineraryList');
+    const funButtons = document.getElementById('funButtons');
+    const absurdCard = document.getElementById('absurdCard');
+    const routeRefreshBtn = document.getElementById('routeRefreshBtn');
+    const practicalBtn = document.getElementById('practicalBtn');
+    const absurdBtn = document.getElementById('absurdBtn');
+    const allFunBtn = document.getElementById('allFunBtn');
+
+    const recTag = document.getElementById('recTag');
+    const headline = document.getElementById('headline');
+    const summary = document.getElementById('summary');
+    const priceBand = document.getElementById('priceBand');
+    const transportText = document.getElementById('transportText');
+    const sleepText = document.getElementById('sleepText');
+    const moveText = document.getElementById('moveText');
+    const quoteBox = document.getElementById('quoteBox');
+    const tripWindowText = document.getElementById('tripWindowText');
+    const travelMathText = document.getElementById('travelMathText');
+    const focusText = document.getElementById('focusText');
+    const schemaChip = document.getElementById('schemaChip');
+    const copyPlanBtn = document.getElementById('copyPlanBtn');
+    const livePlanAnnounce = document.getElementById('livePlanAnnounce');
+
+    const LS_KEY = 'billys_big_adventure_ui_v1';
+    const TRANSPORT_VALUES = ['unlocked', 'crew-rig', 'borrow-rig', 'rent-cargo-van', 'rent-box-truck'];
+    const SLEEP_VALUES = ['cheap-room', 'camp', 'van', 'cabin'];
+    const VIBE_VALUES = ['balanced', 'chaos', 'legend'];
+
+    function esc(s) {
+      if (s == null) return '';
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escAttr(s) {
+      return esc(s).replace(/'/g, '&#39;');
+    }
+
+    function getSourceMeta(id) {
+      return (tripData.source_registry || []).find(function (x) { return x.id === id; });
+    }
+
+    function sourceLinksHtml(sourceIds) {
+      if (!sourceIds || !sourceIds.length) return '';
+      const parts = sourceIds.map(function (sid) {
+        const src = getSourceMeta(sid);
+        if (!src || !src.url) return '';
+        return '<a href="' + escAttr(src.url) + '" target="_blank" rel="noopener noreferrer">' + esc(src.title || sid) + '</a>';
+      }).filter(Boolean);
+      if (!parts.length) return '';
+      return '<div class="source-links">' + parts.join(' · ') + '</div>';
+    }
+
+    function updateSchemaChip() {
+      if (!schemaChip) return;
+      const v = tripData.schema_version != null ? tripData.schema_version : '?';
+      const g = tripData.generated_at ? ' · ' + tripData.generated_at : '';
+      schemaChip.textContent = 'Data v' + v + g;
+    }
+
+    function announcePlan(text) {
+      if (livePlanAnnounce) livePlanAnnounce.textContent = text;
+    }
+
+    function savePrefs() {
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify({
+          startDate: startDate.value,
+          endDate: endDate.value,
+          nights: nightsInput.value,
+          people: people.value,
+          surrons: surrons.value,
+          budget: budget.value,
+          transport: getSelected('transport'),
+          sleep: getSelected('sleep'),
+          vibe: getSelected('vibe')
+        }));
+      } catch (e) { /* ignore */ }
+    }
+
+    function loadPrefs() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (!raw) return;
+        const o = JSON.parse(raw);
+        if (o.startDate && /^\d{4}-\d{2}-\d{2}$/.test(o.startDate)) startDate.value = o.startDate;
+        if (o.endDate && /^\d{4}-\d{2}-\d{2}$/.test(o.endDate)) endDate.value = o.endDate;
+        if (o.nights != null && String(o.nights).match(/^\d+$/)) nightsInput.value = o.nights;
+        if (o.people != null) people.value = o.people;
+        if (o.surrons != null) surrons.value = o.surrons;
+        if (o.budget != null) budget.value = o.budget;
+        if (TRANSPORT_VALUES.indexOf(o.transport) !== -1) {
+          const r = document.querySelector('input[name="transport"][value="' + o.transport + '"]');
+          if (r) r.checked = true;
+        }
+        if (SLEEP_VALUES.indexOf(o.sleep) !== -1) {
+          const r = document.querySelector('input[name="sleep"][value="' + o.sleep + '"]');
+          if (r) r.checked = true;
+        }
+        if (VIBE_VALUES.indexOf(o.vibe) !== -1) {
+          const r = document.querySelector('input[name="vibe"][value="' + o.vibe + '"]');
+          if (r) r.checked = true;
+        }
+      } catch (e) { /* ignore */ }
+    }
+
+    function buildPlanExport(state) {
+      const rec = buildRecommendation(state);
+      const lines = [];
+      lines.push("# Billy's Big Adventure — wolfpack brief");
+      lines.push('');
+      lines.push('**Window:** ' + formatShortDate(state.startDate) + ' → ' + formatShortDate(state.endDate) + ' · ' + state.nights + ' night(s)');
+      lines.push('**Crew:** ' + state.people + ' people · ' + state.surrons + ' Surron(s) · budget ~$' + state.budget);
+      lines.push('**Transport:** ' + state.transport + ' · **Sleep:** ' + state.sleep + ' · **Vibe:** ' + state.vibe);
+      lines.push('');
+      lines.push('## Recommendation');
+      lines.push(rec.title);
+      lines.push('');
+      lines.push(rec.summary);
+      lines.push('');
+      lines.push('- **Transport:** ' + rec.transport);
+      lines.push('- **Sleep:** ' + rec.sleep);
+      lines.push('- **Move:** ' + rec.move);
+      lines.push('- **Quote:** ' + rec.quote);
+      lines.push('');
+      lines.push(rec.price);
+      lines.push('');
+      lines.push('## Top stops (ranked)');
+      const entities = (tripData.entities || []).filter(function (e) {
+        return ['poi', 'camping', 'lodging', 'food', 'service', 'supply', 'regulation'].indexOf(e.type) !== -1;
+      });
+      const ranked = entities
+        .map(function (entity) { return { entity: entity, score: scoreEntity(entity, state) }; })
+        .sort(function (a, b) { return b.score - a.score; })
+        .slice(0, 8);
+      ranked.forEach(function (item, i) {
+        lines.push((i + 1) + '. **' + item.entity.name + '** — ' + item.entity.summary);
+      });
+      lines.push('');
+      lines.push('---');
+      lines.push('Data: schema v' + (tripData.schema_version || '?') + (tripData.generated_at ? ' · ' + tripData.generated_at : '') + ' · source: ' + loadedDataSource);
+      return lines.join('\n');
+    }
+
+    const embeddedTripData = JSON.parse(document.getElementById('embeddedTripData').textContent);
+    const extraFunOptions = [];
+
+    let tripData = embeddedTripData;
+    let loadedDataSource = 'bundled seed data';
+    let lastPlanAnnounceKey = '';
+
+    function getSelected(name) {
+      const checked = document.querySelector('input[name="' + name + '"]:checked');
+      return checked ? checked.value : null;
+    }
+
+    function parseDate(value) {
+      const parts = value.split('-').map(Number);
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    function formatShortDate(value) {
+      const d = parseDate(value);
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }
+
+    function addDays(value, days) {
+      const d = parseDate(value);
+      d.setDate(d.getDate() + days);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + day;
+    }
+
+    function diffNights(start, end) {
+      const ms = parseDate(end) - parseDate(start);
+      return Math.max(0, Math.round(ms / 86400000));
+    }
+
+    function tripDates(state) {
+      const nights = diffNights(state.startDate, state.endDate);
+      const days = [];
+      for (let i = 0; i <= nights; i += 1) {
+        days.push(parseDate(addDays(state.startDate, i)));
+      }
+      return days;
+    }
+
+    function tripHasWeekday(state) {
+      return tripDates(state).some(d => d.getDay() >= 1 && d.getDay() <= 5);
+    }
+
+    function tripTouchesDinnerDays(state) {
+      return tripDates(state).some(d => [4,5,6,0].includes(d.getDay()));
+    }
+
+    function syncNightsFromDates() {
+      const nights = diffNights(startDate.value, endDate.value);
+      nightsInput.value = nights;
+      updatePlan();
+    }
+
+    function syncEndFromNights() {
+      const nights = Math.max(0, Number(nightsInput.value || 0));
+      endDate.value = addDays(startDate.value, nights);
+      updatePlan();
+    }
+
+    async function loadTripData() {
+      try {
+        const res = await fetch('./billy_big_adventure_tripdata.json');
+        if (!res.ok) throw new Error('fetch failed');
+        tripData = await res.json();
+        loadedDataSource = 'live JSON file';
+        dataSourceBadge.textContent = 'Using billy_big_adventure_tripdata.json';
+        dataStatusText.textContent = 'Auto-loaded full trip JSON from the same folder as the page.';
+        announcePlan('Trip data loaded from billy_big_adventure_tripdata.json.');
+      } catch (err) {
+        tripData = embeddedTripData;
+        loadedDataSource = 'bundled seed data';
+        dataSourceBadge.textContent = 'Using bundled seed data';
+        dataStatusText.textContent = 'Auto-fetch failed, so the page is using embedded fallback data. You can still load the full JSON file manually.';
+        announcePlan('Using embedded trip data. You can load JSON from disk with the file picker.');
+      }
+      updateSchemaChip();
+      renderEverything();
+    }
+
+    function getBudgetModel(id) {
+      return (tripData.entities || []).find(e => e.id === id);
+    }
+
+    function routeInfo() {
+      return (tripData.route_profiles || []).find(r => r.id === 'route_primary_fastest') || { distance_miles: 135.2, drive_time_minutes: 181 };
+    }
+
+    function buildState() {
+      return {
+        startDate: startDate.value,
+        endDate: endDate.value,
+        nights: diffNights(startDate.value, endDate.value),
+        people: Number(people.value),
+        surrons: Number(surrons.value),
+        budget: Number(budget.value),
+        transport: getSelected('transport'),
+        sleep: getSelected('sleep'),
+        vibe: getSelected('vibe')
+      };
+    }
+
+    function formatMoney(n) {
+      return '$' + Math.round(n);
+    }
+
+    function transportEstimate(state) {
+      const route = routeInfo();
+      const localMiles = 20 + (state.nights * 18);
+      const totalMiles = Math.round((route.distance_miles * 2) + localMiles);
+      const personal = getBudgetModel('budget_personal_vehicle');
+      const gasPrice = personal && personal.assumptions ? personal.assumptions.gas_price_regular_idaho_avg : 4.099;
+      if (state.transport === 'crew-rig') {
+        return { miles: totalMiles, text: formatMoney((totalMiles / 20) * gasPrice) + ' fuel-ish if the crew rig averages about 20 mpg', readiness: 'ready' };
+      }
+      if (state.transport === 'borrow-rig') {
+        return { miles: totalMiles, text: formatMoney((totalMiles / 18) * gasPrice) + ' fuel-ish plus whatever favor or trailer borrowing cost comes with it', readiness: 'ready' };
+      }
+      if (state.transport === 'rent-cargo-van') {
+        const van = getBudgetModel('budget_uhaul_cargo_van');
+        const fuel = van && van.assumptions ? van.assumptions.round_trip_fuel_estimate_usd + (state.nights * 4) : ((totalMiles / 18) * gasPrice);
+        return { miles: totalMiles, text: formatMoney(fuel) + ' fuel-ish plus rental/day fees', readiness: 'ready' };
+      }
+      if (state.transport === 'rent-box-truck') {
+        return { miles: totalMiles, text: 'heavier fuel burn plus rental/day fees; only makes sense if hauling is the whole problem', readiness: 'ready' };
+      }
+      return { miles: totalMiles, text: 'transport not locked yet', readiness: 'unlocked' };
+    }
+
+    function sleepEstimate(state) {
+      if (state.sleep === 'camp') return 'camping is usually the cheapest actual overnight if gear already exists';
+      if (state.sleep === 'cheap-room') return 'budget motel split across the crew is the cleanest low-drama sleep play';
+      if (state.sleep === 'van') return 'sleep cost can stay low, but comfort and legality questions go up fast';
+      return 'cabin cost can flatten out if enough people split it';
+    }
+
+    function weekdayNote(entity, state) {
+      if (entity.id === 'poi_dworshak_visitor_center') {
+        return tripHasWeekday(state) ? { text: 'Good fit for the selected dates', className: 'good' } : { text: 'Better on a weekday; spring schedule is Monday through Friday', className: 'warn' };
+      }
+      if (entity.id === 'food_edge') {
+        return tripTouchesDinnerDays(state) ? { text: 'Possible dinner window in selected dates', className: 'good' } : { text: 'Likely bad timing for selected dates', className: 'warn' };
+      }
+      if (entity.status === 'seasonal' && parseDate(state.startDate).getMonth() < 4) {
+        return { text: 'Seasonal, so verify before committing', className: 'warn' };
+      }
+      return null;
+    }
+
+    function scoreEntity(entity, state) {
+      let score = (entity.practical_score || 0) + (entity.budget_score || 0);
+      score += state.nights > 0 ? (entity.overnight_relevance || 0) : 0;
+      score += state.surrons > 0 ? (entity.surron_relevance || 0) : 0;
+      if (state.budget <= 320) score += (entity.budget_score || 0);
+      if (state.vibe === 'legend' && (entity.interest_tags || []).includes('history')) score += 3;
+      if (state.vibe === 'chaos' && (entity.interest_tags || []).includes('group')) score += 2;
+      if (entity.type === 'regulation' && state.surrons > 0) score += 25;
+      if (entity.status === 'mixed') score -= 3;
+      if (entity.status === 'seasonal') score -= 2;
+      const note = weekdayNote(entity, state);
+      if (note && note.className === 'warn') score -= 8;
+      if (note && note.className === 'good') score += 4;
+      return score;
+    }
+
+    function buildRecommendation(state) {
+      const estimate = transportEstimate(state);
+      let out = {
+        tag: 'Best next move',
+        title: 'Lock transport first',
+        summary: 'No rig, no road trip movie—just a group chat and optimism. Before rooms, cabins, or sacred photo ops, decide what actually hauls the wolfpack (and bikes) to Dworshak.',
+        transport: 'No vehicle assumed. Pick a transport path first—this is the plot, not the B-story.',
+        sleep: 'Cheap room is a placeholder until transport is solved. Nobody wakes up confused in the right motel if nobody drove there.',
+        move: 'Keep pass one simple: launch, fuel, mission zone, sleep, one encore block, home—like a tight third act.',
+        quote: 'Pee-wee never skipped the bike problem; the wolfpack never skips the headcount. Do both.',
+        price: 'Rough total feel: plan shape not ready yet'
+      };
+
+      if (state.transport === 'unlocked') return out;
+
+      const route = routeInfo();
+      const windowText = formatShortDate(state.startDate) + ' to ' + formatShortDate(state.endDate) + ' • ' + state.nights + (state.nights === 1 ? ' night' : ' nights');
+      out.price = 'Trip window: ' + windowText + ' • Travel: about ' + route.distance_miles + ' one-way miles before local moves';
+
+      if (state.transport === 'rent-box-truck') {
+        out.tag = 'Hauler-first chaos plan';
+        out.title = 'Rent the box truck only if hauling is the actual blocker';
+        out.summary = 'A box truck is a logistics answer, not a romance answer. It makes sense only if the bike count or gear pile truly needs it.';
+        out.transport = 'Box truck path selected. Expect the highest hassle and fuel burn.';
+        out.sleep = state.sleep === 'van' ? 'Truck-sleep fantasy is still a question mark; motel or camp is cleaner.' : sleepEstimate(state);
+        out.move = 'Drive direct, keep detours short, use Orofino as reset zone.';
+        out.quote = 'Big truck energy only if the mission earned it—otherwise you are cosplaying logistics.';
+        return out;
+      }
+
+      if (state.transport === 'rent-cargo-van') {
+        out.tag = 'Flexible van plan';
+        out.title = state.sleep === 'van' ? 'Cargo-van birthday chaos' : 'Cargo-van haul with sane sleep';
+        out.summary = state.sleep === 'van'
+          ? 'Wolfpack deluxe: great for hauling, questionable for sleep hygiene. Commit as a group or bail to a real bed.'
+          : 'The van is the getaway vehicle for gear, not a lifestyle flex. Sleep somewhere with walls if you can.';
+        out.transport = 'Cargo van selected. Travel math: ' + estimate.text + '.';
+        out.sleep = sleepEstimate(state);
+        out.move = 'Haul hard, tight stops, no “where did the straps go” subplot at dusk.';
+        out.quote = 'If the van carries the mission, it gets a credit in the story—and a thorough sweep before you return it.';
+        return out;
+      }
+
+      if (state.sleep === 'camp') {
+        out.tag = 'Camp-first low-cost play';
+        out.title = state.transport === 'borrow-rig' ? 'Borrowed rig + camp plan' : 'Crew rig + camp plan';
+        out.summary = 'Weather and gear willing, camping keeps cash for fuel, food, and daylight drama in a good way.';
+        out.transport = (state.transport === 'borrow-rig' ? 'Borrowed truck / trailer path.' : 'Crew rig path.') + ' Travel math: ' + estimate.text + '.';
+        out.sleep = sleepEstimate(state);
+        out.move = 'Launch early, camp before dark, reservoir block next—Pee-wee would respect the schedule; the wolfpack will test it.';
+        out.quote = 'Stars, zippers, and one friend who swears they pitched this tent before. That is the movie.';
+        return out;
+      }
+
+      if (state.sleep === 'cabin' && state.budget >= 380) {
+        out.tag = 'Comfort-if-lucky play';
+        out.title = state.transport === 'borrow-rig' ? 'Borrowed rig + cabin hunt' : 'Crew rig + cabin hunt';
+        out.summary = 'A cabin win upgrades the whole weekend without Vegas receipts—still book early and keep a motel escape hatch.';
+        out.transport = (state.transport === 'borrow-rig' ? 'Borrowed truck / trailer path.' : 'Crew rig path.') + ' Travel math: ' + estimate.text + '.';
+        out.sleep = sleepEstimate(state);
+        out.move = 'Day 1 grounded, Day 2 softer—recover like you planned it (even if you did not).';
+        out.quote = 'Good basecamp energy: looks like you meant it, feels like you lucked into it.';
+        return out;
+      }
+
+      out.tag = 'Best value plan';
+      out.title = state.transport === 'borrow-rig' ? 'Borrowed rig + cheap room' : 'Crew rig + cheap room';
+      out.summary = 'Clean money-to-fun ratio when a rig exists: direct route, Orofino as reset button, stops doing the heavy character work.';
+      out.transport = (state.transport === 'borrow-rig' ? 'Borrowed truck / trailer path.' : 'Crew has access to a rig.') + ' Travel math: ' + estimate.text + '.';
+      out.sleep = sleepEstimate(state);
+      out.move = 'Day 1 mission, cheap sleep, Day 2 victory lap, then home before anyone becomes a cautionary tale.';
+      out.quote = state.vibe === 'legend'
+        ? 'Legend status unlocked when the group chat still likes each other after the last mile home.'
+        : 'Hydrate tonight, brag tomorrow—same wolfpack, slightly smarter.';
+      return out;
+    }
+
+    function renderRecommendation(state) {
+      const rec = buildRecommendation(state);
+      const route = routeInfo();
+      const est = transportEstimate(state);
+      recTag.textContent = rec.tag;
+      headline.textContent = rec.title;
+      summary.textContent = rec.summary;
+      transportText.textContent = rec.transport;
+      sleepText.textContent = rec.sleep;
+      moveText.textContent = rec.move;
+      quoteBox.textContent = rec.quote;
+      priceBand.textContent = rec.price;
+      tripWindowText.textContent = formatShortDate(state.startDate) + ' to ' + formatShortDate(state.endDate) + ' • ' + state.nights + (state.nights === 1 ? ' night' : ' nights');
+      travelMathText.textContent = 'Primary route: about ' + route.distance_miles + ' miles one way, about ' + route.drive_time_minutes + ' minutes before extra stops. ' + (est.readiness === 'ready' ? est.text : 'Transport not locked yet.');
+      focusText.textContent = state.sleep + ' • ' + state.transport + ' • ' + state.surrons + ' Surron' + (state.surrons === 1 ? '' : 's') + ' • data source: ' + loadedDataSource;
+      const annKey = rec.title + '|' + state.transport + '|' + state.sleep + '|' + state.startDate + '|' + state.endDate;
+      if (annKey !== lastPlanAnnounceKey) {
+        lastPlanAnnounceKey = annKey;
+        const ann = rec.title + '. ' + (rec.summary.length > 160 ? rec.summary.slice(0, 160) + '…' : rec.summary);
+        announcePlan(ann);
+      }
+    }
+
+    function renderAlerts(state) {
+      const cards = [];
+      const alerts = tripData.alerts || [];
+      alerts.forEach(function (alert) {
+        const src = sourceLinksHtml(alert.source_ids);
+        cards.push(
+          '<article class="alert-card"><span class="tag alert">' + esc(alert.severity || 'alert') + '</span><h3 style="margin-top:10px;">' + esc(alert.name) + '</h3><p class="muted">' + esc(alert.summary) + '</p>' +
+          (alert.action ? '<p class="small">Action: ' + esc(alert.action) + '</p>' : '') +
+          src +
+          '</article>'
+        );
+      });
+      if (state.surrons > 0) {
+        const reg = (tripData.entities || []).find(function (e) { return e.id === 'reg_surron_access'; });
+        if (reg) {
+          const src = sourceLinksHtml(reg.source_ids);
+          cards.unshift(
+            '<article class="alert-card"><span class="tag alert">ride caution</span><h3 style="margin-top:10px;">' + esc(reg.name) + '</h3><p class="muted">' + esc(reg.summary) + '</p><p class="small">Do not assume a Surron is treated the same as a Class 1 or 2 e-bike in every setup or every place you want to ride.</p>' + src + '</article>'
+          );
+        }
+      }
+      alertsGrid.innerHTML = cards.join('');
+    }
+
+    function renderStops(state) {
+      const entities = (tripData.entities || []).filter(e => ['poi','camping','lodging','food','service','supply','regulation'].includes(e.type));
+      const ranked = entities
+        .map(entity => ({ entity, score: scoreEntity(entity, state) }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 8);
+
+      stopsGrid.innerHTML = ranked.map(function (item) {
+        const e = item.entity;
+        const note = weekdayNote(e, state);
+        const tags = [];
+        if (note) tags.push('<span class="mini-pill ' + esc(note.className) + '">' + esc(note.text) + '</span>');
+        if (e.status && e.status !== 'open') tags.push('<span class="mini-pill warn">Status: ' + esc(e.status) + '</span>');
+        if ((e.interest_tags || []).includes('budget_group')) tags.push('<span class="mini-pill good">Group-friendly</span>');
+        if ((e.interest_tags || []).includes('birthday_dinner')) tags.push('<span class="mini-pill">Birthday meal</span>');
+        if ((e.interest_tags || []).includes('fuel')) tags.push('<span class="mini-pill">Fuel anchor</span>');
+        const src = sourceLinksHtml(e.source_ids);
+        return '<article class="stop-card"><span class="tag stop">' + esc(e.type) + '</span><h3 style="margin-top:10px;">' + esc(e.name) + '</h3><p class="muted">' + esc(e.summary) + '</p><div class="data-status" style="margin-top:10px;">' + tags.join('') + '</div><p class="small" style="margin-top:10px;">Practical ' + (e.practical_score || 0) + ' • Budget ' + (e.budget_score || 0) + ' • Overnight ' + (e.overnight_relevance || 0) + '</p>' + src + '</article>';
+      }).join('');
+    }
+
+    function renderRoutes() {
+      const routes = tripData.route_profiles || [];
+      routesGrid.innerHTML = routes.map(function (route) {
+        const nodes = route.corridor_nodes ? route.corridor_nodes.map(function (n) { return esc(n); }).join(' → ') : 'Optional detour chain';
+        const meta = [];
+        if (route.distance_miles) meta.push(route.distance_miles + ' miles to Orofino baseline');
+        if (route.drive_time_minutes) meta.push(route.drive_time_minutes + ' min baseline');
+        if (route.status) meta.push('status: ' + esc(route.status));
+        const src = sourceLinksHtml(route.source_ids);
+        return '<article class="route-card"><span class="tag route">' + esc(route.corridor_role || 'route') + '</span><h3 style="margin-top:10px;">' + esc(route.name) + '</h3><p class="muted">' + esc(route.summary) + '</p><p class="small" style="margin-top:10px;">' + nodes + '</p><p class="small">' + meta.join(' • ') + '</p>' + src + '</article>';
+      }).join('');
+    }
+
+    function buildItinerary(state) {
+      const lines = [];
+      const transport = state.transport === 'unlocked'
+        ? 'First task: solve transport.'
+        : state.transport === 'rent-cargo-van'
+          ? 'Pick up the cargo van, load smart, and keep the stop count disciplined.'
+          : state.transport === 'rent-box-truck'
+            ? 'Pick up the box truck only if the hauling need is real.'
+            : state.transport === 'borrow-rig'
+              ? 'Confirm the borrowed truck / trailer combo before anything else.'
+              : 'Use the crew rig and keep the launch efficient.';
+      lines.push(transport);
+      lines.push('Launch from CDA on ' + formatShortDate(state.startDate) + ' with ' + state.people + ' people and ' + state.surrons + ' Surron' + (state.surrons === 1 ? '' : 's') + ' — wolfpack accounted for (re-count after every gas stop if you must).');
+      lines.push('Orofino is the reset scene: fuel, snacks, “what were we thinking,” and the final sleep vote.');
+
+      if (state.sleep === 'camp') {
+        lines.push('If camping, lock in the site before dark so the birthday does not turn into a gear argument.');
+      } else if (state.sleep === 'van') {
+        lines.push('If doing the van / truck hack, treat it as transport-first and comfort-second.');
+      } else if (state.sleep === 'cabin') {
+        lines.push('If hunting cabins, check the Freeman Creek style options first and keep a motel fallback ready.');
+      } else {
+        lines.push('Cheap-room play: land the room, drop gear, and use the extra brain space for actual fun.');
+      }
+
+      if (state.surrons > 0) {
+        lines.push('Because Surrons are in the mix, surface legal trail / OHV caution before random ride assumptions.');
+      }
+
+      for (let i = 1; i <= state.nights; i += 1) {
+        lines.push('Night ' + i + ': keep the evening light enough that Day ' + (i + 1) + ' still has one real outing block left in it.');
+      }
+      lines.push('Departure day: one more short stop, one Pee-wee-tier photo nobody will delete, then home before the highway becomes a Hangover sequel.');
+      itineraryList.innerHTML = lines.map(function (line) { return '<li>' + esc(line) + '</li>'; }).join('');
+    }
+
+    function funOptions() {
+      return (tripData.entities || []).filter(e => e.type === 'fun_option').concat(extraFunOptions);
+    }
+
+    function renderFunButtons() {
+      funButtons.innerHTML = funOptions().map(function (fun) {
+        return '<button class="ghost" data-fun-id="' + escAttr(fun.id) + '" type="button">' + esc(fun.name) + '</button>';
+      }).join('');
+      Array.from(funButtons.querySelectorAll('button')).forEach(function (btn) {
+        btn.addEventListener('click', function () { showFun(btn.getAttribute('data-fun-id')); });
+      });
+    }
+
+    function showFun(id) {
+      const choice = funOptions().find(function (item) { return item.id === id; }) || funOptions()[0];
+      absurdCard.innerHTML = '<span class="tag absurd">Side quest</span><h3 style="margin-top:10px;">' + esc(choice.name) + '</h3><p class="muted">' + esc(choice.summary) + '</p>';
+    }
+
+    function spinAbsurd() {
+      const options = funOptions();
+      const pick = options[Math.floor(Math.random() * options.length)];
+      showFun(pick.id);
+    }
+
+    function updatePlan() {
+      const state = buildState();
+      peopleValue.textContent = state.people;
+      surronValue.textContent = state.surrons;
+      budgetValue.textContent = '$' + state.budget;
+      tripWindowBadge.textContent = formatShortDate(state.startDate) + ' → ' + formatShortDate(state.endDate) + ' • ' + state.nights + (state.nights === 1 ? ' night' : ' nights');
+      renderRecommendation(state);
+      renderAlerts(state);
+      renderStops(state);
+      renderRoutes();
+      buildItinerary(state);
+      savePrefs();
+    }
+
+    function renderEverything() {
+      renderFunButtons();
+      updatePlan();
+    }
+
+    jsonLoader.addEventListener('change', async (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      tripData = JSON.parse(text);
+      loadedDataSource = file.name;
+      dataSourceBadge.textContent = 'Using ' + file.name;
+      dataStatusText.textContent = 'Loaded custom JSON file directly into the planner.';
+      updateSchemaChip();
+      announcePlan('Loaded custom file ' + file.name + '.');
+      renderEverything();
+    });
+
+    reloadDataBtn.addEventListener('click', loadTripData);
+    [people, surrons, budget].forEach(el => el.addEventListener('input', updatePlan));
+    [startDate, endDate].forEach(el => el.addEventListener('change', syncNightsFromDates));
+    nightsInput.addEventListener('input', syncEndFromNights);
+    document.querySelectorAll('input[name="transport"], input[name="sleep"], input[name="vibe"]').forEach(el => el.addEventListener('change', updatePlan));
+    routeRefreshBtn.addEventListener('click', updatePlan);
+    practicalBtn.addEventListener('click', function () {
+      document.getElementById('transport-crew').checked = true;
+      document.getElementById('sleep-cheap').checked = true;
+      document.getElementById('vibe-balanced').checked = true;
+      updatePlan();
+    });
+    absurdBtn.addEventListener('click', spinAbsurd);
+    allFunBtn.addEventListener('click', function () {
+      const opts = (tripData.entities || []).filter(function (e) { return e.type === 'fun_option'; });
+      if (opts[0]) showFun(opts[0].id);
+      else spinAbsurd();
+    });
+
+    copyPlanBtn.addEventListener('click', async function () {
+      const state = buildState();
+      const text = buildPlanExport(state);
+      try {
+        await navigator.clipboard.writeText(text);
+        announcePlan('Wolfpack brief copied to clipboard.');
+        copyPlanBtn.textContent = 'Copied!';
+        setTimeout(function () { copyPlanBtn.textContent = 'Copy wolfpack brief'; }, 2000);
+      } catch (e) {
+        announcePlan('Clipboard not available; select and copy from a new window.');
+        window.prompt('Copy this summary:', text);
+      }
+    });
+
+    loadPrefs();
+    loadTripData();
+  </script>
+</body>
+</html>

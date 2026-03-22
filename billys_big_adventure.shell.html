@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Road-trip planner: CDA to Dworshak — real logistics with Pee-wee-sized heart and wolfpack-level headcounts. Dates, transport, stops, sources, side quests." />
+  <title>Billy's Big Adventure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sky: #38b8e8;
+      --sky-glow: rgba(56, 184, 232, 0.35);
+      --sky-deep: #0d5a82;
+      --night: #061a28;
+      --night-mid: #0c2a3d;
+      --panel: rgba(10, 42, 62, 0.92);
+      --panel-2: rgba(6, 32, 48, 0.94);
+      --line: rgba(255, 199, 44, 0.22);
+      --text: #fff8e8;
+      --muted: #a8d9ef;
+      --yellow: #ffc72c;
+      --yellow-hot: #ffdf6b;
+      --red: #e31c2d;
+      --red-deep: #9b1020;
+      --orange: #ff8c42;
+      --green: #3d9a5c;
+      --green-soft: #7adf9a;
+      --forest: #1e5c3a;
+      --cream: #fff3d4;
+      --shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+      --font-display: "Lilita One", "Arial Black", sans-serif;
+      --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(ellipse 90% 45% at 50% -8%, rgba(255, 199, 44, 0.14), transparent 52%),
+        radial-gradient(circle at 95% 8%, var(--sky-glow), transparent 38%),
+        radial-gradient(circle at 5% 85%, rgba(30, 92, 58, 0.2), transparent 42%),
+        linear-gradient(168deg, var(--night-mid) 0%, var(--night) 48%, #040f18 100%);
+      color: var(--text);
+      font-family: var(--font-body);
+    }
+    body { padding: 24px; }
+    .wrap { max-width: 1260px; margin: 0 auto; display: grid; gap: 20px; }
+    .hero, .panel {
+      border: 2px solid rgba(56, 184, 232, 0.2);
+      background: var(--panel-2);
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border: 2px solid rgba(255, 199, 44, 0.25);
+      background:
+        linear-gradient(145deg, rgba(227, 28, 45, 0.12), rgba(56, 184, 232, 0.1)),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04) 1px, transparent 1px, transparent 20px),
+        var(--panel);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("assets/decor.svg") no-repeat 100% 100%;
+      background-size: min(420px, 55%) auto;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -100px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 199, 44, 0.35), transparent 62%);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+    .eyebrow, .badge, .mini-pill, .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+    .eyebrow {
+      font-family: var(--font-body);
+      font-weight: 800;
+      color: var(--night);
+      padding: 8px 14px;
+      border: 2px solid var(--red-deep);
+      background: linear-gradient(180deg, var(--yellow-hot), var(--yellow));
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 0 var(--red-deep);
+    }
+    h1, h2, h3, h4 { margin: 0; line-height: 1.05; font-family: var(--font-display); }
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      max-width: 14ch;
+      text-wrap: balance;
+      color: var(--yellow);
+      text-shadow:
+        3px 3px 0 var(--red),
+        -1px -1px 0 rgba(0,0,0,0.35),
+        0 0 24px rgba(255, 199, 44, 0.35);
+      letter-spacing: 0.02em;
+    }
+    h2.section-title, details.flow-panel > summary { letter-spacing: 0.03em; }
+    .card h3, .data-card h4, .control .label, fieldset.control legend {
+      font-family: var(--font-body);
+      font-weight: 800;
+    }
+    .card h3 { font-size: 1.05rem; }
+    .sub { margin-top: 14px; max-width: 70ch; color: var(--muted); line-height: 1.65; font-size: 1.04rem; }
+    .hero-grid, .grid-2, .grid-3, .grid-4 { display: grid; gap: 16px; }
+    .hero-grid { grid-template-columns: 1.5fr 1fr; margin-top: 22px; }
+    .grid-2 { grid-template-columns: 1.1fr 0.9fr; }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .section-title { margin-bottom: 12px; font-size: 1.3rem; }
+    .muted { color: var(--muted); line-height: 1.58; }
+    .controls { display: grid; gap: 14px; }
+    .control {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .control label, .control .label { font-weight: 700; font-size: 0.95rem; }
+    .range-line, .field-line { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
+    input[type="range"] { width: 100%; accent-color: var(--red); }
+    input[type="date"], input[type="number"], input[type="file"] {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(10,10,16,0.72);
+      color: var(--text);
+      padding: 11px 12px;
+      font: inherit;
+    }
+    .date-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+    .pill-group { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill-group input { display: none; }
+    .pill-group label {
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+    .pill-group input:checked + label {
+      background: linear-gradient(180deg, rgba(227, 28, 45, 0.35), rgba(227, 28, 45, 0.2));
+      border-color: var(--yellow);
+      color: var(--cream);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 var(--red-deep), 0 12px 28px rgba(227, 28, 45, 0.25);
+    }
+    .hero-road {
+      position: relative;
+      height: 100px;
+      border-radius: 18px;
+      padding: 14px 16px;
+      border: 2px solid rgba(56, 184, 232, 0.35);
+      background: linear-gradient(180deg, rgba(15, 90, 130, 0.5), rgba(6, 26, 40, 0.9));
+      overflow: hidden;
+    }
+    .hero-road svg.road-svg {
+      position: absolute;
+      left: 0; right: 0; bottom: 8px;
+      width: 100%;
+      height: 36px;
+      opacity: 0.95;
+    }
+    .stops { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; height: 100%; padding-top: 4px; }
+    .stop {
+      display: grid; gap: 2px; padding: 8px 10px; border-radius: 12px;
+      background: rgba(255, 248, 232, 0.08);
+      border: 2px solid rgba(255, 199, 44, 0.35);
+      box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    }
+    .stop strong { font-size: 0.95rem; }
+    .stop span { font-size: 0.8rem; color: var(--muted); }
+    .badge-row, .toolbar, .button-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge, .mini-pill { padding: 9px 12px; border: 2px solid rgba(56, 184, 232, 0.45); background: rgba(56, 184, 232, 0.12); color: #d4f4ff; }
+    .mini-pill.warn { color: #ffb8b8; border-color: rgba(227, 28, 45, 0.45); background: rgba(227, 28, 45, 0.15); }
+    .mini-pill.good { color: var(--green-soft); border-color: rgba(61, 154, 92, 0.5); background: rgba(61, 154, 92, 0.12); }
+    .result-main, .card, .route-card, .stop-card, .alert-card, .absurd-card, .data-card {
+      padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+    }
+    .result-main { background: linear-gradient(135deg, rgba(227, 28, 45, 0.12), rgba(56, 184, 232, 0.1)), rgba(255,255,255,0.04); border-color: rgba(255, 199, 44, 0.2); }
+    .recommendation { display: inline-flex; gap: 8px; align-items: center; padding: 8px 14px; border-radius: 999px; margin-bottom: 12px; font-size: 0.85rem; font-weight: 800; background: rgba(61, 154, 92, 0.2); border: 2px solid var(--green); color: var(--green-soft); }
+    .price { margin-top: 12px; font-weight: 800; color: var(--yellow); text-shadow: 1px 1px 0 var(--red-deep); }
+    .cards, .routes, .stops-grid, .alerts-grid, .data-grid { display: grid; gap: 14px; }
+    .cards, .routes, .stops-grid, .alerts-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .data-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .tag { width: fit-content; padding: 6px 10px; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); }
+    .tag.alert { color: #ffd0d0; border-color: rgba(227, 28, 45, 0.45); background: rgba(227, 28, 45, 0.15); }
+    .tag.route { color: #9ee8ff; border-color: rgba(56, 184, 232, 0.45); background: rgba(56, 184, 232, 0.12); }
+    .tag.stop { color: #ffe8f0; border-color: rgba(227, 28, 45, 0.35); background: rgba(227, 28, 45, 0.12); }
+    .tag.absurd { color: var(--yellow); border-color: rgba(255, 199, 44, 0.45); background: rgba(255, 199, 44, 0.1); }
+    .list { margin: 12px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.7; }
+    .quote { padding: 18px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.08); color: var(--muted); line-height: 1.66; }
+    .small { font-size: 0.92rem; color: #8ec9dc; line-height: 1.55; }
+    .data-status { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    button { cursor: pointer; border: 0; color: var(--night); font-weight: 800; padding: 12px 18px; border-radius: 14px; background: linear-gradient(180deg, var(--yellow-hot), var(--yellow)); box-shadow: 0 5px 0 var(--red-deep), 0 14px 28px rgba(0,0,0,0.35); }
+    button:hover { filter: brightness(1.05); }
+    button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--red-deep), 0 8px 20px rgba(0,0,0,0.3); }
+    button.secondary { color: var(--cream); background: linear-gradient(180deg, var(--sky), var(--sky-deep)); box-shadow: 0 5px 0 #063652, 0 14px 28px rgba(56, 184, 232, 0.2); }
+    button.secondary:active { box-shadow: 0 2px 0 #063652, 0 8px 20px rgba(56, 184, 232, 0.15); }
+    button.ghost { color: var(--cream); background: rgba(255, 248, 232, 0.06); box-shadow: none; border: 2px solid rgba(255, 199, 44, 0.35); }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 12px;
+      z-index: 9999;
+      padding: 10px 16px;
+      background: var(--yellow);
+      color: var(--night);
+      font-weight: 800;
+      border-radius: 10px;
+      text-decoration: none;
+      font-family: var(--font-body);
+      border: 2px solid var(--red);
+    }
+    .skip-link:focus {
+      left: 12px;
+      outline: 3px solid var(--sky);
+      outline-offset: 2px;
+    }
+    .toc-nav {
+      max-width: 1260px;
+      margin: 0 auto 12px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      align-items: center;
+    }
+    .toc-nav span { color: var(--muted); font-size: 0.85rem; font-weight: 600; margin-right: 4px; }
+    .toc-nav a { color: var(--yellow); font-weight: 700; text-decoration: none; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+    .toc-nav a:hover { text-decoration: underline; }
+    fieldset.control { border: 0; margin: 0; padding: 0; min-width: 0; }
+    fieldset.control legend { margin-bottom: 8px; }
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+    .pill-group input:focus-visible + label {
+      outline: 3px solid var(--sky);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pill-group input:checked + label { transform: none; transition: none; }
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    details.flow-panel { border: 0; padding: 0; }
+    details.flow-panel > summary {
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      list-style: none;
+      margin-bottom: 12px;
+      padding: 8px 0;
+      color: var(--text);
+    }
+    details.flow-panel > summary::-webkit-details-marker { display: none; }
+    details.flow-panel > summary::after {
+      content: " ▾";
+      color: var(--muted);
+      font-size: 0.85em;
+    }
+    details.flow-panel[open] > summary::after { content: " ▴"; }
+    .source-links { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px 14px; }
+    .source-links a {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #8ee6ff;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(56, 184, 232, 0.45);
+    }
+    .source-links a:hover { border-bottom-color: var(--yellow); color: var(--yellow); }
+    .external-strip {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .external-strip a {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--yellow);
+      text-decoration: none;
+      border-bottom: 2px solid var(--red);
+    }
+    .external-strip a:hover { text-decoration: underline; }
+    .hero-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 22px;
+      align-items: start;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-poster-wrap {
+      flex-shrink: 0;
+    }
+    .hero-poster {
+      display: block;
+      width: min(200px, 42vw);
+      height: auto;
+      border-radius: 14px;
+      border: 4px solid var(--yellow);
+      box-shadow:
+        0 0 0 2px var(--red),
+        0 14px 36px rgba(0,0,0,0.45);
+      transform: rotate(-2.5deg);
+      background: var(--night);
+    }
+    .hero-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      opacity: 0.9;
+    }
+    .hero-icons svg {
+      width: 40px;
+      height: 40px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+    }
+    .sprite-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+    @media (max-width: 980px) { .hero-grid, .grid-2, .grid-3, .grid-4, .cards, .routes, .stops-grid, .alerts-grid, .data-grid, .date-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) {
+      .hero-top { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .hero-poster { transform: rotate(-1deg); width: min(240px, 70vw); }
+    }
+    @media (max-width: 640px) { body { padding: 14px; } .hero, .panel { padding: 16px; border-radius: 20px; } .stops { gap: 6px; flex-wrap: wrap; justify-content: center; } .stop { padding: 6px 8px; } .stop strong { font-size: 0.82rem; } .stop span { font-size: 0.72rem; } }
+  </style>
+</head>
+<body>
+  <svg class="sprite-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="sym-dam" viewBox="0 0 48 40">
+        <path fill="#5a6d7e" d="M6 34 L10 14 L38 14 L42 34 Z"/>
+        <path fill="#38b8e8" d="M4 32 h40 v6 H4 z" opacity="0.85"/>
+        <rect fill="#ffc72c" x="17" y="8" width="14" height="8" rx="1"/>
+        <line x1="12" y1="22" x2="36" y2="22" stroke="#061a28" stroke-width="1" opacity="0.3"/>
+      </symbol>
+      <symbol id="sym-ufo" viewBox="0 0 48 36">
+        <ellipse cx="24" cy="14" rx="17" ry="7" fill="#aeb6bf"/>
+        <ellipse cx="24" cy="16" rx="20" ry="5" fill="#38b8e8" opacity="0.45"/>
+        <path fill="#ffc72c" opacity="0.75" d="M17 20 L24 34 L31 20 Z"/>
+        <circle cx="24" cy="13" r="3" fill="#fff8e8"/>
+      </symbol>
+      <symbol id="sym-pine" viewBox="0 0 36 44">
+        <path fill="#1e5c3a" d="M18 2 L30 20 L24 20 L32 34 H4 L12 20 L6 20 Z"/>
+        <rect fill="#4a3224" x="14" y="34" width="8" height="8" rx="1"/>
+      </symbol>
+      <symbol id="sym-motel" viewBox="0 0 48 38">
+        <rect fill="#9b1020" x="4" y="6" width="40" height="28" rx="3"/>
+        <rect fill="#ffc72c" x="8" y="10" width="32" height="8" rx="1"/>
+        <rect fill="#38b8e8" x="10" y="22" width="8" height="10" rx="1"/>
+        <rect fill="#38b8e8" x="30" y="22" width="8" height="10" rx="1"/>
+        <rect fill="#fff8e8" x="20" y="24" width="8" height="6" rx="1"/>
+      </symbol>
+      <symbol id="sym-map" viewBox="0 0 40 40">
+        <path fill="#fff3d4" stroke="#e31c2d" stroke-width="2" d="M6 8 L28 6 L34 28 L10 32 Z" opacity="0.9"/>
+        <path fill="none" stroke="#ffc72c" stroke-width="2" stroke-dasharray="4 3" d="M10 24 Q18 12 26 20 T34 14"/>
+        <circle fill="#e31c2d" cx="22" cy="18" r="3"/>
+      </symbol>
+      <symbol id="sym-trout" viewBox="0 0 48 32">
+        <ellipse cx="22" cy="16" rx="14" ry="8" fill="#38b8e8" opacity="0.6"/>
+        <path fill="#1e5c3a" d="M8 16 L2 12 v8 Z"/>
+        <circle cx="30" cy="14" r="2" fill="#061a28"/>
+      </symbol>
+    </defs>
+  </svg>
+  <a class="skip-link" href="#main">Skip to planner</a>
+  <nav class="toc-nav" aria-label="On this page">
+    <span>Jump:</span>
+    <a href="#section-build">Build</a>
+    <a href="#section-rec">Plan</a>
+    <a href="#section-alerts">Alerts</a>
+    <a href="#section-stops">Stops</a>
+    <a href="#section-routes">Routes</a>
+    <a href="#section-itinerary">Itinerary</a>
+  </nav>
+  <div id="livePlanAnnounce" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-top">
+        <div class="hero-poster-wrap">
+          <img class="hero-poster" src="assets/poster.png" width="200" height="267" alt="Illustrated travel poster: Billy's Big Adventure, Dworshak road-trip collage in retro neon colors" decoding="async" loading="eager" onerror="this.onerror=null;this.src='assets/poster.svg';" />
+        </div>
+        <div>
+          <div class="eyebrow">Pee-wee heart · Wolfpack logistics · Dworshak birthday mission</div>
+          <h1 id="hero-title">Billy's Big Adventure</h1>
+          <p class="sub">Part “I know what I’m looking for” bike-quest energy, part “count the crew before the rig moves” grown-up comedy. Under the jokes: real trip data—dates, nights, transport you still have to lock, Surrons, sleep style—and stop cards that react to the window you actually picked.</p>
+          <div class="hero-icons" aria-hidden="true">
+            <svg width="40" height="33" viewBox="0 0 48 40"><title>Dam</title><use href="#sym-dam"/></svg>
+            <svg width="40" height="30" viewBox="0 0 48 36"><title>UFO</title><use href="#sym-ufo"/></svg>
+            <svg width="34" height="42" viewBox="0 0 36 44"><title>Pines</title><use href="#sym-pine"/></svg>
+            <svg width="40" height="32" viewBox="0 0 48 38"><title>Motel</title><use href="#sym-motel"/></svg>
+            <svg width="36" height="36" viewBox="0 0 40 40"><title>Map</title><use href="#sym-map"/></svg>
+            <svg width="40" height="27" viewBox="0 0 48 32"><title>Fish</title><use href="#sym-trout"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="hero-grid">
+        <div class="panel">
+          <h2 class="section-title">Road-trip shape</h2>
+          <p class="muted">Pick the launch date, let the page compute nights, then pressure-test motel vs camp vs van chaos vs “who stole the keys and why is there a second cooler.” Same corridor: CDA → Lewiston lane → Orofino reset → Dworshak mission.</p>
+          <div class="hero-road" style="margin-top:14px;">
+            <svg class="road-svg" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0 26 Q100 6 200 18 T400 12" fill="none" stroke="#0a1520" stroke-width="10" stroke-linecap="round"/>
+              <path d="M0 26 Q100 6 200 18 T400 12" fill="none" stroke="#2a3540" stroke-width="6" stroke-linecap="round"/>
+              <path d="M0 26 Q100 6 200 18 T400 12" fill="none" stroke="#ffc72c" stroke-width="2" stroke-dasharray="12 10" stroke-linecap="round"/>
+            </svg>
+            <div class="stops">
+              <div class="stop"><strong>CDA</strong><span>launch</span></div>
+              <div class="stop"><strong>Lewiston lane</strong><span>detour chance</span></div>
+              <div class="stop"><strong>Orofino</strong><span>fuel + food</span></div>
+              <div class="stop"><strong>Dworshak</strong><span>mission zone</span></div>
+            </div>
+          </div>
+          <div class="badge-row" style="margin-top:14px;">
+            <div class="badge" id="tripWindowBadge">Apr 6 → Apr 7 • 1 night</div>
+            <div class="badge" id="dataSourceBadge">Loading trip data…</div>
+            <div class="badge" id="schemaChip" title="Trip dataset version">Data …</div>
+            <div class="badge">Budget-aware</div>
+            <div class="badge">Side quests: rated R for ridiculous</div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2 class="section-title">Mission notes</h2>
+          <ul class="list">
+            <li><strong>Transport first.</strong> Otherwise you are pitching a sequel nobody wants to film—except maybe on a shaky phone at 2 a.m.</li>
+            <li><strong>Wolfpack rule:</strong> headcount before wheels turn. Nobody gets “forgotten at the gas station” energy (rooftops are for movies; Orofino is for snacks).</li>
+            <li>Dates drive nights; transport, Surrons, sleep, and vibe re-rank stops and surface the “read this before you commit” alerts.</li>
+            <li>Load the JSON from disk if this file is opened somewhere that blocks fetch—your trip data still works.</li>
+            <li><strong>Real-trip mode:</strong> hydrate, sleep, and obey signs, maps, and Idaho rules. The Hangover nods are for morale, not a playbook.</li>
+          </ul>
+          <p class="small" style="margin-top:12px;">Your last settings are saved in this browser (local storage)—so the wolfpack can close the tab and not lose the plan.</p>
+          <div class="external-strip" aria-label="Live travel checks">
+            <a href="https://511.idaho.gov/roadconditions" target="_blank" rel="noopener noreferrer">Idaho 511</a>
+            <a href="https://itd.idaho.gov/travel/" target="_blank" rel="noopener noreferrer">ITD travel</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-build" class="grid-2" aria-labelledby="build-heading">
+      <div class="panel">
+        <h2 id="build-heading" class="section-title">Build the trip (director’s cut)</h2>
+        <div class="controls">
+          <div class="control">
+            <div class="label">Trip dates</div>
+            <div class="date-grid">
+              <div>
+                <label for="startDate">Start date</label>
+                <input id="startDate" type="date" value="2026-04-06" />
+              </div>
+              <div>
+                <label for="endDate">End date</label>
+                <input id="endDate" type="date" value="2026-04-07" />
+              </div>
+              <div>
+                <label for="nightsInput">Nights</label>
+                <input id="nightsInput" type="number" min="0" step="1" value="1" />
+              </div>
+            </div>
+          </div>
+
+          <div class="control">
+            <div class="range-line">
+              <label for="people">People in the crew</label>
+              <strong id="peopleValue">2</strong>
+            </div>
+            <input id="people" type="range" min="1" max="6" value="2" />
+          </div>
+
+          <div class="control">
+            <div class="range-line">
+              <label for="surrons">How many Surrons</label>
+              <strong id="surronValue">2</strong>
+            </div>
+            <input id="surrons" type="range" min="0" max="4" value="2" />
+          </div>
+
+          <div class="control">
+            <div class="range-line">
+              <label for="budget">Total budget comfort zone</label>
+              <strong id="budgetValue">$320</strong>
+            </div>
+            <input id="budget" type="range" min="120" max="1200" step="10" value="320" />
+          </div>
+
+          <fieldset class="control">
+            <legend class="label">Transport path</legend>
+            <div class="pill-group">
+              <input type="radio" id="transport-unlocked" name="transport" value="unlocked" checked>
+              <label for="transport-unlocked">No transport locked</label>
+
+              <input type="radio" id="transport-crew" name="transport" value="crew-rig">
+              <label for="transport-crew">Crew has a rig</label>
+
+              <input type="radio" id="transport-borrow" name="transport" value="borrow-rig">
+              <label for="transport-borrow">Borrow truck / trailer</label>
+
+              <input type="radio" id="transport-van" name="transport" value="rent-cargo-van">
+              <label for="transport-van">Rent cargo van</label>
+
+              <input type="radio" id="transport-box" name="transport" value="rent-box-truck">
+              <label for="transport-box">Rent box truck</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control">
+            <legend class="label">Sleep style</legend>
+            <div class="pill-group">
+              <input type="radio" id="sleep-cheap" name="sleep" value="cheap-room" checked>
+              <label for="sleep-cheap">Cheap room</label>
+
+              <input type="radio" id="sleep-camp" name="sleep" value="camp">
+              <label for="sleep-camp">Camp it</label>
+
+              <input type="radio" id="sleep-van" name="sleep" value="van">
+              <label for="sleep-van">Van / truck hack</label>
+
+              <input type="radio" id="sleep-cabin" name="sleep" value="cabin">
+              <label for="sleep-cabin">Cabin if lucky</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="control">
+            <legend class="label">Trip vibe</legend>
+            <div class="pill-group">
+              <input type="radio" id="vibe-balanced" name="vibe" value="balanced" checked>
+              <label for="vibe-balanced">Balanced</label>
+
+              <input type="radio" id="vibe-chaos" name="vibe" value="chaos">
+              <label for="vibe-chaos">Mild chaos (wolfpack)</label>
+
+              <input type="radio" id="vibe-legend" name="vibe" value="legend">
+              <label for="vibe-legend">Legend / morning-after myth</label>
+            </div>
+          </fieldset>
+
+          <div class="control">
+            <div class="field-line">
+              <label for="jsonLoader">Trip JSON</label>
+              <button class="ghost" id="reloadDataBtn" type="button">Retry auto-load</button>
+            </div>
+            <input id="jsonLoader" type="file" accept="application/json,.json" />
+            <div class="small" id="dataStatusText">The page will try to fetch billy_big_adventure_tripdata.json first, then fall back to bundled seed data.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="section-rec" aria-labelledby="rec-heading">
+        <h2 id="rec-heading" class="section-title">Live recommendation</h2>
+        <p class="small" style="margin:0 0 10px;">The friend who still remembers what you agreed to yesterday.</p>
+        <div class="toolbar" style="margin-bottom:12px;">
+          <button type="button" class="secondary" id="copyPlanBtn">Copy wolfpack brief</button>
+        </div>
+        <div class="result-main" role="region" aria-labelledby="rec-heading">
+          <div class="recommendation" id="recTag">Best next move</div>
+          <h3 id="headline">Lock transport first</h3>
+          <p class="muted" id="summary">Before rooms, before cabins, before anyone swears they saw the Alamo in a gravel lot—figure out what actually moves the wolfpack (and the bikes) from CDA to Dworshak.</p>
+          <div class="price" id="priceBand">Rough total feel: plan shape not ready yet</div>
+        </div>
+        <div class="grid-3" style="margin-top:14px;">
+          <div class="card">
+            <h3>Transport</h3>
+            <p class="muted" id="transportText">No vehicle assumed. Pick a transport path first—this is the plot, not the B-story.</p>
+          </div>
+          <div class="card">
+            <h3>Sleep</h3>
+            <p class="muted" id="sleepText">Cheap room is a placeholder until transport is solved. Nobody wakes up in the right motel if nobody drove there.</p>
+          </div>
+          <div class="card">
+            <h3>Move</h3>
+            <p class="muted" id="moveText">Keep pass one simple: launch, fuel, mission zone, sleep, encore block, home.</p>
+          </div>
+        </div>
+        <div class="quote" id="quoteBox" style="margin-top:14px;">The best trips are Pee-wee stubborn about the fun and Hangover-serious about the headcount.</div>
+        <div class="data-grid" style="margin-top:14px;">
+          <div class="data-card"><h4>Trip window</h4><p class="muted" id="tripWindowText">Apr 6 to Apr 7 • 1 night</p></div>
+          <div class="data-card"><h4>Travel math</h4><p class="muted" id="travelMathText">Using route data once loaded.</p></div>
+          <div class="data-card"><h4>Selected focus</h4><p class="muted" id="focusText">Cheap room + undecided transport + possible Surrons.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <details class="panel flow-panel" id="section-alerts" open>
+      <summary>Active alerts — the part of the movie where reality shows up</summary>
+      <div class="alerts-grid" id="alertsGrid"></div>
+    </details>
+
+    <details class="panel flow-panel" id="section-stops" open>
+      <summary>Date-aware stop cards</summary>
+      <div class="toolbar">
+        <button id="routeRefreshBtn" type="button">Re-rank stops</button>
+        <button id="practicalBtn" class="secondary" type="button" title="Crew rig, cheap room, balanced vibe — less plot twist">Practical mode</button>
+      </div>
+      <div class="stops-grid" id="stopsGrid"></div>
+    </details>
+
+    <details class="panel flow-panel" id="section-routes" open>
+      <summary>Route cards</summary>
+      <div class="routes" id="routesGrid"></div>
+    </details>
+
+    <section id="section-itinerary" class="grid-2" aria-label="Itinerary and fun">
+      <div class="panel">
+        <h2 class="section-title">Suggested shape — script you’ll improvise anyway</h2>
+        <ul class="list" id="itineraryList"></ul>
+      </div>
+      <div class="panel">
+        <div class="toolbar">
+          <button id="absurdBtn" type="button">Spin wolfpack wild card</button>
+          <button id="allFunBtn" class="secondary" type="button">Browse all side quests</button>
+        </div>
+        <h2 class="section-title">Side quests &amp; morale patches</h2>
+        <div class="button-row" id="funButtons"></div>
+        <div class="absurd-card" id="absurdCard" style="margin-top:14px;">
+          <span class="tag absurd">Side quest</span>
+          <h3 style="margin-top:10px;">Honorary birthday parade permit</h3>
+          <p class="muted">Pee-wee-grade paperwork. Hangover-grade confidence. Completely fake, emotionally licensed—deploy when the wolfpack needs one sacred stupid tradition.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script id="embeddedTripData" type="application/json">__TRIPDATA_JSON__</script>
+  <script>
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+    const nightsInput = document.getElementById('nightsInput');
+    const people = document.getElementById('people');
+    const surrons = document.getElementById('surrons');
+    const budget = document.getElementById('budget');
+    const peopleValue = document.getElementById('peopleValue');
+    const surronValue = document.getElementById('surronValue');
+    const budgetValue = document.getElementById('budgetValue');
+    const tripWindowBadge = document.getElementById('tripWindowBadge');
+    const dataSourceBadge = document.getElementById('dataSourceBadge');
+    const dataStatusText = document.getElementById('dataStatusText');
+    const jsonLoader = document.getElementById('jsonLoader');
+    const reloadDataBtn = document.getElementById('reloadDataBtn');
+    const alertsGrid = document.getElementById('alertsGrid');
+    const stopsGrid = document.getElementById('stopsGrid');
+    const routesGrid = document.getElementById('routesGrid');
+    const itineraryList = document.getElementById('itineraryList');
+    const funButtons = document.getElementById('funButtons');
+    const absurdCard = document.getElementById('absurdCard');
+    const routeRefreshBtn = document.getElementById('routeRefreshBtn');
+    const practicalBtn = document.getElementById('practicalBtn');
+    const absurdBtn = document.getElementById('absurdBtn');
+    const allFunBtn = document.getElementById('allFunBtn');
+
+    const recTag = document.getElementById('recTag');
+    const headline = document.getElementById('headline');
+    const summary = document.getElementById('summary');
+    const priceBand = document.getElementById('priceBand');
+    const transportText = document.getElementById('transportText');
+    const sleepText = document.getElementById('sleepText');
+    const moveText = document.getElementById('moveText');
+    const quoteBox = document.getElementById('quoteBox');
+    const tripWindowText = document.getElementById('tripWindowText');
+    const travelMathText = document.getElementById('travelMathText');
+    const focusText = document.getElementById('focusText');
+    const schemaChip = document.getElementById('schemaChip');
+    const copyPlanBtn = document.getElementById('copyPlanBtn');
+    const livePlanAnnounce = document.getElementById('livePlanAnnounce');
+
+    const LS_KEY = 'billys_big_adventure_ui_v1';
+    const TRANSPORT_VALUES = ['unlocked', 'crew-rig', 'borrow-rig', 'rent-cargo-van', 'rent-box-truck'];
+    const SLEEP_VALUES = ['cheap-room', 'camp', 'van', 'cabin'];
+    const VIBE_VALUES = ['balanced', 'chaos', 'legend'];
+
+    function esc(s) {
+      if (s == null) return '';
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function escAttr(s) {
+      return esc(s).replace(/'/g, '&#39;');
+    }
+
+    function getSourceMeta(id) {
+      return (tripData.source_registry || []).find(function (x) { return x.id === id; });
+    }
+
+    function sourceLinksHtml(sourceIds) {
+      if (!sourceIds || !sourceIds.length) return '';
+      const parts = sourceIds.map(function (sid) {
+        const src = getSourceMeta(sid);
+        if (!src || !src.url) return '';
+        return '<a href="' + escAttr(src.url) + '" target="_blank" rel="noopener noreferrer">' + esc(src.title || sid) + '</a>';
+      }).filter(Boolean);
+      if (!parts.length) return '';
+      return '<div class="source-links">' + parts.join(' · ') + '</div>';
+    }
+
+    function updateSchemaChip() {
+      if (!schemaChip) return;
+      const v = tripData.schema_version != null ? tripData.schema_version : '?';
+      const g = tripData.generated_at ? ' · ' + tripData.generated_at : '';
+      schemaChip.textContent = 'Data v' + v + g;
+    }
+
+    function announcePlan(text) {
+      if (livePlanAnnounce) livePlanAnnounce.textContent = text;
+    }
+
+    function savePrefs() {
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify({
+          startDate: startDate.value,
+          endDate: endDate.value,
+          nights: nightsInput.value,
+          people: people.value,
+          surrons: surrons.value,
+          budget: budget.value,
+          transport: getSelected('transport'),
+          sleep: getSelected('sleep'),
+          vibe: getSelected('vibe')
+        }));
+      } catch (e) { /* ignore */ }
+    }
+
+    function loadPrefs() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (!raw) return;
+        const o = JSON.parse(raw);
+        if (o.startDate && /^\d{4}-\d{2}-\d{2}$/.test(o.startDate)) startDate.value = o.startDate;
+        if (o.endDate && /^\d{4}-\d{2}-\d{2}$/.test(o.endDate)) endDate.value = o.endDate;
+        if (o.nights != null && String(o.nights).match(/^\d+$/)) nightsInput.value = o.nights;
+        if (o.people != null) people.value = o.people;
+        if (o.surrons != null) surrons.value = o.surrons;
+        if (o.budget != null) budget.value = o.budget;
+        if (TRANSPORT_VALUES.indexOf(o.transport) !== -1) {
+          const r = document.querySelector('input[name="transport"][value="' + o.transport + '"]');
+          if (r) r.checked = true;
+        }
+        if (SLEEP_VALUES.indexOf(o.sleep) !== -1) {
+          const r = document.querySelector('input[name="sleep"][value="' + o.sleep + '"]');
+          if (r) r.checked = true;
+        }
+        if (VIBE_VALUES.indexOf(o.vibe) !== -1) {
+          const r = document.querySelector('input[name="vibe"][value="' + o.vibe + '"]');
+          if (r) r.checked = true;
+        }
+      } catch (e) { /* ignore */ }
+    }
+
+    function buildPlanExport(state) {
+      const rec = buildRecommendation(state);
+      const lines = [];
+      lines.push("# Billy's Big Adventure — wolfpack brief");
+      lines.push('');
+      lines.push('**Window:** ' + formatShortDate(state.startDate) + ' → ' + formatShortDate(state.endDate) + ' · ' + state.nights + ' night(s)');
+      lines.push('**Crew:** ' + state.people + ' people · ' + state.surrons + ' Surron(s) · budget ~$' + state.budget);
+      lines.push('**Transport:** ' + state.transport + ' · **Sleep:** ' + state.sleep + ' · **Vibe:** ' + state.vibe);
+      lines.push('');
+      lines.push('## Recommendation');
+      lines.push(rec.title);
+      lines.push('');
+      lines.push(rec.summary);
+      lines.push('');
+      lines.push('- **Transport:** ' + rec.transport);
+      lines.push('- **Sleep:** ' + rec.sleep);
+      lines.push('- **Move:** ' + rec.move);
+      lines.push('- **Quote:** ' + rec.quote);
+      lines.push('');
+      lines.push(rec.price);
+      lines.push('');
+      lines.push('## Top stops (ranked)');
+      const entities = (tripData.entities || []).filter(function (e) {
+        return ['poi', 'camping', 'lodging', 'food', 'service', 'supply', 'regulation'].indexOf(e.type) !== -1;
+      });
+      const ranked = entities
+        .map(function (entity) { return { entity: entity, score: scoreEntity(entity, state) }; })
+        .sort(function (a, b) { return b.score - a.score; })
+        .slice(0, 8);
+      ranked.forEach(function (item, i) {
+        lines.push((i + 1) + '. **' + item.entity.name + '** — ' + item.entity.summary);
+      });
+      lines.push('');
+      lines.push('---');
+      lines.push('Data: schema v' + (tripData.schema_version || '?') + (tripData.generated_at ? ' · ' + tripData.generated_at : '') + ' · source: ' + loadedDataSource);
+      return lines.join('\n');
+    }
+
+    const embeddedTripData = JSON.parse(document.getElementById('embeddedTripData').textContent);
+    const extraFunOptions = [];
+
+    let tripData = embeddedTripData;
+    let loadedDataSource = 'bundled seed data';
+    let lastPlanAnnounceKey = '';
+
+    function getSelected(name) {
+      const checked = document.querySelector('input[name="' + name + '"]:checked');
+      return checked ? checked.value : null;
+    }
+
+    function parseDate(value) {
+      const parts = value.split('-').map(Number);
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+
+    function formatShortDate(value) {
+      const d = parseDate(value);
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }
+
+    function addDays(value, days) {
+      const d = parseDate(value);
+      d.setDate(d.getDate() + days);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + day;
+    }
+
+    function diffNights(start, end) {
+      const ms = parseDate(end) - parseDate(start);
+      return Math.max(0, Math.round(ms / 86400000));
+    }
+
+    function tripDates(state) {
+      const nights = diffNights(state.startDate, state.endDate);
+      const days = [];
+      for (let i = 0; i <= nights; i += 1) {
+        days.push(parseDate(addDays(state.startDate, i)));
+      }
+      return days;
+    }
+
+    function tripHasWeekday(state) {
+      return tripDates(state).some(d => d.getDay() >= 1 && d.getDay() <= 5);
+    }
+
+    function tripTouchesDinnerDays(state) {
+      return tripDates(state).some(d => [4,5,6,0].includes(d.getDay()));
+    }
+
+    function syncNightsFromDates() {
+      const nights = diffNights(startDate.value, endDate.value);
+      nightsInput.value = nights;
+      updatePlan();
+    }
+
+    function syncEndFromNights() {
+      const nights = Math.max(0, Number(nightsInput.value || 0));
+      endDate.value = addDays(startDate.value, nights);
+      updatePlan();
+    }
+
+    async function loadTripData() {
+      try {
+        const res = await fetch('./billy_big_adventure_tripdata.json');
+        if (!res.ok) throw new Error('fetch failed');
+        tripData = await res.json();
+        loadedDataSource = 'live JSON file';
+        dataSourceBadge.textContent = 'Using billy_big_adventure_tripdata.json';
+        dataStatusText.textContent = 'Auto-loaded full trip JSON from the same folder as the page.';
+        announcePlan('Trip data loaded from billy_big_adventure_tripdata.json.');
+      } catch (err) {
+        tripData = embeddedTripData;
+        loadedDataSource = 'bundled seed data';
+        dataSourceBadge.textContent = 'Using bundled seed data';
+        dataStatusText.textContent = 'Auto-fetch failed, so the page is using embedded fallback data. You can still load the full JSON file manually.';
+        announcePlan('Using embedded trip data. You can load JSON from disk with the file picker.');
+      }
+      updateSchemaChip();
+      renderEverything();
+    }
+
+    function getBudgetModel(id) {
+      return (tripData.entities || []).find(e => e.id === id);
+    }
+
+    function routeInfo() {
+      return (tripData.route_profiles || []).find(r => r.id === 'route_primary_fastest') || { distance_miles: 135.2, drive_time_minutes: 181 };
+    }
+
+    function buildState() {
+      return {
+        startDate: startDate.value,
+        endDate: endDate.value,
+        nights: diffNights(startDate.value, endDate.value),
+        people: Number(people.value),
+        surrons: Number(surrons.value),
+        budget: Number(budget.value),
+        transport: getSelected('transport'),
+        sleep: getSelected('sleep'),
+        vibe: getSelected('vibe')
+      };
+    }
+
+    function formatMoney(n) {
+      return '$' + Math.round(n);
+    }
+
+    function transportEstimate(state) {
+      const route = routeInfo();
+      const localMiles = 20 + (state.nights * 18);
+      const totalMiles = Math.round((route.distance_miles * 2) + localMiles);
+      const personal = getBudgetModel('budget_personal_vehicle');
+      const gasPrice = personal && personal.assumptions ? personal.assumptions.gas_price_regular_idaho_avg : 4.099;
+      if (state.transport === 'crew-rig') {
+        return { miles: totalMiles, text: formatMoney((totalMiles / 20) * gasPrice) + ' fuel-ish if the crew rig averages about 20 mpg', readiness: 'ready' };
+      }
+      if (state.transport === 'borrow-rig') {
+        return { miles: totalMiles, text: formatMoney((totalMiles / 18) * gasPrice) + ' fuel-ish plus whatever favor or trailer borrowing cost comes with it', readiness: 'ready' };
+      }
+      if (state.transport === 'rent-cargo-van') {
+        const van = getBudgetModel('budget_uhaul_cargo_van');
+        const fuel = van && van.assumptions ? van.assumptions.round_trip_fuel_estimate_usd + (state.nights * 4) : ((totalMiles / 18) * gasPrice);
+        return { miles: totalMiles, text: formatMoney(fuel) + ' fuel-ish plus rental/day fees', readiness: 'ready' };
+      }
+      if (state.transport === 'rent-box-truck') {
+        return { miles: totalMiles, text: 'heavier fuel burn plus rental/day fees; only makes sense if hauling is the whole problem', readiness: 'ready' };
+      }
+      return { miles: totalMiles, text: 'transport not locked yet', readiness: 'unlocked' };
+    }
+
+    function sleepEstimate(state) {
+      if (state.sleep === 'camp') return 'camping is usually the cheapest actual overnight if gear already exists';
+      if (state.sleep === 'cheap-room') return 'budget motel split across the crew is the cleanest low-drama sleep play';
+      if (state.sleep === 'van') return 'sleep cost can stay low, but comfort and legality questions go up fast';
+      return 'cabin cost can flatten out if enough people split it';
+    }
+
+    function weekdayNote(entity, state) {
+      if (entity.id === 'poi_dworshak_visitor_center') {
+        return tripHasWeekday(state) ? { text: 'Good fit for the selected dates', className: 'good' } : { text: 'Better on a weekday; spring schedule is Monday through Friday', className: 'warn' };
+      }
+      if (entity.id === 'food_edge') {
+        return tripTouchesDinnerDays(state) ? { text: 'Possible dinner window in selected dates', className: 'good' } : { text: 'Likely bad timing for selected dates', className: 'warn' };
+      }
+      if (entity.status === 'seasonal' && parseDate(state.startDate).getMonth() < 4) {
+        return { text: 'Seasonal, so verify before committing', className: 'warn' };
+      }
+      return null;
+    }
+
+    function scoreEntity(entity, state) {
+      let score = (entity.practical_score || 0) + (entity.budget_score || 0);
+      score += state.nights > 0 ? (entity.overnight_relevance || 0) : 0;
+      score += state.surrons > 0 ? (entity.surron_relevance || 0) : 0;
+      if (state.budget <= 320) score += (entity.budget_score || 0);
+      if (state.vibe === 'legend' && (entity.interest_tags || []).includes('history')) score += 3;
+      if (state.vibe === 'chaos' && (entity.interest_tags || []).includes('group')) score += 2;
+      if (entity.type === 'regulation' && state.surrons > 0) score += 25;
+      if (entity.status === 'mixed') score -= 3;
+      if (entity.status === 'seasonal') score -= 2;
+      const note = weekdayNote(entity, state);
+      if (note && note.className === 'warn') score -= 8;
+      if (note && note.className === 'good') score += 4;
+      return score;
+    }
+
+    function buildRecommendation(state) {
+      const estimate = transportEstimate(state);
+      let out = {
+        tag: 'Best next move',
+        title: 'Lock transport first',
+        summary: 'No rig, no road trip movie—just a group chat and optimism. Before rooms, cabins, or sacred photo ops, decide what actually hauls the wolfpack (and bikes) to Dworshak.',
+        transport: 'No vehicle assumed. Pick a transport path first—this is the plot, not the B-story.',
+        sleep: 'Cheap room is a placeholder until transport is solved. Nobody wakes up confused in the right motel if nobody drove there.',
+        move: 'Keep pass one simple: launch, fuel, mission zone, sleep, one encore block, home—like a tight third act.',
+        quote: 'Pee-wee never skipped the bike problem; the wolfpack never skips the headcount. Do both.',
+        price: 'Rough total feel: plan shape not ready yet'
+      };
+
+      if (state.transport === 'unlocked') return out;
+
+      const route = routeInfo();
+      const windowText = formatShortDate(state.startDate) + ' to ' + formatShortDate(state.endDate) + ' • ' + state.nights + (state.nights === 1 ? ' night' : ' nights');
+      out.price = 'Trip window: ' + windowText + ' • Travel: about ' + route.distance_miles + ' one-way miles before local moves';
+
+      if (state.transport === 'rent-box-truck') {
+        out.tag = 'Hauler-first chaos plan';
+        out.title = 'Rent the box truck only if hauling is the actual blocker';
+        out.summary = 'A box truck is a logistics answer, not a romance answer. It makes sense only if the bike count or gear pile truly needs it.';
+        out.transport = 'Box truck path selected. Expect the highest hassle and fuel burn.';
+        out.sleep = state.sleep === 'van' ? 'Truck-sleep fantasy is still a question mark; motel or camp is cleaner.' : sleepEstimate(state);
+        out.move = 'Drive direct, keep detours short, use Orofino as reset zone.';
+        out.quote = 'Big truck energy only if the mission earned it—otherwise you are cosplaying logistics.';
+        return out;
+      }
+
+      if (state.transport === 'rent-cargo-van') {
+        out.tag = 'Flexible van plan';
+        out.title = state.sleep === 'van' ? 'Cargo-van birthday chaos' : 'Cargo-van haul with sane sleep';
+        out.summary = state.sleep === 'van'
+          ? 'Wolfpack deluxe: great for hauling, questionable for sleep hygiene. Commit as a group or bail to a real bed.'
+          : 'The van is the getaway vehicle for gear, not a lifestyle flex. Sleep somewhere with walls if you can.';
+        out.transport = 'Cargo van selected. Travel math: ' + estimate.text + '.';
+        out.sleep = sleepEstimate(state);
+        out.move = 'Haul hard, tight stops, no “where did the straps go” subplot at dusk.';
+        out.quote = 'If the van carries the mission, it gets a credit in the story—and a thorough sweep before you return it.';
+        return out;
+      }
+
+      if (state.sleep === 'camp') {
+        out.tag = 'Camp-first low-cost play';
+        out.title = state.transport === 'borrow-rig' ? 'Borrowed rig + camp plan' : 'Crew rig + camp plan';
+        out.summary = 'Weather and gear willing, camping keeps cash for fuel, food, and daylight drama in a good way.';
+        out.transport = (state.transport === 'borrow-rig' ? 'Borrowed truck / trailer path.' : 'Crew rig path.') + ' Travel math: ' + estimate.text + '.';
+        out.sleep = sleepEstimate(state);
+        out.move = 'Launch early, camp before dark, reservoir block next—Pee-wee would respect the schedule; the wolfpack will test it.';
+        out.quote = 'Stars, zippers, and one friend who swears they pitched this tent before. That is the movie.';
+        return out;
+      }
+
+      if (state.sleep === 'cabin' && state.budget >= 380) {
+        out.tag = 'Comfort-if-lucky play';
+        out.title = state.transport === 'borrow-rig' ? 'Borrowed rig + cabin hunt' : 'Crew rig + cabin hunt';
+        out.summary = 'A cabin win upgrades the whole weekend without Vegas receipts—still book early and keep a motel escape hatch.';
+        out.transport = (state.transport === 'borrow-rig' ? 'Borrowed truck / trailer path.' : 'Crew rig path.') + ' Travel math: ' + estimate.text + '.';
+        out.sleep = sleepEstimate(state);
+        out.move = 'Day 1 grounded, Day 2 softer—recover like you planned it (even if you did not).';
+        out.quote = 'Good basecamp energy: looks like you meant it, feels like you lucked into it.';
+        return out;
+      }
+
+      out.tag = 'Best value plan';
+      out.title = state.transport === 'borrow-rig' ? 'Borrowed rig + cheap room' : 'Crew rig + cheap room';
+      out.summary = 'Clean money-to-fun ratio when a rig exists: direct route, Orofino as reset button, stops doing the heavy character work.';
+      out.transport = (state.transport === 'borrow-rig' ? 'Borrowed truck / trailer path.' : 'Crew has access to a rig.') + ' Travel math: ' + estimate.text + '.';
+      out.sleep = sleepEstimate(state);
+      out.move = 'Day 1 mission, cheap sleep, Day 2 victory lap, then home before anyone becomes a cautionary tale.';
+      out.quote = state.vibe === 'legend'
+        ? 'Legend status unlocked when the group chat still likes each other after the last mile home.'
+        : 'Hydrate tonight, brag tomorrow—same wolfpack, slightly smarter.';
+      return out;
+    }
+
+    function renderRecommendation(state) {
+      const rec = buildRecommendation(state);
+      const route = routeInfo();
+      const est = transportEstimate(state);
+      recTag.textContent = rec.tag;
+      headline.textContent = rec.title;
+      summary.textContent = rec.summary;
+      transportText.textContent = rec.transport;
+      sleepText.textContent = rec.sleep;
+      moveText.textContent = rec.move;
+      quoteBox.textContent = rec.quote;
+      priceBand.textContent = rec.price;
+      tripWindowText.textContent = formatShortDate(state.startDate) + ' to ' + formatShortDate(state.endDate) + ' • ' + state.nights + (state.nights === 1 ? ' night' : ' nights');
+      travelMathText.textContent = 'Primary route: about ' + route.distance_miles + ' miles one way, about ' + route.drive_time_minutes + ' minutes before extra stops. ' + (est.readiness === 'ready' ? est.text : 'Transport not locked yet.');
+      focusText.textContent = state.sleep + ' • ' + state.transport + ' • ' + state.surrons + ' Surron' + (state.surrons === 1 ? '' : 's') + ' • data source: ' + loadedDataSource;
+      const annKey = rec.title + '|' + state.transport + '|' + state.sleep + '|' + state.startDate + '|' + state.endDate;
+      if (annKey !== lastPlanAnnounceKey) {
+        lastPlanAnnounceKey = annKey;
+        const ann = rec.title + '. ' + (rec.summary.length > 160 ? rec.summary.slice(0, 160) + '…' : rec.summary);
+        announcePlan(ann);
+      }
+    }
+
+    function renderAlerts(state) {
+      const cards = [];
+      const alerts = tripData.alerts || [];
+      alerts.forEach(function (alert) {
+        const src = sourceLinksHtml(alert.source_ids);
+        cards.push(
+          '<article class="alert-card"><span class="tag alert">' + esc(alert.severity || 'alert') + '</span><h3 style="margin-top:10px;">' + esc(alert.name) + '</h3><p class="muted">' + esc(alert.summary) + '</p>' +
+          (alert.action ? '<p class="small">Action: ' + esc(alert.action) + '</p>' : '') +
+          src +
+          '</article>'
+        );
+      });
+      if (state.surrons > 0) {
+        const reg = (tripData.entities || []).find(function (e) { return e.id === 'reg_surron_access'; });
+        if (reg) {
+          const src = sourceLinksHtml(reg.source_ids);
+          cards.unshift(
+            '<article class="alert-card"><span class="tag alert">ride caution</span><h3 style="margin-top:10px;">' + esc(reg.name) + '</h3><p class="muted">' + esc(reg.summary) + '</p><p class="small">Do not assume a Surron is treated the same as a Class 1 or 2 e-bike in every setup or every place you want to ride.</p>' + src + '</article>'
+          );
+        }
+      }
+      alertsGrid.innerHTML = cards.join('');
+    }
+
+    function renderStops(state) {
+      const entities = (tripData.entities || []).filter(e => ['poi','camping','lodging','food','service','supply','regulation'].includes(e.type));
+      const ranked = entities
+        .map(entity => ({ entity, score: scoreEntity(entity, state) }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 8);
+
+      stopsGrid.innerHTML = ranked.map(function (item) {
+        const e = item.entity;
+        const note = weekdayNote(e, state);
+        const tags = [];
+        if (note) tags.push('<span class="mini-pill ' + esc(note.className) + '">' + esc(note.text) + '</span>');
+        if (e.status && e.status !== 'open') tags.push('<span class="mini-pill warn">Status: ' + esc(e.status) + '</span>');
+        if ((e.interest_tags || []).includes('budget_group')) tags.push('<span class="mini-pill good">Group-friendly</span>');
+        if ((e.interest_tags || []).includes('birthday_dinner')) tags.push('<span class="mini-pill">Birthday meal</span>');
+        if ((e.interest_tags || []).includes('fuel')) tags.push('<span class="mini-pill">Fuel anchor</span>');
+        const src = sourceLinksHtml(e.source_ids);
+        return '<article class="stop-card"><span class="tag stop">' + esc(e.type) + '</span><h3 style="margin-top:10px;">' + esc(e.name) + '</h3><p class="muted">' + esc(e.summary) + '</p><div class="data-status" style="margin-top:10px;">' + tags.join('') + '</div><p class="small" style="margin-top:10px;">Practical ' + (e.practical_score || 0) + ' • Budget ' + (e.budget_score || 0) + ' • Overnight ' + (e.overnight_relevance || 0) + '</p>' + src + '</article>';
+      }).join('');
+    }
+
+    function renderRoutes() {
+      const routes = tripData.route_profiles || [];
+      routesGrid.innerHTML = routes.map(function (route) {
+        const nodes = route.corridor_nodes ? route.corridor_nodes.map(function (n) { return esc(n); }).join(' → ') : 'Optional detour chain';
+        const meta = [];
+        if (route.distance_miles) meta.push(route.distance_miles + ' miles to Orofino baseline');
+        if (route.drive_time_minutes) meta.push(route.drive_time_minutes + ' min baseline');
+        if (route.status) meta.push('status: ' + esc(route.status));
+        const src = sourceLinksHtml(route.source_ids);
+        return '<article class="route-card"><span class="tag route">' + esc(route.corridor_role || 'route') + '</span><h3 style="margin-top:10px;">' + esc(route.name) + '</h3><p class="muted">' + esc(route.summary) + '</p><p class="small" style="margin-top:10px;">' + nodes + '</p><p class="small">' + meta.join(' • ') + '</p>' + src + '</article>';
+      }).join('');
+    }
+
+    function buildItinerary(state) {
+      const lines = [];
+      const transport = state.transport === 'unlocked'
+        ? 'First task: solve transport.'
+        : state.transport === 'rent-cargo-van'
+          ? 'Pick up the cargo van, load smart, and keep the stop count disciplined.'
+          : state.transport === 'rent-box-truck'
+            ? 'Pick up the box truck only if the hauling need is real.'
+            : state.transport === 'borrow-rig'
+              ? 'Confirm the borrowed truck / trailer combo before anything else.'
+              : 'Use the crew rig and keep the launch efficient.';
+      lines.push(transport);
+      lines.push('Launch from CDA on ' + formatShortDate(state.startDate) + ' with ' + state.people + ' people and ' + state.surrons + ' Surron' + (state.surrons === 1 ? '' : 's') + ' — wolfpack accounted for (re-count after every gas stop if you must).');
+      lines.push('Orofino is the reset scene: fuel, snacks, “what were we thinking,” and the final sleep vote.');
+
+      if (state.sleep === 'camp') {
+        lines.push('If camping, lock in the site before dark so the birthday does not turn into a gear argument.');
+      } else if (state.sleep === 'van') {
+        lines.push('If doing the van / truck hack, treat it as transport-first and comfort-second.');
+      } else if (state.sleep === 'cabin') {
+        lines.push('If hunting cabins, check the Freeman Creek style options first and keep a motel fallback ready.');
+      } else {
+        lines.push('Cheap-room play: land the room, drop gear, and use the extra brain space for actual fun.');
+      }
+
+      if (state.surrons > 0) {
+        lines.push('Because Surrons are in the mix, surface legal trail / OHV caution before random ride assumptions.');
+      }
+
+      for (let i = 1; i <= state.nights; i += 1) {
+        lines.push('Night ' + i + ': keep the evening light enough that Day ' + (i + 1) + ' still has one real outing block left in it.');
+      }
+      lines.push('Departure day: one more short stop, one Pee-wee-tier photo nobody will delete, then home before the highway becomes a Hangover sequel.');
+      itineraryList.innerHTML = lines.map(function (line) { return '<li>' + esc(line) + '</li>'; }).join('');
+    }
+
+    function funOptions() {
+      return (tripData.entities || []).filter(e => e.type === 'fun_option').concat(extraFunOptions);
+    }
+
+    function renderFunButtons() {
+      funButtons.innerHTML = funOptions().map(function (fun) {
+        return '<button class="ghost" data-fun-id="' + escAttr(fun.id) + '" type="button">' + esc(fun.name) + '</button>';
+      }).join('');
+      Array.from(funButtons.querySelectorAll('button')).forEach(function (btn) {
+        btn.addEventListener('click', function () { showFun(btn.getAttribute('data-fun-id')); });
+      });
+    }
+
+    function showFun(id) {
+      const choice = funOptions().find(function (item) { return item.id === id; }) || funOptions()[0];
+      absurdCard.innerHTML = '<span class="tag absurd">Side quest</span><h3 style="margin-top:10px;">' + esc(choice.name) + '</h3><p class="muted">' + esc(choice.summary) + '</p>';
+    }
+
+    function spinAbsurd() {
+      const options = funOptions();
+      const pick = options[Math.floor(Math.random() * options.length)];
+      showFun(pick.id);
+    }
+
+    function updatePlan() {
+      const state = buildState();
+      peopleValue.textContent = state.people;
+      surronValue.textContent = state.surrons;
+      budgetValue.textContent = '$' + state.budget;
+      tripWindowBadge.textContent = formatShortDate(state.startDate) + ' → ' + formatShortDate(state.endDate) + ' • ' + state.nights + (state.nights === 1 ? ' night' : ' nights');
+      renderRecommendation(state);
+      renderAlerts(state);
+      renderStops(state);
+      renderRoutes();
+      buildItinerary(state);
+      savePrefs();
+    }
+
+    function renderEverything() {
+      renderFunButtons();
+      updatePlan();
+    }
+
+    jsonLoader.addEventListener('change', async (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      tripData = JSON.parse(text);
+      loadedDataSource = file.name;
+      dataSourceBadge.textContent = 'Using ' + file.name;
+      dataStatusText.textContent = 'Loaded custom JSON file directly into the planner.';
+      updateSchemaChip();
+      announcePlan('Loaded custom file ' + file.name + '.');
+      renderEverything();
+    });
+
+    reloadDataBtn.addEventListener('click', loadTripData);
+    [people, surrons, budget].forEach(el => el.addEventListener('input', updatePlan));
+    [startDate, endDate].forEach(el => el.addEventListener('change', syncNightsFromDates));
+    nightsInput.addEventListener('input', syncEndFromNights);
+    document.querySelectorAll('input[name="transport"], input[name="sleep"], input[name="vibe"]').forEach(el => el.addEventListener('change', updatePlan));
+    routeRefreshBtn.addEventListener('click', updatePlan);
+    practicalBtn.addEventListener('click', function () {
+      document.getElementById('transport-crew').checked = true;
+      document.getElementById('sleep-cheap').checked = true;
+      document.getElementById('vibe-balanced').checked = true;
+      updatePlan();
+    });
+    absurdBtn.addEventListener('click', spinAbsurd);
+    allFunBtn.addEventListener('click', function () {
+      const opts = (tripData.entities || []).filter(function (e) { return e.type === 'fun_option'; });
+      if (opts[0]) showFun(opts[0].id);
+      else spinAbsurd();
+    });
+
+    copyPlanBtn.addEventListener('click', async function () {
+      const state = buildState();
+      const text = buildPlanExport(state);
+      try {
+        await navigator.clipboard.writeText(text);
+        announcePlan('Wolfpack brief copied to clipboard.');
+        copyPlanBtn.textContent = 'Copied!';
+        setTimeout(function () { copyPlanBtn.textContent = 'Copy wolfpack brief'; }, 2000);
+      } catch (e) {
+        announcePlan('Clipboard not available; select and copy from a new window.');
+        window.prompt('Copy this summary:', text);
+      }
+    });
+
+    loadPrefs();
+    loadTripData();
+  </script>
+</body>
+</html>

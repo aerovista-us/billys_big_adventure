@@ -1,0 +1,2221 @@
+{
+  "schema_name": "billy_big_adventure_tripdata",
+  "schema_version": "1.1.0",
+  "generated_at": "2026-03-22",
+  "coverage": {
+    "origin": "Coeur d'Alene, Idaho",
+    "destination": "Dworshak Reservoir / Orofino / Ahsahka corridor, Idaho",
+    "trip_window_focus": "early April 2026",
+    "intent_tags": [
+      "birthday_trip",
+      "budget_road_trip",
+      "overnight",
+      "surron_possible",
+      "moving_van_or_truck_possible",
+      "day_trip_extensions",
+      "route_sidequests",
+      "narrative_voice_pee_wee_hangover",
+      "wolfpack_logistics_humor"
+    ],
+    "notes": [
+      "First-pass but broad trip dataset for the Billy's Big Adventure planner UI.",
+      "Narrative voice intentionally blends Pee-wee-scale quest energy with Hangover-style wolfpack logistics humor (PG-13). Movie nods are for morale, not a playbook—obey laws, signs, MVUM/OHV rules, and Idaho 511.",
+      "Practical records (alerts, closures, reservations) stay factual; fun_option rows are explicitly silly.",
+      "Availability, prices, hours, closures, and road conditions change fast; re-check live sources before departure."
+    ],
+    "narrative_voice": {
+      "tone_keywords": [
+        "bike_quest_stubborn_joy",
+        "headcount_before_wheels_turn",
+        "morning_after_hydration_not_chaos"
+      ],
+      "references_in_spirit": [
+        "Pee-wee's Big Adventure",
+        "The Hangover"
+      ],
+      "disclaimer": "No endorsement of impaired driving, wildlife harassment, or Vegas-grade mistakes—Idaho edition runs on snacks, sleep, and spreadsheets."
+    }
+  },
+  "source_registry": [
+    {
+      "id": "src_route_rome2rio",
+      "title": "Rome2Rio Coeur d'Alene to Orofino",
+      "url": "https://www.rome2rio.com/s/Coeur-d-Alene/Orofino",
+      "kind": "travel-planner",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_dworshak_closures_usace",
+      "title": "Dworshak Dam closes some recreation areas for public safety",
+      "url": "https://www.nww.usace.army.mil/Media/News-Releases/Article/4437262/dworshak-dam-closes-some-recreation-areas-for-public-safety/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_state_park",
+      "title": "Dworshak State Park",
+      "url": "https://parksandrecreation.idaho.gov/state-park/dworshak-state-park/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_visitor_center",
+      "title": "Dworshak Visitor Center",
+      "url": "https://www.nww.usace.army.mil/Locations/District-Locks-and-Dams/Dworshak-Dam-and-Reservoir/Dworshak-Visitor-Center/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_big_eddy_usace",
+      "title": "Big Eddy recreation area",
+      "url": "https://www.nww.usace.army.mil/Locations/District-Locks-and-Dams/Dworshak-Dam-and-Reservoir/Big-Eddy/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_water",
+      "title": "Dworshak water data",
+      "url": "https://water.usace.army.mil/overview/nww/locations/dwr",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_reservoir_map",
+      "title": "Dworshak reservoir recreation map",
+      "url": "https://parksandrecreation.idaho.gov/wp-content/uploads/Dworshak-Reservoir-map-USACE.pdf",
+      "kind": "official_pdf",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_fishing_planner",
+      "title": "Idaho Fishing Planner - Dworshak Reservoir",
+      "url": "https://idfg.idaho.gov/ifwis/fishingplanner/water/1162552466241",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_fisheries_update",
+      "title": "Dworshak Reservoir kokanee and smallmouth bass update",
+      "url": "https://idfg.idaho.gov/article/dworshak-reservoir-kokanee-and-smallmouth-bass-update",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_dworshak_hatchery",
+      "title": "Dworshak National Fish Hatchery",
+      "url": "https://www.fws.gov/fish-hatchery/dworshak",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_ohv",
+      "title": "Idaho ATVs, UTVs & Motorbikes",
+      "url": "https://parksandrecreation.idaho.gov/park-activity/atvs-utvs-motorbikes/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_ebikes",
+      "title": "Idaho Parks - Biking / e-bike rules",
+      "url": "https://parksandrecreation.idaho.gov/park-activity/biking/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_mvum",
+      "title": "Nez Perce-Clearwater NF maps and guides",
+      "url": "https://www.fs.usda.gov/r01/nezperce-clearwater/maps-guides",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_idaho_511",
+      "title": "Idaho 511 road conditions",
+      "url": "https://511.idaho.gov/roadconditions",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_itd_travel",
+      "title": "ITD travel information",
+      "url": "https://itd.idaho.gov/travel/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_orofino_tourism",
+      "title": "City of Orofino tourism page",
+      "url": "https://cityoforofino.org/tourism/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_chamber",
+      "title": "Clearwater County Adventures / Chamber",
+      "url": "https://clearwatercountyadventures.com/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_clearwater_events_apr6",
+      "title": "Clearwater County Adventures events for Apr 6, 2026",
+      "url": "https://clearwatercountyadventures.com/events/2026-04-06/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_nezperce_vc",
+      "title": "Nez Perce NHP Visitor Center",
+      "url": "https://www.nps.gov/nepe/planyourvisit/nez-perce-nhp-visitor-center.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_confluence_overlook",
+      "title": "Confluence Overlook",
+      "url": "https://www.nps.gov/nepe/planyourvisit/visit-confluence-overlook.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_winchester_lake",
+      "title": "Winchester Lake State Park",
+      "url": "https://parksandrecreation.idaho.gov/state-park/winchester-lake-state-park/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_hells_gate",
+      "title": "Hells Gate State Park",
+      "url": "https://parksandrecreation.idaho.gov/state-park/hells-gate-state-park/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_weippe_discovery",
+      "title": "Weippe Discovery Center",
+      "url": "https://visitnorthcentralidaho.org/visitorcenters/weippe-discovery-center/",
+      "kind": "regional_official",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_weippe_prairie",
+      "title": "Weippe Prairie",
+      "url": "https://www.nps.gov/nepe/learn/historyculture/weippe-prairie.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_lolo_trail",
+      "title": "Visit Lolo Trail and Pass",
+      "url": "https://www.nps.gov/nepe/planyourvisit/visit-lolo-trail-and-pass.htm",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_helgeson",
+      "title": "Helgeson Place Hotel & Suites",
+      "url": "https://www.helgesonhotel.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_white_pine",
+      "title": "White Pine Motel",
+      "url": "https://whitepinemotel.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_konkolville",
+      "title": "Konkolville Motel",
+      "url": "https://www.konkolvillemotel.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_best_western",
+      "title": "Best Western Lodge at River's Edge",
+      "url": "https://www.bestwestern.com/en_US/book/orofino/hotel-rooms/best-western-lodge-at-river-s-edge/propertyCode.13057.html",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_hayes_foods",
+      "title": "Hayes Foods and Hardware",
+      "url": "https://www.acehardware.com/store-details/05314",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_glenwood_pharmacy",
+      "title": "Arnzen's Glenwood Pharmacy",
+      "url": "https://www.glenwoodpharmacy.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_clearwater_canyon_pharmacy",
+      "title": "Clearwater Canyon Pharmacy",
+      "url": "https://www.clearwatercanyonpharmacy.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_atkinson_fuel",
+      "title": "Atkinson Distributing fuel services",
+      "url": "https://www.atkinsondistributing.com/services-view/gas-services/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_deanos",
+      "title": "Deano's Convenience Store & Gas Pumps",
+      "url": "https://www.atkinsondistributing.com/services-view/deanos/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_exxon_orofino",
+      "title": "Exxon - Orofino",
+      "url": "https://www.exxon.com/en/find-station/exxon-orofino-id-deanosorofino-200311216",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_orofino_airport",
+      "title": "Orofino Municipal Airport",
+      "url": "https://cityoforofino.org/orofino-municipal-airport/",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_museum",
+      "title": "Clearwater Historical Museum",
+      "url": "https://www.clearwatermuseum.org/index.html",
+      "kind": "business_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_rex_theater",
+      "title": "Rex Theater",
+      "url": "https://orofinotheater.com/",
+      "kind": "business_org",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_pizza_factory",
+      "title": "Pizza Factory Orofino",
+      "url": "https://www.pizzafactory.com/orofino/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_edge",
+      "title": "Dining on the Edge",
+      "url": "https://www.diningontheedge.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_ponderosa",
+      "title": "Ponderosa Restaurant and Brass Rail Lounge",
+      "url": "https://www.ponderosacafe.com/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_aaa_idaho",
+      "title": "AAA Idaho average gas prices",
+      "url": "https://gasprices.aaa.com/?state=ID",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_aaa_idaho_page",
+      "title": "AAA Idaho metro averages page",
+      "url": "https://gasprices.aaa.com/page/18/?state=ID",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_van",
+      "title": "U-Haul cargo van rental",
+      "url": "https://www.uhaul.com/Truck-Rentals/Cargo-Van/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_sizes",
+      "title": "U-Haul truck sizes",
+      "url": "https://www.uhaul.com/Truck-Rentals/Moving-Truck-Sizes/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_pickup",
+      "title": "U-Haul pickup truck rental",
+      "url": "https://www.uhaul.com/Truck-Rentals/Pickup-Truck/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_safety",
+      "title": "U-Haul truck user instructions",
+      "url": "https://www.uhaul.com/Tips/Loading/Truck-User-Instructions-123/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_uhaul_passengers",
+      "title": "U-Haul truck rentals FAQ",
+      "url": "https://www.uhaul.com/FrequentlyAskedQuestions/Truck-Rentals/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_hd_cda_rentals",
+      "title": "Home Depot Coeur d'Alene rentals",
+      "url": "https://www.homedepot.com/l/Coeur-D-Alene/ID/Coeur-D-Alene/83815/1803/rentals",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_hd_van",
+      "title": "Home Depot cargo van rental product page",
+      "url": "https://www.homedepot.com/p/rental/Cargo-Van-Rental-3/316821410",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_penske_van",
+      "title": "Penske cargo van",
+      "url": "https://www.pensketruckrental.com/trucks-and-vans/cargo-van/",
+      "kind": "business",
+      "verified": "2026-03-22",
+      "trust": "medium"
+    },
+    {
+      "id": "src_clearwater_sheriff",
+      "title": "Clearwater County Sheriff",
+      "url": "https://www.clearwatercounty.org/departments/sheriff/index.php",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_em",
+      "title": "Clearwater County Emergency Management",
+      "url": "https://www.clearwatercounty.org/departments/emergency_management/index.php",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_contact",
+      "title": "Clearwater County contact list",
+      "url": "https://www.clearwatercounty.org/contact_us/index.php",
+      "kind": "official",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_clearwater_health",
+      "title": "St. Mary's Health & Clearwater Valley Health locations",
+      "url": "https://smh-cvh.org/ourlocations/",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    },
+    {
+      "id": "src_stjoes",
+      "title": "St. Joseph Regional Medical Center",
+      "url": "https://www.sjrmc.org/contact",
+      "kind": "official_org",
+      "verified": "2026-03-22",
+      "trust": "high"
+    }
+  ],
+  "app_contract": {
+    "entity_common_fields": [
+      "id",
+      "type",
+      "name",
+      "zone",
+      "corridor_role",
+      "status",
+      "interest_tags",
+      "summary",
+      "practical_score",
+      "budget_score",
+      "surron_relevance",
+      "overnight_relevance",
+      "location",
+      "contact",
+      "hours",
+      "source_ids",
+      "confidence",
+      "notes"
+    ],
+    "entity_types": [
+      "route_profile",
+      "alert",
+      "poi",
+      "lodging",
+      "camping",
+      "supply",
+      "food",
+      "service",
+      "regulation",
+      "budget_model",
+      "search_template",
+      "fun_option"
+    ],
+    "status_enum": [
+      "open",
+      "mixed",
+      "closed",
+      "seasonal",
+      "check_live",
+      "inferred"
+    ],
+    "confidence_enum": [
+      "high",
+      "medium",
+      "low"
+    ]
+  },
+  "route_profiles": [
+    {
+      "id": "route_primary_fastest",
+      "type": "route_profile",
+      "name": "Fastest practical corridor",
+      "zone": "corridor",
+      "corridor_role": "primary",
+      "status": "check_live",
+      "summary": "Use Coeur d'Alene to Lewiston corridor on US-95, then continue toward Orofino and the Dworshak/Ahsahka area. Coeur d'Alene to Orofino is about 135.2 road miles and about 3h 1m before adding the last stretch to Big Eddy / Ahsahka.",
+      "distance_miles": 135.2,
+      "drive_time_minutes": 181,
+      "corridor_nodes": [
+        "Coeur d'Alene",
+        "Lewiston / Lewiston Grade area",
+        "Lapwai / Spalding",
+        "Orofino",
+        "Ahsahka / Dworshak"
+      ],
+      "source_ids": [
+        "src_route_rome2rio",
+        "src_nezperce_vc",
+        "src_big_eddy_usace"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "Exact turn-by-turn path is not stored here because apps can map that live.",
+        "Big Eddy is described by USACE as 5 miles west of Orofino on Highway 7, then 3 miles to Big Eddy.",
+        "Always re-check Idaho 511 before departure.",
+        "Wolfpack logistics: one navigator, one 511 checker, nobody ‘remembers’ the whole corridor from group chat."
+      ]
+    },
+    {
+      "id": "route_historic_detour_chain",
+      "type": "route_profile",
+      "name": "History-heavy side quest chain",
+      "zone": "corridor",
+      "corridor_role": "optional_detour",
+      "status": "open",
+      "summary": "If you want the route itself to become part of the trip, chain together Confluence Overlook, Nez Perce NHP Visitor Center, and Hells Gate State Park before continuing east toward Orofino.",
+      "source_ids": [
+        "src_confluence_overlook",
+        "src_nezperce_vc",
+        "src_hells_gate"
+      ],
+      "confidence": "high",
+      "notes": [
+        "This is not the shortest way to get there, but it adds actual substance instead of random filler stops.",
+        "Pee-wee would call this ‘the scenic director’s cut’; still pack water and patience."
+      ]
+    },
+    {
+      "id": "route_longer_detour_weippe",
+      "type": "route_profile",
+      "name": "Extend eastward after Orofino",
+      "zone": "destination_region",
+      "corridor_role": "post-arrival_extension",
+      "status": "open",
+      "summary": "If Day 2 needs more to do, keep going east from Orofino toward Weippe and the historic Lolo Trail lane.",
+      "source_ids": [
+        "src_weippe_discovery",
+        "src_weippe_prairie",
+        "src_lolo_trail"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Day-2 extension if the wolfpack still has daylight and nobody lost the keys in Orofino."
+      ]
+    }
+  ],
+  "alerts": [
+    {
+      "id": "alert_dworshak_closures_mar2026",
+      "type": "alert",
+      "name": "Recent Dworshak recreation closures",
+      "zone": "destination_region",
+      "corridor_role": "destination_alert",
+      "status": "mixed",
+      "severity": "high",
+      "summary": "USACE said Merry's Bay Day Use Area, Dent Acres Recreation Area, and Bruce's Eddy Recreation Area are temporarily closed for public safety due to flooding and mudslides. Dam View Campground, Canyon Creek Recreation Area, and Big Eddy Recreation Area remain open. Dent Campground and Dent Group Camping Area were scheduled to open April 12.",
+      "source_ids": [
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high",
+      "action": "Do not build the trip around Dent or Merry's Bay for an April 6 outing unless live status changes."
+    },
+    {
+      "id": "alert_orofino_flooding_context",
+      "type": "alert",
+      "name": "Clearwater County flooding / mudslide context",
+      "zone": "destination_region",
+      "corridor_role": "destination_alert",
+      "status": "check_live",
+      "severity": "high",
+      "summary": "The Orofino / Clearwater County area has been dealing with flooding and mudslide impacts in March 2026. Use Idaho 511 and local emergency channels before leaving.",
+      "source_ids": [
+        "src_idaho_511",
+        "src_itd_travel"
+      ],
+      "confidence": "medium",
+      "notes": [
+        "This record intentionally avoids hard-coding transient lane details because those can change faster than a static file."
+      ]
+    },
+    {
+      "id": "alert_apr6_events_snapshot",
+      "type": "alert",
+      "name": "Official events snapshot for Apr 6, 2026",
+      "zone": "destination_region",
+      "corridor_role": "events",
+      "status": "open",
+      "severity": "low",
+      "summary": "Clearwater County Chamber calendar shows no events scheduled specifically for April 6, 2026.",
+      "source_ids": [
+        "src_clearwater_events_apr6"
+      ],
+      "confidence": "medium"
+    }
+  ],
+  "entities": [
+    {
+      "id": "poi_confluence_overlook",
+      "type": "poi",
+      "name": "Confluence Overlook",
+      "zone": "lewiston_grade",
+      "corridor_role": "en_route",
+      "status": "open",
+      "interest_tags": [
+        "scenic",
+        "quick_stop",
+        "photo",
+        "history",
+        "highway_view"
+      ],
+      "summary": "Highway pullout overlooking the confluence of the Snake and Clearwater Rivers, with views across the Nez Perce homeland and a historical marker.",
+      "practical_score": 8,
+      "budget_score": 10,
+      "surron_relevance": 2,
+      "overnight_relevance": 1,
+      "location": {
+        "description": "about 8 miles north of Lewiston on the Lewiston Grade of US-95",
+        "lat": 46.461539,
+        "lon": -116.9918
+      },
+      "source_ids": [
+        "src_confluence_overlook"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_nez_perce_vc",
+      "type": "poi",
+      "name": "Nez Perce National Historical Park Visitor Center",
+      "zone": "lapwai_spalding",
+      "corridor_role": "en_route",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "culture",
+        "museum",
+        "stretch_legs",
+        "serious_stop"
+      ],
+      "summary": "Substantial visitor center, museum, and historic district stop that adds real depth to the route instead of disposable roadside filler.",
+      "practical_score": 8,
+      "budget_score": 10,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "location": {
+        "address": "39063 US Hwy 95, Lapwai, ID 83540-9715",
+        "lat": 46.447364,
+        "lon": -116.823272
+      },
+      "hours": {
+        "note": "Check NPS for current hours and programming."
+      },
+      "source_ids": [
+        "src_nezperce_vc"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_hells_gate",
+      "type": "poi",
+      "name": "Hells Gate State Park + Lewis & Clark Discovery Center",
+      "zone": "lewiston",
+      "corridor_role": "en_route_or_backup_overnight",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "river",
+        "camping",
+        "bike",
+        "boat",
+        "backup_plan"
+      ],
+      "summary": "Big, serviceable stop near Lewiston with discovery center, marina, camping, cabins, bike access, and a strong 'gateway adventure' feel if the upper route gets messy.",
+      "practical_score": 7,
+      "budget_score": 7,
+      "surron_relevance": 2,
+      "overnight_relevance": 8,
+      "location": {
+        "address": "5100 Hells Gate Rd, Lewiston, ID 83501",
+        "lat": 46.36917,
+        "lon": -117.05444
+      },
+      "hours": {
+        "visitor_center": "Open daily 9 AM–5 PM; closed major holidays",
+        "day_use": "7 AM–10 PM"
+      },
+      "contact": {
+        "phone": "(208) 799-5015"
+      },
+      "source_ids": [
+        "src_hells_gate"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Useful as a fallback overnight or rain-plan stop."
+      ]
+    },
+    {
+      "id": "poi_winchester_lake",
+      "type": "poi",
+      "name": "Winchester Lake State Park",
+      "zone": "south_of_lewiston",
+      "corridor_role": "alternate_detour",
+      "status": "open",
+      "interest_tags": [
+        "camping",
+        "yurts",
+        "fishing",
+        "canoe",
+        "mountain_bike",
+        "quiet"
+      ],
+      "summary": "A quieter detour south of Lewiston if the trip grows into a multi-stop Idaho wander instead of a straight Dworshak punch-in.",
+      "practical_score": 5,
+      "budget_score": 8,
+      "surron_relevance": 2,
+      "overnight_relevance": 7,
+      "location": {
+        "address": "1786 Forest Rd, Winchester, ID 83555"
+      },
+      "contact": {
+        "phone": "(208) 924-7563"
+      },
+      "hours": {
+        "day_use": "7 AM–10 PM"
+      },
+      "source_ids": [
+        "src_winchester_lake"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_orofino_downtown",
+      "type": "poi",
+      "name": "Orofino downtown / business district",
+      "zone": "orofino",
+      "corridor_role": "gateway_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "basecamp",
+        "food",
+        "supplies",
+        "walkable",
+        "hotel_cluster"
+      ],
+      "summary": "Main practical basecamp zone for food, rooms, pharmacy, groceries, theater, and a quick reset before pushing out toward the reservoir.",
+      "practical_score": 10,
+      "budget_score": 8,
+      "surron_relevance": 5,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "Orofino, ID 83544"
+      },
+      "source_ids": [
+        "src_orofino_tourism",
+        "src_clearwater_chamber"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_clearwater_museum",
+      "type": "poi",
+      "name": "Clearwater Historical Museum",
+      "zone": "orofino",
+      "corridor_role": "town_activity",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "indoor",
+        "cheap",
+        "rain_plan"
+      ],
+      "summary": "Local history museum focused on Clearwater River Country, including Nez Perce history, Lewis and Clark, mining, homesteading, farming, and logging.",
+      "practical_score": 6,
+      "budget_score": 9,
+      "surron_relevance": 0,
+      "overnight_relevance": 2,
+      "location": {
+        "address": "433 Bartlett St, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-5033"
+      },
+      "hours": {
+        "year_round": "Tue–Fri 10 AM–3 PM",
+        "seasonal": "Open Saturdays after Memorial Day until Labor Day 10 AM–2 PM"
+      },
+      "source_ids": [
+        "src_clearwater_museum"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_rex_theater",
+      "type": "poi",
+      "name": "Rex Theater",
+      "zone": "orofino",
+      "corridor_role": "town_activity",
+      "status": "open",
+      "interest_tags": [
+        "movie",
+        "date_night",
+        "indoor",
+        "nostalgia"
+      ],
+      "summary": "Historic Orofino movie house and cultural landmark if the birthday trip wants a goofy old-school evening layer.",
+      "practical_score": 5,
+      "budget_score": 8,
+      "surron_relevance": 0,
+      "overnight_relevance": 4,
+      "location": {
+        "address": "Orofino, ID"
+      },
+      "source_ids": [
+        "src_rex_theater"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_dworshak_hatchery",
+      "type": "poi",
+      "name": "Dworshak National Fish Hatchery",
+      "zone": "ahsahka",
+      "corridor_role": "near_destination",
+      "status": "open",
+      "interest_tags": [
+        "fish",
+        "history",
+        "science",
+        "quick_stop",
+        "freeish"
+      ],
+      "summary": "Major hatchery at the confluence of the North Fork and main Clearwater River, 3 miles west of Orofino.",
+      "practical_score": 7,
+      "budget_score": 10,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "location": {
+        "description": "3 miles west of Orofino on the Clearwater / North Fork confluence"
+      },
+      "source_ids": [
+        "src_dworshak_hatchery"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_dworshak_visitor_center",
+      "type": "poi",
+      "name": "Dworshak Visitor Center",
+      "zone": "dworshak_dam",
+      "corridor_role": "destination_activity",
+      "status": "open",
+      "interest_tags": [
+        "dam",
+        "history",
+        "maps",
+        "videos",
+        "gift_shop",
+        "engineering"
+      ],
+      "summary": "Free visitor center with exhibits, maps, videos, and a small gift shop. Good weekday add-on if you want more than just shoreline time.",
+      "practical_score": 7,
+      "budget_score": 9,
+      "surron_relevance": 0,
+      "overnight_relevance": 1,
+      "location": {
+        "address": "Dworshak Dam / Ahsahka, ID"
+      },
+      "contact": {
+        "phone": "208-476-1255",
+        "info_line": "800-321-3198"
+      },
+      "hours": {
+        "spring_fall_winter": "Open Monday through Friday",
+        "summer": "Open 7 days a week from Memorial Day weekend through Labor Day weekend",
+        "day_use": "8:30 AM–4:30 PM",
+        "gates_lock": "4:30 PM"
+      },
+      "rules": [
+        "Photo ID required for tours",
+        "Tours are limited in size",
+        "Pets not allowed in visitor center",
+        "No camping in day-use area"
+      ],
+      "source_ids": [
+        "src_dworshak_visitor_center"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_dworshak_state_park",
+      "type": "camping",
+      "name": "Dworshak State Park",
+      "zone": "freeman_creek_lenore",
+      "corridor_role": "destination_anchor",
+      "status": "mixed",
+      "interest_tags": [
+        "camping",
+        "cabins",
+        "marina",
+        "boat",
+        "disc_golf",
+        "shore_access",
+        "basecamp"
+      ],
+      "summary": "Primary park anchor on the western shore of Dworshak Reservoir with campsites, cabins, group camp options, boat access, rentals, fishing support, and weak cell service.",
+      "practical_score": 9,
+      "budget_score": 7,
+      "surron_relevance": 3,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "9934 Freeman Creek, Lenore, ID 83541",
+        "lat": 46.57583,
+        "lon": -116.28
+      },
+      "contact": {
+        "phone": "(208) 476-5994",
+        "reservations": "1-888-922-6743"
+      },
+      "hours": {
+        "day_use": "7 AM–10 PM"
+      },
+      "capacity": {
+        "campsites_total": 103,
+        "campsites_electric_water": 46,
+        "campsites_electric": 11,
+        "campsites_central_water": 46,
+        "ada_campsites": 2,
+        "camper_cabins": 4,
+        "group_campsites": 2,
+        "group_lodging_beds": 100
+      },
+      "amenities": [
+        "boat ramp",
+        "handling dock",
+        "fish-cleaning station",
+        "marina fuel",
+        "overnight boat moorage",
+        "disc golf",
+        "canoe rental",
+        "kayak rental",
+        "SUP rental",
+        "life jacket loaners",
+        "playgrounds",
+        "indoor showers"
+      ],
+      "constraints": [
+        "Cell service is unreliable within the park",
+        "Wi-Fi is only noted at the Big Eddy Marina conference center"
+      ],
+      "source_ids": [
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_freeman_creek_cabins",
+      "type": "lodging",
+      "name": "Freeman Creek Cabins",
+      "zone": "dworshak_state_park",
+      "corridor_role": "destination_lodging",
+      "status": "seasonal",
+      "interest_tags": [
+        "cabin",
+        "simple",
+        "state_park",
+        "budget_group"
+      ],
+      "summary": "Four park cabins sleeping five each with electricity, heat, and air conditioning.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 2,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "Dworshak State Park / Freeman Creek area"
+      },
+      "capacity": {
+        "cabin_count": 4,
+        "sleep_per_cabin": 5
+      },
+      "source_ids": [
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_three_meadows_group",
+      "type": "lodging",
+      "name": "Three Meadows Group Camp",
+      "zone": "dworshak_state_park",
+      "corridor_role": "destination_group_lodging",
+      "status": "open",
+      "interest_tags": [
+        "group",
+        "large_crew",
+        "chaos_camp",
+        "event_basecamp"
+      ],
+      "summary": "Large group lodging and camp zone with cabins, lodge, kitchen, fire pit, courts, amphitheater, and private boat dock.",
+      "practical_score": 5,
+      "budget_score": 6,
+      "surron_relevance": 3,
+      "overnight_relevance": 10,
+      "capacity": {
+        "sleep_up_to_cabins": 100,
+        "sleep_with_tents_or_rvs": 120,
+        "day_capacity": 200
+      },
+      "source_ids": [
+        "src_dworshak_state_park"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Probably overkill for a tiny birthday crew, but useful if this idea snowballs."
+      ]
+    },
+    {
+      "id": "poi_big_eddy",
+      "type": "poi",
+      "name": "Big Eddy Recreation Area + Marina",
+      "zone": "dworshak_lower_reservoir",
+      "corridor_role": "destination_primary_target",
+      "status": "open",
+      "interest_tags": [
+        "open_access",
+        "marina",
+        "boat_launch",
+        "day_use",
+        "good_first_trip"
+      ],
+      "summary": "Open now, close to Orofino, year-round general access, and one of the safest bets for a first Dworshak run during current closure conditions.",
+      "practical_score": 10,
+      "budget_score": 8,
+      "surron_relevance": 2,
+      "overnight_relevance": 5,
+      "location": {
+        "description": "5 miles west of Orofino on Highway 7, then follow signs for 3 miles to Big Eddy"
+      },
+      "contact": {
+        "usace": "208-476-1255",
+        "marina": "208-476-5994"
+      },
+      "marina": {
+        "full_season_slips": 99,
+        "fuel": true,
+        "marina_store": true,
+        "conference_area": true
+      },
+      "source_ids": [
+        "src_big_eddy_usace",
+        "src_dworshak_state_park",
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_canyon_creek",
+      "type": "poi",
+      "name": "Canyon Creek Recreation Area",
+      "zone": "dworshak_reservoir",
+      "corridor_role": "destination_secondary_target",
+      "status": "open",
+      "interest_tags": [
+        "open_access",
+        "backup_plan",
+        "water_access"
+      ],
+      "summary": "USACE says Canyon Creek remains open. Good backup if Big Eddy is busy or you want a second zone to explore.",
+      "practical_score": 8,
+      "budget_score": 8,
+      "surron_relevance": 2,
+      "overnight_relevance": 3,
+      "source_ids": [
+        "src_dworshak_closures_usace",
+        "src_dworshak_reservoir_map"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_dent_acres",
+      "type": "poi",
+      "name": "Dent Acres / Dent Campground",
+      "zone": "upper_dworshak",
+      "corridor_role": "destination_not_for_apr6",
+      "status": "closed",
+      "interest_tags": [
+        "usually_popular",
+        "boat_access",
+        "not_now"
+      ],
+      "summary": "Temporarily closed in the March 2026 public-safety announcement. Dent Campground and group camping were scheduled to open April 12, which is after the birthday date.",
+      "practical_score": 1,
+      "budget_score": 0,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_merrys_bay",
+      "type": "poi",
+      "name": "Merry's Bay Day Use Area",
+      "zone": "dworshak_reservoir",
+      "corridor_role": "destination_not_for_apr6",
+      "status": "closed",
+      "interest_tags": [
+        "closed"
+      ],
+      "summary": "Temporarily closed in the March 2026 USACE safety update due to flooding / mudslides.",
+      "practical_score": 0,
+      "budget_score": 0,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_dworshak_closures_usace"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "poi_weippe_discovery",
+      "type": "poi",
+      "name": "Weippe Discovery Center",
+      "zone": "weippe",
+      "corridor_role": "east_side_day2_extension",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "museum",
+        "lolo_trail",
+        "day2_extension"
+      ],
+      "summary": "Small interpretive stop for the Lewis and Clark / Nez Perce meeting story if you push east beyond Orofino.",
+      "practical_score": 4,
+      "budget_score": 9,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "location": {
+        "address": "204 Wood St., Weippe, ID"
+      },
+      "contact": {
+        "phone": "(208) 435-4406"
+      },
+      "source_ids": [
+        "src_weippe_discovery"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "poi_weippe_prairie",
+      "type": "poi",
+      "name": "Weippe Prairie",
+      "zone": "weippe",
+      "corridor_role": "east_side_day2_extension",
+      "status": "open",
+      "interest_tags": [
+        "history",
+        "views",
+        "landscape",
+        "camas",
+        "nez_perce"
+      ],
+      "summary": "Publicly accessible historic landscape where Lewis & Clark first met the Nez Perce, with sweeping prairie views.",
+      "practical_score": 4,
+      "budget_score": 10,
+      "surron_relevance": 1,
+      "overnight_relevance": 1,
+      "source_ids": [
+        "src_weippe_prairie"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "lodging_helgeson",
+      "type": "lodging",
+      "name": "Helgeson Place Hotel & Suites",
+      "zone": "orofino",
+      "corridor_role": "budget_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "hotel",
+        "kitchen",
+        "downtown",
+        "pet_friendlyish"
+      ],
+      "summary": "Historic 20-suite hotel in Orofino with full kitchens and downtown access.",
+      "practical_score": 9,
+      "budget_score": 8,
+      "surron_relevance": 6,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "125 Johnson Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "1-208-476-5729",
+        "email": "helgesonhotel@orofino-id.com"
+      },
+      "features": [
+        "full kitchen in each suite",
+        "free Wi-Fi",
+        "some pet-friendly rooms",
+        "non-smoking"
+      ],
+      "source_ids": [
+        "src_helgeson"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "lodging_white_pine",
+      "type": "lodging",
+      "name": "White Pine Motel",
+      "zone": "orofino",
+      "corridor_role": "budget_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "motel",
+        "walkable",
+        "pet_friendly",
+        "simple"
+      ],
+      "summary": "18-room downtown-adjacent motel with walking access to local amenities, Wi-Fi, and pet-friendly positioning.",
+      "practical_score": 9,
+      "budget_score": 9,
+      "surron_relevance": 6,
+      "overnight_relevance": 10,
+      "features": [
+        "18 rooms",
+        "Wi-Fi",
+        "pet-friendly",
+        "non-smoking"
+      ],
+      "source_ids": [
+        "src_white_pine"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "lodging_konkolville",
+      "type": "lodging",
+      "name": "Konkolville Motel",
+      "zone": "orofino",
+      "corridor_role": "budget_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "motel",
+        "quiet",
+        "creekside",
+        "pet_friendly"
+      ],
+      "summary": "Motel about three miles from downtown Orofino, set in a canyon near Orofino Creek.",
+      "practical_score": 8,
+      "budget_score": 8,
+      "surron_relevance": 7,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "2600 Michigan Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-5584",
+        "toll_free": "(800) 616-1964"
+      },
+      "source_ids": [
+        "src_konkolville"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "lodging_best_western",
+      "type": "lodging",
+      "name": "Best Western Lodge at River's Edge",
+      "zone": "orofino",
+      "corridor_role": "comfort_basecamp",
+      "status": "open",
+      "interest_tags": [
+        "hotel",
+        "river_view",
+        "pool",
+        "breakfast",
+        "higher_budget"
+      ],
+      "summary": "Comfort-upgrade option on Main Street with pool / hot tub / breakfast type amenities and direct booking support.",
+      "practical_score": 8,
+      "budget_score": 4,
+      "surron_relevance": 5,
+      "overnight_relevance": 10,
+      "location": {
+        "address": "615 Main Street, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-9999"
+      },
+      "features": [
+        "check-in 4 PM",
+        "check-out 11 AM",
+        "indoor pool",
+        "river views",
+        "gift shop",
+        "multiple room types"
+      ],
+      "source_ids": [
+        "src_best_western"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "supply_hayes",
+      "type": "supply",
+      "name": "Hayes Foods and Hardware",
+      "zone": "orofino",
+      "corridor_role": "supply_anchor",
+      "status": "open",
+      "interest_tags": [
+        "grocery",
+        "hardware",
+        "last_minute_trip_fixes"
+      ],
+      "summary": "Useful one-stop practical stop for grocery and hardware-type needs before heading farther into the reservoir corridor.",
+      "practical_score": 10,
+      "budget_score": 8,
+      "surron_relevance": 8,
+      "overnight_relevance": 5,
+      "location": {
+        "address": "10840 Highway 12, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-4317"
+      },
+      "hours": {
+        "mon_fri": "8 AM–9 PM",
+        "sat": "8 AM–9 PM",
+        "sun": "9 AM–7 PM"
+      },
+      "source_ids": [
+        "src_hayes_foods"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "supply_atkinson",
+      "type": "supply",
+      "name": "Atkinson fuel network (Orofino)",
+      "zone": "orofino",
+      "corridor_role": "fuel_anchor",
+      "status": "open",
+      "interest_tags": [
+        "fuel",
+        "non_ethanol",
+        "diesel",
+        "route_planning"
+      ],
+      "summary": "Orofino fuel network including main office cardlock / credit card pumps and Deano's convenience store pumps.",
+      "practical_score": 9,
+      "budget_score": 7,
+      "surron_relevance": 5,
+      "overnight_relevance": 3,
+      "locations": [
+        {
+          "name": "Atkinson's Main Office",
+          "address": "701 Michigan Ave, Orofino, ID"
+        },
+        {
+          "name": "Deano's Convenience Store",
+          "address": "13834 Highway 12, Orofino, ID"
+        }
+      ],
+      "features": [
+        "Chevron products",
+        "non-ethanol gasoline",
+        "diesel"
+      ],
+      "source_ids": [
+        "src_atkinson_fuel",
+        "src_deanos"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "supply_exxon_deanos",
+      "type": "supply",
+      "name": "Deano's / Exxon Orofino",
+      "zone": "orofino",
+      "corridor_role": "fuel_anchor",
+      "status": "open",
+      "interest_tags": [
+        "fuel",
+        "diesel",
+        "snacks",
+        "late_stop"
+      ],
+      "summary": "Fuel / convenience option on Highway 12 with long daily hours and diesel.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 5,
+      "overnight_relevance": 2,
+      "location": {
+        "address": "13834 Hwy 12, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-3880"
+      },
+      "hours": {
+        "daily": "6 AM–10 PM",
+        "pumps": "24/7 per Atkinson/Deano's source"
+      },
+      "source_ids": [
+        "src_exxon_orofino",
+        "src_deanos"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "service_glenwood_pharmacy",
+      "type": "service",
+      "name": "Arnzen's Glenwood Pharmacy",
+      "zone": "orofino",
+      "corridor_role": "medical_support",
+      "status": "open",
+      "interest_tags": [
+        "pharmacy",
+        "trip_support",
+        "meds"
+      ],
+      "summary": "Local full-service pharmacy in Orofino.",
+      "practical_score": 8,
+      "budget_score": 5,
+      "surron_relevance": 1,
+      "overnight_relevance": 3,
+      "location": {
+        "address": "1105 Michigan Avenue, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-3600"
+      },
+      "hours": {
+        "mon_fri": "10 AM–6 PM",
+        "sat_sun": "closed"
+      },
+      "source_ids": [
+        "src_glenwood_pharmacy"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_canyon_pharmacy",
+      "type": "service",
+      "name": "Clearwater Canyon Pharmacy",
+      "zone": "orofino",
+      "corridor_role": "medical_support",
+      "status": "open",
+      "interest_tags": [
+        "pharmacy",
+        "trip_support",
+        "meds"
+      ],
+      "summary": "Additional pharmacy option in Orofino.",
+      "practical_score": 7,
+      "budget_score": 5,
+      "surron_relevance": 1,
+      "overnight_relevance": 3,
+      "location": {
+        "address": "13020 US Highway 12, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "(208) 476-0110"
+      },
+      "hours": {
+        "mon_fri": "9 AM–6 PM"
+      },
+      "source_ids": [
+        "src_clearwater_canyon_pharmacy"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_orofino_airport",
+      "type": "service",
+      "name": "Orofino Municipal Airport fuel",
+      "zone": "orofino",
+      "corridor_role": "niche_support",
+      "status": "open",
+      "interest_tags": [
+        "airport",
+        "24_7_fuel",
+        "aviation"
+      ],
+      "summary": "Probably not core to this trip, but the municipal airport notes 24/7 fuel purchase via credit card.",
+      "practical_score": 2,
+      "budget_score": 3,
+      "surron_relevance": 0,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_orofino_airport"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "food_edge",
+      "type": "food",
+      "name": "Dining on the Edge",
+      "zone": "orofino",
+      "corridor_role": "birthday_meal",
+      "status": "open",
+      "interest_tags": [
+        "restaurant",
+        "river_view",
+        "birthday_dinner",
+        "date_night"
+      ],
+      "summary": "More special-occasion dinner play with river views.",
+      "practical_score": 6,
+      "budget_score": 3,
+      "surron_relevance": 0,
+      "overnight_relevance": 2,
+      "hours": {
+        "thu": "4 PM–10 PM",
+        "fri": "4 PM–10 PM",
+        "sat": "4 PM–10 PM",
+        "sun": "4 PM–8 PM",
+        "mon_wed": "closed"
+      },
+      "source_ids": [
+        "src_edge"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "food_pizza_factory",
+      "type": "food",
+      "name": "Pizza Factory Orofino",
+      "zone": "orofino",
+      "corridor_role": "cheapish_group_food",
+      "status": "open",
+      "interest_tags": [
+        "pizza",
+        "group",
+        "easy",
+        "post_ride"
+      ],
+      "summary": "Simple group-friendly pizza option in town.",
+      "practical_score": 8,
+      "budget_score": 8,
+      "surron_relevance": 1,
+      "overnight_relevance": 2,
+      "location": {
+        "address": "307 Michigan Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-5519"
+      },
+      "source_ids": [
+        "src_pizza_factory"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "food_ponderosa",
+      "type": "food",
+      "name": "Ponderosa Restaurant and Brass Rail Lounge",
+      "zone": "orofino",
+      "corridor_role": "all_day_food",
+      "status": "open",
+      "interest_tags": [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "family_style"
+      ],
+      "summary": "Family-style restaurant open long hours, useful when timing matters more than aesthetics.",
+      "practical_score": 8,
+      "budget_score": 7,
+      "surron_relevance": 0,
+      "overnight_relevance": 2,
+      "hours": {
+        "daily": "5 AM–10 PM"
+      },
+      "source_ids": [
+        "src_ponderosa"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "reg_surron_access",
+      "type": "regulation",
+      "name": "Surron / motorized trail caution",
+      "zone": "idaho_general",
+      "corridor_role": "legal",
+      "status": "check_live",
+      "interest_tags": [
+        "ohv",
+        "ebike",
+        "trail_access",
+        "important"
+      ],
+      "summary": "Idaho Parks allows Class 1 and 2 e-bikes in state parks and on department-administered trails, but Idaho requires OHV numbering for motorbikes / dirtbikes / ATVs / UTVs. Nez Perce-Clearwater MVUMs are the official maps for motorized travel decisions.",
+      "practical_score": 10,
+      "budget_score": 10,
+      "surron_relevance": 10,
+      "overnight_relevance": 0,
+      "source_ids": [
+        "src_idaho_ebikes",
+        "src_idaho_ohv",
+        "src_mvum"
+      ],
+      "confidence": "high",
+      "notes": [
+        "Whether a specific Surron setup qualifies as an e-bike or should be treated as a motorbike depends on the actual configuration and where you ride.",
+        "Do not assume state-park shoreline paths or random forest roads are legal without checking the applicable map/rules."
+      ]
+    },
+    {
+      "id": "reg_usace_visitor_center_atv",
+      "type": "regulation",
+      "name": "Visitor center roadway ATV note",
+      "zone": "dworshak_dam",
+      "corridor_role": "legal",
+      "status": "open",
+      "interest_tags": [
+        "atv",
+        "roadway_access",
+        "dam_area"
+      ],
+      "summary": "The Dworshak Visitor Center notes that ATVs licensed as a motor vehicle are allowed on the roadways in that area.",
+      "source_ids": [
+        "src_dworshak_visitor_center"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "reg_reservoir_ramps",
+      "type": "regulation",
+      "name": "Boat ramp usability context",
+      "zone": "dworshak_reservoir",
+      "corridor_role": "water_access",
+      "status": "open",
+      "interest_tags": [
+        "boat_ramp",
+        "water_level",
+        "planning"
+      ],
+      "summary": "The official Dworshak map lists usable elevation ranges for major ramps. Big Eddy has the deepest usable range in the map table, which helps explain why it stays valuable when conditions are sketchy elsewhere.",
+      "ramp_table": [
+        {
+          "ramp": "Big Eddy",
+          "usable_lake_elevation_ft": "1600-1445"
+        },
+        {
+          "ramp": "Bruce's Eddy #1",
+          "usable_lake_elevation_ft": "1600-1490"
+        },
+        {
+          "ramp": "Bruce's Eddy #2",
+          "usable_lake_elevation_ft": "1600-1560"
+        },
+        {
+          "ramp": "Canyon Creek",
+          "usable_lake_elevation_ft": "1600-1560"
+        },
+        {
+          "ramp": "Dent Acres",
+          "usable_lake_elevation_ft": "1600-1485"
+        },
+        {
+          "ramp": "Freeman Creek",
+          "usable_lake_elevation_ft": "1600-1515"
+        },
+        {
+          "ramp": "Grandad",
+          "usable_lake_elevation_ft": "1600-1530"
+        }
+      ],
+      "source_ids": [
+        "src_dworshak_reservoir_map"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_health",
+      "type": "service",
+      "name": "Clearwater Valley Health emergency / clinic support",
+      "zone": "orofino",
+      "corridor_role": "medical_support",
+      "status": "open",
+      "interest_tags": [
+        "hospital",
+        "emergency",
+        "medical"
+      ],
+      "summary": "Primary medical support in Orofino; emergency department is always open.",
+      "practical_score": 10,
+      "budget_score": 0,
+      "surron_relevance": 10,
+      "overnight_relevance": 4,
+      "location": {
+        "address": "1055 Riverside Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-5777"
+      },
+      "hours": {
+        "emergency_department": "Always open"
+      },
+      "source_ids": [
+        "src_clearwater_health"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_sheriff",
+      "type": "service",
+      "name": "Clearwater County Sheriff",
+      "zone": "orofino",
+      "corridor_role": "safety_support",
+      "status": "open",
+      "interest_tags": [
+        "sheriff",
+        "non_emergency",
+        "backcountry_medics"
+      ],
+      "summary": "County sheriff and backcountry medic request point if the trip goes sideways in remote terrain.",
+      "location": {
+        "address": "150 Michigan Ave., Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-4521",
+        "tip_hotline": "208-476-3673"
+      },
+      "source_ids": [
+        "src_clearwater_sheriff",
+        "src_clearwater_contact"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_clearwater_em",
+      "type": "service",
+      "name": "Clearwater County Emergency Management",
+      "zone": "orofino",
+      "corridor_role": "safety_support",
+      "status": "open",
+      "interest_tags": [
+        "emergency_management",
+        "flooding",
+        "mudslides"
+      ],
+      "summary": "Good emergency-management contact to know when the area is in active flood / slide conditions.",
+      "location": {
+        "address": "2200 Michigan Ave, Orofino, ID 83544"
+      },
+      "contact": {
+        "phone": "208-476-4064"
+      },
+      "source_ids": [
+        "src_clearwater_em",
+        "src_clearwater_contact"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "service_stjoes",
+      "type": "service",
+      "name": "St. Joseph Regional Medical Center",
+      "zone": "lewiston",
+      "corridor_role": "regional_medical_backup",
+      "status": "open",
+      "interest_tags": [
+        "hospital",
+        "regional_backup"
+      ],
+      "summary": "Regional full-service hospital backup in Lewiston if something bigger than local urgent needs comes up.",
+      "location": {
+        "address": "415 6th Street, Lewiston, ID 83501"
+      },
+      "contact": {
+        "general": "208-743-2511",
+        "physician_referral": "208-799-5511"
+      },
+      "source_ids": [
+        "src_stjoes"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "budget_personal_vehicle",
+      "type": "budget_model",
+      "name": "Personal vehicle baseline",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "inferred",
+      "interest_tags": [
+        "gas_budget",
+        "baseline"
+      ],
+      "summary": "Using Idaho regular gas average and the Coeur d'Alene-to-Orofino drive distance as a baseline, fuel remains the cleanest budget play if you already have a vehicle that can haul your gear.",
+      "assumptions": {
+        "gas_price_regular_idaho_avg": 4.099,
+        "route_miles_round_trip_to_orofino": 270.4,
+        "mpg_examples": {
+          "20_mpg": 55.4,
+          "25_mpg": 44.3,
+          "30_mpg": 37.0
+        }
+      },
+      "formula_note": "Fuel cost = round-trip miles / mpg * gas price",
+      "source_ids": [
+        "src_aaa_idaho",
+        "src_route_rome2rio"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "budget_uhaul_cargo_van",
+      "type": "budget_model",
+      "name": "U-Haul cargo van baseline",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "open",
+      "interest_tags": [
+        "rental",
+        "cargo_van",
+        "bike_haul"
+      ],
+      "summary": "U-Haul cargo van has two seats and about 246 cu ft of cargo space. Good for hauling, not magically good for comfort.",
+      "assumptions": {
+        "estimated_mpg": 18,
+        "cargo_volume_cu_ft": 246,
+        "inside_dimensions": "9'6\" x 5'7\" x 4'8\"",
+        "seats": 2,
+        "round_trip_fuel_estimate_usd": 61.6
+      },
+      "source_ids": [
+        "src_uhaul_van",
+        "src_uhaul_passengers",
+        "src_aaa_idaho",
+        "src_route_rome2rio"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "budget_home_depot_van",
+      "type": "budget_model",
+      "name": "Home Depot cargo van concept",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "check_live",
+      "interest_tags": [
+        "rental",
+        "cargo_van",
+        "unlimited_mileage_maybe"
+      ],
+      "summary": "Home Depot advertises cargo vans starting at $19 and says its moving vehicles have unlimited mileage, but local branch availability needs to be checked directly.",
+      "assumptions": {
+        "starting_rate_usd": 19,
+        "max_payload_lb": 3000
+      },
+      "source_ids": [
+        "src_hd_van",
+        "src_hd_cda_rentals"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "budget_lodging_logic",
+      "type": "budget_model",
+      "name": "Lodging logic",
+      "zone": "trip_math",
+      "corridor_role": "budget",
+      "status": "inferred",
+      "interest_tags": [
+        "room_split",
+        "camping",
+        "cabin",
+        "decision_logic"
+      ],
+      "summary": "For a small crew, the usual money order is: own vehicle + tent if you already own gear, then own vehicle + budget motel, then van/truck only if bike hauling solves a real problem, then comfort hotel / cabin if the crew can split enough to flatten the hit.",
+      "source_ids": [
+        "src_dworshak_state_park",
+        "src_helgeson",
+        "src_white_pine",
+        "src_konkolville",
+        "src_best_western",
+        "src_uhaul_van"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "template_airbnb",
+      "type": "search_template",
+      "name": "Airbnb search",
+      "zone": "live_search",
+      "corridor_role": "future_app",
+      "status": "check_live",
+      "interest_tags": [
+        "vacation_rental",
+        "live_search"
+      ],
+      "summary": "Use live booking search for vacation rentals because inventory and price change too fast for static JSON.",
+      "template_url": "https://www.airbnb.com/s/Orofino--ID/homes",
+      "notes": [
+        "App should treat this as an external launch, not static inventory."
+      ]
+    },
+    {
+      "id": "template_vrbo",
+      "type": "search_template",
+      "name": "VRBO search",
+      "zone": "live_search",
+      "corridor_role": "future_app",
+      "status": "check_live",
+      "interest_tags": [
+        "vacation_rental",
+        "live_search"
+      ],
+      "summary": "Backup vacation-rental search template.",
+      "template_url": "https://www.vrbo.com/search?destination=Orofino%2C%20Idaho%2C%20United%20States%20of%20America"
+    },
+    {
+      "id": "template_511",
+      "type": "search_template",
+      "name": "Idaho 511",
+      "zone": "live_search",
+      "corridor_role": "must_check_before_departure",
+      "status": "open",
+      "interest_tags": [
+        "road_conditions",
+        "must_check"
+      ],
+      "summary": "Mandatory last-minute road check source.",
+      "template_url": "https://511.idaho.gov/roadconditions",
+      "source_ids": [
+        "src_idaho_511"
+      ]
+    },
+    {
+      "id": "template_recreation_reservations",
+      "type": "search_template",
+      "name": "Idaho Parks reservations",
+      "zone": "live_search",
+      "corridor_role": "must_check_before_departure",
+      "status": "open",
+      "interest_tags": [
+        "camping",
+        "cabins",
+        "reservations"
+      ],
+      "summary": "Use for Dworshak campsite / cabin checks.",
+      "template_url": "https://getoutside.idaho.gov/dworshak",
+      "source_ids": [
+        "src_dworshak_state_park"
+      ]
+    },
+    {
+      "id": "template_mvum",
+      "type": "search_template",
+      "name": "Motor Vehicle Use Maps",
+      "zone": "live_search",
+      "corridor_role": "surron_legality",
+      "status": "open",
+      "interest_tags": [
+        "mvum",
+        "ohv",
+        "forest_roads"
+      ],
+      "summary": "App should link users to the official motorized-travel maps before presenting any Surron route ideas.",
+      "template_url": "https://www.fs.usda.gov/r01/nezperce-clearwater/maps-guides",
+      "source_ids": [
+        "src_mvum"
+      ]
+    },
+    {
+      "id": "fun_museum_convoy",
+      "type": "fun_option",
+      "name": "Museum-grade birthday convoy",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "birthday",
+        "pee_wee_energy",
+        "wolfpack"
+      ],
+      "summary": "Pee-wee energy: treat the convoy as a traveling exhibit. Assign one friend to narrate every gas stop like a solemn docent while the wolfpack tries not to laugh.",
+      "practical_score": 1,
+      "budget_score": 2,
+      "surron_relevance": 3,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_velvet_suite",
+      "type": "fun_option",
+      "name": "Velvet-rope moon suite",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "birthday",
+        "hangover_energy"
+      ],
+      "summary": "Hangover-adjacent luxury cosplay: battery candles, handwritten room-service cards, one unserious concierge with a clipboard. Actual sleep quality not guaranteed.",
+      "practical_score": 1,
+      "budget_score": 3,
+      "surron_relevance": 0,
+      "overnight_relevance": 6
+    },
+    {
+      "id": "fun_roof_count_idaho",
+      "type": "fun_option",
+      "name": "Rooftop headcount (Idaho edition)",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "wolfpack",
+        "hangover_energy"
+      ],
+      "summary": "Before leaving any lot, one dramatic roll call like you misplaced a groomsman. You are beside a Subaru and a guilt cooler—not a Vegas roof. Still: count everyone.",
+      "practical_score": 4,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_mystery_cooler",
+      "type": "fun_option",
+      "name": "Something in the cooler",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "group",
+        "hangover_energy"
+      ],
+      "summary": "Movie lore, snack reality: one sticker-bombed or padlocked cooler that is 90% sandwiches and 10% myth. Assign a cooler historian to log each opening.",
+      "practical_score": 2,
+      "budget_score": 4,
+      "surron_relevance": 0,
+      "overnight_relevance": 2
+    },
+    {
+      "id": "fun_alamo_dworshak",
+      "type": "fun_option",
+      "name": "The Alamo stop — reservoir cut",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "pee_wee_energy",
+        "photo_op"
+      ],
+      "summary": "One non-negotiable photo stop nobody fully explains but everyone obeys—a sign, a rock, a fish statue. Pee-wee rules; wolfpack attendance mandatory.",
+      "practical_score": 2,
+      "budget_score": 5,
+      "surron_relevance": 1,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_morning_kit_adult",
+      "type": "fun_option",
+      "name": "Adult “next morning” kit",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "practical_adjacent",
+        "hangover_energy",
+        "responsible"
+      ],
+      "summary": "Water, electrolytes, real breakfast, sunglasses, dignity. The movie had chaos; your trip has ibuprofen only if your doctor says OK—and zero mystery pills.",
+      "practical_score": 6,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 3
+    },
+    {
+      "id": "fun_singalong_tax",
+      "type": "fun_option",
+      "name": "One-verse singalong tax",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "group",
+        "wolfpack"
+      ],
+      "summary": "Pick one ridiculous song. Exactly one verse at the fuel pump. Whoever knows all the words navigates the next leg—fair tax, cruel jury.",
+      "practical_score": 2,
+      "budget_score": 5,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_tuxedo_tow",
+      "type": "fun_option",
+      "name": "Tuxedo tow package",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "roleplay",
+        "birthday",
+        "hangover_energy"
+      ],
+      "summary": "Black-tie meets muddy ramps: everyone dresses gala-ready while unloading bikes like valet chaos broke the timeline. The wolfpack pretends this was planned.",
+      "practical_score": 1,
+      "budget_score": 2,
+      "surron_relevance": 5,
+      "overnight_relevance": 0
+    },
+    {
+      "id": "fun_goose_escort",
+      "type": "fun_option",
+      "name": "Ceremonial goose escort (fiction only)",
+      "zone": "fun",
+      "corridor_role": "absurd",
+      "status": "open",
+      "interest_tags": [
+        "absurd",
+        "birthday",
+        "nonsense",
+        "pee_wee_energy"
+      ],
+      "summary": "Data-only joke: seven imaginary geese ‘bless’ the convoy. Real geese are wildlife—observe from distance; do not harass. Pee-wee would use puppets; you use restraint.",
+      "practical_score": 0,
+      "budget_score": 0,
+      "surron_relevance": 0,
+      "overnight_relevance": 0
+    }
+  ],
+  "operational_notes": {
+    "road_and_weather_checks": [
+      "Check Idaho 511 on departure morning.",
+      "Re-check Dworshak USACE closure page for reservoir access status.",
+      "If planning anything motorized off normal roads, confirm legal travel using the correct MVUM / local rules."
+    ],
+    "recommended_app_behaviors": [
+      "Treat alerts and booking search templates as dynamic/high-priority records.",
+      "Show closed / mixed-status destination entities before open fun stops.",
+      "If user toggles Surron mode, surface legal caution records before ride ideas.",
+      "If user toggles budget mode, sort by budget_score descending and practical_score descending."
+    ],
+    "known_gaps": [
+      "No live Airbnb/VRBO inventory is embedded because rental supply changes too fast.",
+      "No static list of every gas station or restaurant on the corridor is embedded; this file focuses on useful anchors rather than exhaustive map spam.",
+      "Road lane control details around Orofino are intentionally abstracted to Idaho 511 because those can change faster than a saved file."
+    ],
+    "wolfpack_reminders": [
+      "Headcount before major moves—movies skip it; your trip should not.",
+      "If the crew splits attention, assign a navigator and a separate 511 checker.",
+      "fun_option rows are jokes; alerts and search_template rows are the serious channel.",
+      "Hydration and sleep are part of logistics, not a punchline—plan both."
+    ]
+  }
+}
